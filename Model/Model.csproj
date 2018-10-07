@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{19DC95C4-398C-4E84-9DF6-2912C97B91E5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAO\FeedbackInforDao.cs" />
+    <Compile Include="DAO\FeedbackDao.cs" />
+    <Compile Include="DAO\MessegeDao.cs" />
+    <Compile Include="DAO\ProcessDao.cs" />
+    <Compile Include="DAO\InformationDao.cs" />
+    <Compile Include="DAO\InforUserDao.cs" />
+    <Compile Include="DAO\ProjectUserDao.cs" />
+    <Compile Include="DAO\CompetiorProductDao.cs" />
+    <Compile Include="DAO\ProjectCompetitorDao.cs" />
+    <Compile Include="DAO\ProjectProductDao.cs" />
+    <Compile Include="DAO\ContentDao.cs" />
+    <Compile Include="DAO\GroupUserDao.cs" />
+    <Compile Include="DAO\GroupDao.cs" />
+    <Compile Include="DAO\ProjectDao.cs" />
+    <Compile Include="DAO\ProductDao.cs" />
+    <Compile Include="DAO\PriceDao.cs" />
+    <Compile Include="DAO\ResourceDao.cs" />
+    <Compile Include="DAO\CategoryDao.cs" />
+    <Compile Include="DAO\CityDao.cs" />
+    <Compile Include="DAO\DistrictDao.cs" />
+    <Compile Include="DAO\SupplierDao.cs" />
+    <Compile Include="DAO\CompetitorDao.cs" />
+    <Compile Include="DAO\ContratorDao.cs" />
+    <Compile Include="DAO\BuilderDao.cs" />
+    <Compile Include="DAO\PermissionDao.cs" />
+    <Compile Include="DAO\UserDao.cs" />
+    <Compile Include="EF\Builder.cs" />
+    <Compile Include="EF\Business.cs" />
+    <Compile Include="EF\Category.cs" />
+    <Compile Include="EF\City.cs" />
+    <Compile Include="EF\CompetiorProduct.cs" />
+    <Compile Include="EF\Competitor.cs" />
+    <Compile Include="EF\Content.cs" />
+    <Compile Include="EF\Contrator.cs" />
+    <Compile Include="EF\District.cs" />
+    <Compile Include="EF\Feedback.cs" />
+    <Compile Include="EF\FeedbackInfor.cs" />
+    <Compile Include="EF\FeedbackInfoUser.cs" />
+    <Compile Include="EF\FeedbackUser.cs" />
+    <Compile Include="EF\GrantPermission.cs" />
+    <Compile Include="EF\Group.cs" />
+    <Compile Include="EF\GroupUser.cs" />
+    <Compile Include="EF\Information.cs" />
+    <Compile Include="EF\InforUser.cs" />
+    <Compile Include="EF\MenuType.cs" />
+    <Compile Include="EF\Messege.cs" />
+    <Compile Include="EF\Permission.cs" />
+    <Compile Include="EF\Price.cs" />
+    <Compile Include="EF\Process.cs" />
+    <Compile Include="EF\ProcessUser.cs" />
+    <Compile Include="EF\Product.cs" />
+    <Compile Include="EF\Project.cs" />
+    <Compile Include="EF\ProjectCompetitor.cs" />
+    <Compile Include="EF\ProjectMessage.cs" />
+    <Compile Include="EF\ProjectProduct.cs" />
+    <Compile Include="EF\ProjectUser.cs" />
+    <Compile Include="EF\PTTDataContext.cs" />
+    <Compile Include="EF\Resource.cs" />
+    <Compile Include="EF\Supplier.cs" />
+    <Compile Include="EF\User.cs" />
+    <Compile Include="EF\V_Project_Builer_Contrator.cs" />
+    <Compile Include="EF\V_Project_Products.cs" />
+    <Compile Include="EF\V_Project_Supplier.cs" />
+    <Compile Include="EF\V_Project_Users.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

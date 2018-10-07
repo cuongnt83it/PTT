@@ -1,0 +1,93 @@
+﻿@model Model.EF.Price
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section FooterClienScript{
+    <script src="~/Access/js/controller/supplierController.js"></script>
+
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Sửa giá dự án
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        @using (Html.BeginForm("Edit", "Price", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.PriceID)
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Tên giá" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PriceStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.PriceStart, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Giá khởi điểm", Type = "number" })
+                        @Html.ValidationMessageFor(model => model.PriceStart, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PriceEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.PriceEnd, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Giá kết thúc", Type = "number" })
+                        @Html.ValidationMessageFor(model => model.PriceEnd, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MetaTite, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.MetaTite, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mô tả" })
+                        @Html.ValidationMessageFor(model => model.MetaTite, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Thứ tự", Type = "number", Value = "1" })
+                        @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.DropDownListFor(model => model.Status, new List<SelectListItem> { new SelectListItem { Text = "Kính hoạt", Value = "True" }, new SelectListItem { Text = "Khóa", Value = "false" } }, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Quay lại", "Index", "Price", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>

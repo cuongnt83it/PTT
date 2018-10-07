@@ -1,0 +1,87 @@
+﻿
+
+@{
+    ViewBag.Title = "Mesage/Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Danh sách thông báo
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Tiêu đề
+                    </th>
+                    <th>
+                       Mô tả
+                    </th>
+
+                    <th>
+                       Ngày tạo
+                    </th>
+                    <th>
+                       Người tạo
+                    </th>
+
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.lstMesage)
+                {
+                    <tr id="row_@item.ContentID">
+                        <td>
+                           @item.Name
+                        </td>
+
+                        <td>
+                          @item.Description
+                        </td>
+
+                        <td>
+                            @Convert.ToDateTime(item.CreateDate).ToString("dd/MM/yyyy")
+                        </td>
+
+                        <td>
+                           @item.CreateBy
+                        </td>
+
+                        
+                        <td>
+
+                            @Html.ActionLink("Chia tiết", "DetailMesage", new { id = item.ContentID })
+
+                     
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+          
+        </table>
+    </div>
+</div>
+@section FooterClienScript{
+
+    <script>
+            $(function () {
+                $('#example1').DataTable()
+
+            })
+    </script>
+}

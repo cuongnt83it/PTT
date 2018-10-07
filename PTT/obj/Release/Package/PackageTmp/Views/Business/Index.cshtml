@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Model.EF.Business>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Nghiệp vụ chức năng
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <p>
+            @Html.ActionLink(" Cập nhật ", "UpdateBusiness", "Business", null, new { @class = "btn btn-primary" })
+        </p>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BusinessID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BusinessName)
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr id="row_@item.BusinessID">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BusinessID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BusinessName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.BusinessID }) |
+                            @Html.ActionLink("Chi tiết quyền hạn", "Index", "Permission", new { id = item.BusinessID }, null) |
+                         
+                            @Ajax.ActionLink("Xoá", "Delete", new { id = item.BusinessID }, new AjaxOptions
+                       {
+                           Confirm = "Bạn có muốn xoá bản ghi này?",
+                           OnComplete = "$('#row_" + @item.BusinessID + "').remove()",
+                           HttpMethod = "Delete"
+                       })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BusinessID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BusinessName)
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+            </tfoot>
+            
+</table>
+    </div>
+</div>
+@section FooterClienScript{
+
+    <script>
+            $(function () {
+                $('#example1').DataTable()
+
+            })
+    </script>
+}

@@ -1,0 +1,190 @@
+﻿@using PTT.Common;
+@using Model.EF;
+@{
+    ViewBag.Title = "FeedbackInformation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/Access/plugins/iCheck/all.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Access/bower_components/select2/dist/css/select2.min.css">
+
+}
+@section FooterClienScript{
+
+    <script src="~/Access/js/controller/feedbackInfoController.js"></script>
+
+
+    <!-- Select2 -->
+    <script src="~/Access/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/Access/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap datepicker -->
+    <script src="~/Access/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- bootstrap color picker -->
+    <script src="~/Access/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <!-- bootstrap time picker -->
+    <script src="~/Access/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="~/Access/plugins/iCheck/icheck.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Access/bower_components/fastclick/lib/fastclick.js"></script>
+    <script>
+        $(function () {
+
+
+
+            $('#EndCreate').datepicker({
+                autoclose: true
+            })
+            $('.select2').select2()
+        })
+    </script>
+}
+
+@section ContenHeader{
+    <section class="content-header"></section>
+}
+<div class="box">
+    <div class="box-body">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+               
+                <h3 class="box-title">Dự án: @ViewBag.Project.Name  </h3>
+            </div>
+            <div class="box-body">
+               
+                @using (Html.BeginForm("Index", "FeedbackInfor", FormMethod.Post, new { @class = "form-horizontal" }))
+                { @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Góp ý </label>
+                        <div class="col-md-10">
+                            @Html.Hidden("txtID", (string)ViewBag.Project.InformationID.ToString(), new { @class = "form-control", id = "txtID" })
+                            @Html.TextArea("txtDescription", "", new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Ý kiến", id = "txtDescription" })
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-10 col-md-2">
+                            <input type="submit" id="bntCreate" value=" Gửi " class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- /.box-body -->
+        </div>
+
+
+        <div class="box box-success">
+            <div class="box-header">
+                <i class="fa fa-comments-o"></i>
+                <h3 class="box-title">Ý KIẾN ĐÓNG GÓP</h3>
+                <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+
+                </div>
+            </div>
+            <div class="box-body chat" id="chat-box">
+                @functions{
+                    public string GetSubContent(long InformationID, long id)
+                    {
+                        string str = "";
+                        foreach (var p in ViewBag.Feedback)
+                        {
+
+                            if (p.ChildID == id && p.InformationID == InformationID)
+                            {
+                                str += "<ul class=\"treeview-menu\">";
+                                str += "<li class=\"treeview\">";
+
+                                str += "<a href=\"#\"><i class=\"fa fa-angle-right\"></i><b>";
+                                str += p.CreateDate.ToString("h:mm:ss tt dd/MM/yyyy") + ": " + p.FullName + ": </b>" + p.Description;
+
+                                str += "<span class=\"pull-right-container\"><i class=\"btn-Message\" data-prid=\"" + @p.ProjectID + "\" data-id=\"" + @p.FeedbackID + "\">Trả lời</i></span> </a>";
+                                str += GetSubContent(InformationID, p.FeedbackID);
+                                str += "</li></ul>";
+                            }
+                        }
+
+                        return str;
+                    }
+                }
+
+
+
+                @{
+                    foreach (var process in ViewBag.FeedbackNull)
+                    {
+                        <div class="item">
+                            <img src="@process.Image" alt="user image" class="online">
+                            <p class="message">
+                                <a href="#" class="name">
+                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> @process.CreateDate.ToString("h:mm:ss tt dd/MM/yyyy") </small>
+                                    @process.FullName
+                                </a>
+                            </p>
+                            <div class="attachment">
+                                @process.Description
+                                <div class="pull-right">
+                                    <a href="#" data-prid="@process.InformationID" data-id="@process.InformationID" class="btn-Message"> Trả lời </a>
+                                </div>
+                            </div>
+                            <!-- /.attachment -->
+                        </div>
+                        <ul class="sidebar-menu" data-widget="tree">
+                            @{
+                                foreach (FeedbacInfokUser prm in ViewBag.Feedback)
+                                {
+
+                                    if (prm.ChildID == process.FeedbackID && prm.InformationID == @process.InformationID)
+                                    {
+
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i>@prm.CreateDate.ToString("h:mm:ss tt dd/MM/yyyy") : @prm.FullName : @prm.Description
+                                                <span class="pull-right-container">
+                                                    <i class="btn-Message" data-prid="@prm.InformationID" data-id="@prm.FeedbackID">Trả lời</i>
+                                                </span>
+                                            </a>
+                                            @Html.Raw(GetSubContent(prm.InformationID, prm.FeedbackID))
+
+                                        </li>
+
+                                    }
+                                }
+                            }
+
+                        </ul>
+                                }
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
+<div id="MessageModal" class="modal fade" style="display: none;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Trả lời</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Hidden("hidProjectID", "", new { @id = "hidProjectID" })
+                @Html.Hidden("hidID", "", new { @id = "hidID" })
+                @Html.TextArea("txtMessage", "", new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Nội dung", id = "txtMessage" })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal">Gửi</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+
+    </div>
+</div>

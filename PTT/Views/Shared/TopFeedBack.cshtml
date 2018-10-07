@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Model.EF.FeedbackUser>
+<li class="dropdown messages-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-envelope-o"></i>
+        <span class="label label-success">@Model.Count().ToString()</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li class="header">Bạn có @Model.Count().ToString() tin nhắn</li>
+        <li>
+            <!-- inner menu: contains the actual data -->
+            <ul class="menu">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="~/Feedback/Index/@item.ProjectID">
+                            <i class="fa fa-users text-aqua"></i>@item.FullName.ToString(): @item.Description.ToString()
+                        </a>
+                    </li>
+                }
+                <!-- end message -->
+            </ul>
+        </li>
+        
+    </ul>
+</li>

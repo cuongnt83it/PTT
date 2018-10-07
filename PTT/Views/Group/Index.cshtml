@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Model.EF.Group>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Nhóm người dùng
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <p>
+            @Html.ActionLink(" Tạo mới ", "Create", "Group", null, new { @class = "btn btn-primary" })
+        </p>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GroupName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Note)
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr id="row_@item.GroupID">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GroupName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.GroupID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.GroupID }) |
+                            @Ajax.ActionLink("Xoá", "Delete", new { id = item.GroupID }, new AjaxOptions
+                       {
+                           Confirm = "Bạn có muốn xoá bản ghi này?",
+                           OnComplete = "$('#row_" + @item.GroupID + "').remove()",
+                           HttpMethod = "Delete"
+                       }) | @Html.ActionLink("GrantPermission", "Index", "GrantPermission", new { id = item.GroupID }, null)
+                </td>
+            </tr>
+                }
+            </tbody>
+           
+        </table>
+    </div>
+</div>
+@section FooterClienScript{
+
+    <script>
+        $(function () {
+            $('#example1').DataTable()
+
+        })
+    </script>
+}

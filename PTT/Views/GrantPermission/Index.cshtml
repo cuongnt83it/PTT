@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+<link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="~/Access/plugins/iCheck/all.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="~/Access/bower_components/select2/dist/css/select2.min.css">
+}
+@section FooterClienScript{
+
+   
+<script src="~/Access/js/controller/projectController.js"></script>
+
+<!-- Select2 -->
+<script src="~/Access/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="~/Access/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="~/Access/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="~/Access/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="~/Access/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="~/Access/plugins/iCheck/icheck.min.js"></script>
+<!-- FastClick -->
+<script src="~/Access/bower_components/fastclick/lib/fastclick.js"></script>
+<script>
+
+        function getPermissions(action, groupgrant) {
+            $.ajax({
+                url: action,
+                data: { grouppid: groupgrant },
+                datType: "json",
+                type: "GET",
+                success: function (data) {
+                $("#listaction").html('');
+                    $.each(data, function (index, value) {
+                        if (value.isGranted)
+                            $("#listaction").append("<input type='checkbox' checked='true' onchange='updatePermissions(" + "\"/Admin/GrantPermission/updatePermissions/\" + this.value ,\"@Session["groupgrant"]\")' value='" + value.PermissionID + "'>" + value.Description + "<br>");
+                        else
+                            $("#listaction").append("<input type='checkbox'   onchange='updatePermissions(" + "\"/Admin/GrantPermission/updatePermissions/\" + this.value ,\"@Session["groupgrant"]\")' value='" + value.PermissionID + "'>" + value.Description + "<br>");
+                    });
+                },
+                failure: function (response) {
+                    $("#listaction").append("không load được");
+                }
+            });
+
+
+
+        }
+    function  updatePermissions(action, groupgrant) {
+            $.ajax({
+                url: action,
+                data: { grouppid: groupgrant },
+                datType: "json",
+                type: "GET",
+                success: function (data) {
+                    //alert(data);
+                    $("#msg").html(data)
+                    
+                },
+            });
+        }
+</script>
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+           Phân quyền nhóm người dùng
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-header with-border">
+        <i class="fa fa-list-alt"></i>
+        <h3 class="box-title">Cấp quyền nhóm: <b>@ViewBag.groupgrant </b> </h3>
+    </div>
+    <div class="box-body">
+         <div id="msg"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-solid">
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Danh mục nghiệp vụ</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            @Html.DropDownList("businesscontroler", (IEnumerable<SelectListItem>)ViewBag.items, new { @class = "form-control", size = 20, onchange = "getPermissions('../getPermissions/'+this.value,'" + @Session["groupgrant"] + "');" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-solid">
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Danh sách quyền hạn</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div id="listaction"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

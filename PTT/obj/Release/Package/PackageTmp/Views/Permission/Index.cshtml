@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Chức năng của nghiệp vụ
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <p>
+            @Html.ActionLink(" Nghiệp vụ ", "Index", "Business", null, new { @class = "btn btn-primary" })
+        </p>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                     Nghiệp vụ
+                    </th>
+                    <th>
+                      Tên chức năng
+                    </th>
+                    <th>
+                      Mô tả
+                    </th>
+                    <th> Thao tác</th>
+                </tr>
+</thead>
+            <tbody>
+                @foreach (var item in ViewBag.PB)
+                {
+                    <tr id="row_@item.PermissionID">
+                        <td>
+                       
+                            @item.BusinessName
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.PermissionID }) |
+                            @Ajax.ActionLink("Xoá", "Delete", new { id = item.PermissionID }, new AjaxOptions
+                        {
+                            Confirm = "Bạn có muốn xoá bản ghi này?",
+                            OnComplete = "$('#row_" + @item.PermissionID + "').remove()",
+                            HttpMethod = "Delete"
+                        })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>
+                        Nghiệp vụ
+                    </th>
+                    <th>
+                        Tên chức năng
+                    </th>
+                    <th>
+                        Mô tả
+                    </th>
+                    <th> Thao tác</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+@section FooterClienScript{
+
+    <script>
+            $(function () {
+                $('#example1').DataTable()
+
+            })
+    </script>
+}

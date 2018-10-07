@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Model.EF.Competitor>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Đối thủ cạnh tranh
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <p>
+            @Html.ActionLink(" Tạo mới ", "Create", "Competitor", null, new { @class = "btn btn-primary" })
+        </p>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CompetitorID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CompetitorName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        Thao tác
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr id="row_@item.ID">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompetitorID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompetitorName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+
+                        <td>
+                            @(item.Status == true ? "Kích hoạt" : "Không")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("Chia tiết", "Details", new { id = item.ID }) |
+
+                            @Ajax.ActionLink("Xoá", "Delete", new { id = item.ID }, new AjaxOptions
+                       {
+                           Confirm = "Bạn có muốn xoá bản ghi này?",
+                           OnComplete = "$('#row_" + @item.ID + "').remove()",
+                           HttpMethod = "Delete"
+                       })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        
+        </table>
+    </div>
+</div>
+@section FooterClienScript{
+
+    <script>
+            $(function () {
+                $('#example1').DataTable()
+
+            })
+    </script>
+}

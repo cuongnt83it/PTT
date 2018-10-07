@@ -1,0 +1,127 @@
+﻿@model IEnumerable<Model.EF.Information>
+
+@{
+    ViewBag.Title = "Thông tin chia sẻ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Thông tin chia sẻ
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <table id="dtbPrivate" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreateBy)
+                    </th>
+
+                    <th>
+
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+
+                    <th></th>
+            </thead>
+
+            @{
+                var stt = 0;
+                foreach (var item in Model)
+                {
+
+                    stt++;
+                    <tr>
+                        <td>
+                            @stt
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+
+                        <td>
+                            @{
+                                var creatDate = "";
+                                creatDate = Convert.ToDateTime(item.CreateDate).ToString("dd/MM/yyyy");
+                            }
+                            @creatDate
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreateBy)
+                        </td>
+
+                        <td>
+                            @{
+                                var sStatus = "";
+                                int iStus = Convert.ToInt32(item.Status);
+                                switch (iStus)
+                                {
+                                    case 0: sStatus = "Đợi duyệt chia sẻ"; break;
+                                    case 1: sStatus = "Đã duyệt"; break;
+                                    case 2: sStatus = "Đã phân công"; break;
+                                    case 3: sStatus = "Kết thúc"; break;
+                                    default: break;
+                                }
+                            }
+                            @sStatus
+
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.InformationID })
+
+                        </td>
+                    </tr>
+                                } }
+
+        </table>
+
+
+    </div>
+</div>
+
+@section FooterClienScript{
+
+    <script>
+        $(function () {
+            $('#dtbPrivate').DataTable()
+
+        })
+    </script>
+
+}

@@ -1,0 +1,139 @@
+﻿@using Model.DAO;
+@using PTT.Common;
+
+@{
+    int pass = 0;
+
+
+    UserLogin user = (UserLogin)Session[CommonConstant.USER_SESSION];
+    UserDao uerDAO = new UserDao();
+    pass = uerDAO.isManager(user.UserID);
+}
+<ul class="sidebar-menu" data-widget="tree">
+@{if (pass == 0 || pass == 2)
+    {
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-dashboard"></i> <span>DỰ ÁN TỰ TRIỂN KHAI</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="~/Home/ProjectUser"><i class="fa fa-circle-o"></i> Dự án cá nhân</a></li>
+            <li><a href="~/Home/ProjectGroup"><i class="fa fa-circle-o"></i> Dự án nhóm</a></li>
+        </ul>
+    </li>
+    <li><a href="~/Information/Jobs"><i class="fa fa-dashboard"></i> <span>CÔNG VIỆC ĐƯỢC GIAO</span></a></li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-dashboard"></i> <span>CHIA SẺ THÔNG TIN</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="~/Information/Create"><i class="fa fa-circle-o"></i> Tạo mới chia sẻ thông tin</a></li>
+            <li><a href="~/Information/Shared"><i class="fa fa-circle-o"></i> Thông tin đã chia sẻ</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-dashboard"></i> <span>QUẢN LÝ DỰ ÁN</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="~/Home/ProjectUserStart"><i class="fa fa-circle-o"></i> Dự án đợi duyệt đăng ký</a></li>
+            <li><a href="~/Home/ProjectUserWait"><i class="fa fa-circle-o"></i> Dự án đợi duyệt kết thúc</a></li>
+            <li><a href="~/Home/ProjectUserEnd"><i class="fa fa-circle-o"></i> Dự án đã hoàn thành</a></li>
+            <li><a href="~/Home/ProjectUserStop"><i class="fa fa-circle-o"></i> Dự án không hoàn thành</a></li>
+            <li><a href="~/Home/ProjectUserNotPassStart"><i class="fa fa-circle-o"></i> Dự án không được duyệt đăng ký</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-dashboard"></i> <span>KHAI BÁO THÔNG TIN</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="~/Contrator"><i class="fa fa-circle-o"></i> Khai báo chủ đầu tư</a></li>
+            <li><a href="~/Builders"><i class="fa fa-circle-o"></i> Khai báo nhà thầu</a></li>
+        </ul>
+    </li>
+        } }
+    @{if (pass==1||pass==2)
+        {
+
+            <li><a href="~/Information/Create"><i class="fa fa-dashboard"></i> <span>TẠO MỚI CHIA SẺ THÔNG TIN</span></a></li>
+            <li><a href="~/Information/Manager"><i class="fa fa-dashboard"></i> <span>QUẢN LÝ GIAO VIỆC</span></a></li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>QUẢN LÝ DỰ ÁN</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="~/Project/ProjectWaitStart"><i class="fa fa-circle-o"></i> Dự án đợi duyệt đăng ký</a></li>
+                    <li><a href="~/Project/ProjectWaitEnd"><i class="fa fa-circle-o"></i> Dự án đợi duyệt kết thúc</a></li>
+                    <li><a href="~/Project/ProjectEnd"><i class="fa fa-circle-o"></i> Dự án đã hoàn thành</a></li>
+                    <li><a href="~/Project/ProjectStop"><i class="fa fa-circle-o"></i> Dự án không hoàn thành</a></li>
+                    <li><a href="~/Project/ProjectStart?"><i class="fa fa-circle-o"></i> Dự án không được duyệt đăng ký</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>KHAI BÁO THÔNG TIN</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="~/Contrator"><i class="fa fa-dashboard"></i> <span>Quản lý chủ đầu tư</span></a></li>
+                    <li><a href="~/Builders"><i class="fa fa-dashboard"></i> <span>Quản lý nhà thầu</span></a></li>
+                    <li><a href="~/Supplier"><i class="fa fa-dashboard"></i> <span>Quản lý đơn vị cung ứng</span></a></li>
+                    <li><a href="~/Competitor"><i class="fa fa-dashboard"></i> <span>Quản lý đối thủ cạnh tranh</span></a></li>
+                    <li><a href="~/Category"><i class="fa fa-dashboard"></i> <span>Quản lý loại dự án</span></a></li>
+                    <li><a href="~/Resource"><i class="fa fa-dashboard"></i> <span>Quản lý loại nguồn vốn</span></a></li>
+                    <li><a href="~/Price"><i class="fa fa-dashboard"></i> <span>Quản lý giá trị dự án</span></a></li>
+                    <li><a href="~/Product"><i class="fa fa-dashboard"></i> <span>Quản lý sản phẩm</span></a></li>
+                    
+                </ul>
+            </li>
+            <li><a href="~/Mesage"><i class="fa fa-dashboard"></i> <span> QUẢN LÝ THÔNG BÁO</span></a></li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>THỐNG KÊ BÁO CÁO</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="~/Static/Project"><i class="fa fa-circle-o"></i> Thống kê theo dự án</a></li>
+                    <li><a href="~/Static/Users"><i class="fa fa-circle-o"></i> Thống kê theo nhân viên</a></li>
+                    <li><a href="~/Static/Supplier"><i class="fa fa-circle-o"></i> Thống kê theo đơn vị cung ứng</a></li>
+                </ul>
+            </li>
+           
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>QUẢN TRỊ HỆ THỐNG</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="~/Group"><i class="fa fa-circle-o"></i> Nhóm người dùng</a></li>
+                    <li><a href="~/User"><i class="fa fa-circle-o"></i> Người dùng</a></li>
+                    <li><a href="~/Business"><i class="fa fa-circle-o"></i> Nghiệp vụ</a></li>
+                </ul>
+            </li>
+
+
+        } }
+
+</ul>

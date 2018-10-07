@@ -1,0 +1,279 @@
+﻿@using PTT.Common;
+
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/Access/plugins/iCheck/all.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Access/bower_components/select2/dist/css/select2.min.css">
+
+}
+@section FooterClienScript{
+
+    <script src="~/Access/js/controller/projectController.js"></script>
+
+    <!-- Select2 -->
+    <script src="~/Access/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/Access/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap datepicker -->
+    <script src="~/Access/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- bootstrap color picker -->
+    <script src="~/Access/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <!-- bootstrap time picker -->
+    <script src="~/Access/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="~/Access/plugins/iCheck/icheck.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Access/bower_components/fastclick/lib/fastclick.js"></script>
+    <script>
+        $(function () {
+
+
+
+            $('#dtStart').datepicker({
+                autoclose: true
+            })
+            $('#dtEnd').datepicker({
+                autoclose: true
+            })
+            })
+    </script>
+    <link href="~/Access/plugins/tableExport/css/tableexport.css" rel="stylesheet" />
+    <script src="~/Access/plugins/tableExport/js/FileSaver.min.js"></script>
+    <script src="~/Access/plugins/tableExport/js/FileSaver.min.js"></script>
+    <script src="~/Access/plugins/tableExport/js/xls.core.min.js"></script>
+    <script src="~/Access/plugins/tableExport/js/tableexport.js"></script>
+    <script>
+    $("table").tableExport(
+        {
+            // Displays table headers (th or td elements) in the <thead>
+                headers: true,
+            // Filename for the downloaded file
+                  fileName: "id",
+            // Style buttons using bootstrap framework
+
+                      bootstrap: true,
+            formats: ["xlsx",  "csv", "txt"],
+            charset:"charset=utf-8"
+        });
+    //$.fn.tableExport.charset = "charset=utf-8";
+    // Filename fallback for exported files.
+
+
+
+    </script>
+
+
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Thống kê người dùng
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        @using (Html.BeginForm("Users", "Static", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Thời gian bắt đầu </label>
+                <div class="col-md-10">
+
+                    @Html.TextBox("dtStart", (string)ViewBag.sdate, new { @class = "form-control", @autoforcus = "autoforcus", id = "dtStart", @placeholder = "MM/dd/yyyy" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Thời gian kết thúc </label>
+                <div class="col-md-10">
+
+                    @Html.TextBox("dtEnd", (string)ViewBag.edate, new { @class = "form-control", @autoforcus = "autoforcus", id = "dtEnd", @placeholder = "MM/dd/yyyy" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Người dùng </label>
+                <div class="col-md-10">
+                    @Html.DropDownList("drlUser", (SelectList)ViewBag.User, new { id = "drlUser", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Trạng thái </label>
+                <div class="col-md-10">
+                    @Html.DropDownList("drlStatus", (SelectList)ViewBag.Status, new { id = "drlStatus", @class = "form-control" })
+                </div>
+            </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Loại dự án </label>
+                            <div class="col-md-10">
+                                @Html.DropDownList("drlCategory", (SelectList)ViewBag.CategoryID, new { id = "drlCategory", @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-10 col-md-2">
+                                <input type="submit" value="Thống kê" class="btn btn-primary" />
+                            </div>
+                        </div>
+        }
+    </div>
+    <div class="box box-success">
+        <div class="box-header">
+            <h3 class="box-title">KẾT QUẢ</h3>
+        </div>
+        <div class="box-body">
+           
+            @{
+                           
+                if (ViewBag.Member != null)
+                            {
+                                var stt = 0;
+                                var collProdut = ViewBag.Product.Count * 3;
+                    <table id="HoSoPTT" class="table table-bordered  col-md-10" data-name="cool-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="3">
+                                    STT
+                                </th>
+                                <th rowspan="3">
+                                    MÃ DỰ ÁN
+                                </th>
+
+                                <th rowspan="3">
+                                    TÊN DỰ ÁN
+                                </th>
+                                <th rowspan="3">
+                                    THỜI GIAN BẮT ĐẦU
+                                </th>
+                                <th rowspan="3">
+                                    THỜI GIAN KẾT THÚC
+                                </th>
+                                <th rowspan="3">
+                                    NHÂN VIÊN
+                                </th>
+                                <th rowspan="3">CHỦ ĐẦU TƯ</th>
+                                <th rowspan="3">NHÀ THẦU THI CÔNG</th>
+                                <th rowspan="3">ĐƠN VỊ CUNG ỨNG</th>
+                                <th colspan="@collProdut">SẢN PHẨM</th>
+                                <th rowspan="3">TỔNG GIÁ TRỊ</th>
+                            </tr>
+                            <tr>
+                                @{
+                            foreach (var pd in ViewBag.Product)
+                            {
+
+                                        <td colspan="3">@pd.Code</td>
+
+                                    }
+                        }
+                            </tr>
+                            <tr>
+                                @{
+                                    for (var i = 1; i <= collProdut; i++)
+                                    {
+
+
+                                        if (i % 3 == 0)
+                                        {
+                                            <td>Giá trị</td>
+                                            <td>Triết khấu ngoài HĐ</td>
+                                            <td>Triết khấu trong HĐ</td>
+                                        }
+                                    }
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var pj in ViewBag.Member)
+                            {
+                                stt = stt + 1;
+                                <tr>
+
+                                    <td>@stt</td>
+                                    <td>@pj.Code</td>
+                                    <td>@pj.Name</td>
+                                    <td>@pj.StartDate.ToString("MM/dd/yyyy")</td>
+                                    <td> @pj.DateLine.ToString("MM/dd/yyyy")</td>
+                                    <td>
+                                        @pj.FullName
+                                    </td>
+                                    <td>
+                                        @{ 
+                                            var conTra = "";
+                                            var buider = "";
+                                            foreach (var prC in ViewBag.Project)
+                                            {
+                                                if (prC.ProjectID == pj.ProjectID)
+                                                {
+                                                    conTra = prC.ContraName;
+                                                    buider= prC.BuilderName;
+
+                                                }
+                                            }
+                                        }
+                                        @conTra
+                                    </td>
+                                    <td>@buider</td>
+                                    <td>
+                                        @{
+                        var sp = "";
+                        foreach (var s in ViewBag.Supplier)
+                        {
+                            if (s.ProjectID == pj.ProjectID)
+                            {
+                                sp += s.SupplierName;
+                            }
+                        }
+                    }
+                    @sp
+                </td>
+                                    @{
+                                        var col = 0;
+                                        foreach (var pd in ViewBag.Product)
+                                        {
+                                            foreach (var pdP in ViewBag.ProductProject)
+                                            {
+                                                if (pj.ProjectID == pdP.ProjectID && pdP.ProductID == pd.ProductID)
+                                                {
+                                                    col += 3;
+                                                    <td>@pdP.Price</td>
+                                                    <td>@pdP.Discount</td>
+                                                    <td>@pdP.DiscountVAT</td>
+                                                }
+
+
+                                            }
+
+
+                                        }
+                                        for (var i = col; i < collProdut; i++)
+                                        {
+                                            <td></td>
+                                        }
+                    }
+
+
+                                    <td>@pj.Value</td>
+                                </tr>
+
+                                        }
+
+                        </tbody>
+                    </table>
+
+                                        }}
+        </div>
+    </div>
+
+</div>

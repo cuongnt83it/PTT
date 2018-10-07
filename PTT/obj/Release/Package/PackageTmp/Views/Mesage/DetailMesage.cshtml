@@ -1,0 +1,54 @@
+﻿@model Model.EF.Content
+
+@{
+    ViewBag.Title = "DetailMesage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Chi tiết thông báo
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">@Model.Name</h3>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                    title="Collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body">
+     @Html.Raw(Model.Detail)
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <h3>Các thông báo khác</h3>
+        <ul>
+            @foreach (var item in ViewBag.listHot)
+            {
+                <li >
+                    <a href="~/Mesage/DetailMesage/@item.ContentID">
+                        @item.Name.ToString()
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    <!-- /.box-footer-->
+</div>
+<!-- /.box -->

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Model.EF.Resource>
+
+@{
+    ViewBag.Title = "Resource/Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+           Nguồn vốn dự án
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <p>
+            @Html.ActionLink(" Tạo mới ", "Create", "Resource", null, new { @class = "btn btn-primary" })
+        </p>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MetaTite)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DisplayOrder)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr id="row_@item.ResourceID">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MetaTite)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DisplayOrder)
+                        </td>
+
+                        <td>
+                            @(item.Status == true ? "Kích hoạt" : "Không")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ResourceID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ResourceID }) |
+                            @Ajax.ActionLink("Xoá", "Delete", new { id = item.ResourceID }, new AjaxOptions
+                   {
+                       Confirm = "Bạn có muốn xoá bản ghi này?",
+                       OnComplete = "$('#row_" + @item.ResourceID + "').remove()",
+                       HttpMethod = "Delete"
+                   })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        
+        </table>
+    </div>
+</div>
+@section FooterClienScript{
+
+    <script>
+        $(function () {
+            $('#example1').DataTable()
+
+        })
+    </script>
+}

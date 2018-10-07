@@ -1,0 +1,127 @@
+﻿@model IEnumerable<Model.EF.Content>
+
+@{
+    ViewBag.Title = "Mesage/Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Danh sách thông báo
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <p>
+            @Html.ActionLink(" Tạo mới ", "Create", "Mesage", null, new { @class = "btn btn-primary" })
+        </p>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreateBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TopHot)
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr  id="row_@item.ContentID">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                   
+                    <td>
+                         @Convert.ToDateTime(item.CreateDate).ToString("dd/MM/yyyy")
+                    </td>
+                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateBy)
+                    </td>
+
+                    <td>
+                        @(item.Status==true? "Khích hoạt" : "Khóa")
+                    </td>
+                    <td>
+                        @( item.TopHot == true ? "Tin hot" : "Không")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.ContentID }) |
+                        @Html.ActionLink("Chia tiết", "Details", new { id = item.ContentID }) |
+
+                        @Ajax.ActionLink("Xoá", "Delete", new { id = item.ContentID }, new AjaxOptions
+                       {
+                           Confirm = "Bạn có muốn xoá bản ghi này?",
+                           OnComplete = "$('#row_" + @item.ContentID + "').remove()",
+                           HttpMethod = "Delete"
+                       })
+                    </td>
+
+                </tr>
+            }</tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreateDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreateBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TopHot)
+                        </th>
+                        <th>Thao tác</th>
+                    </tr>
+                </tfoot>
+        </table>
+    </div>
+</div>
+@section FooterClienScript{
+
+    <script>
+            $(function () {
+                $('#example1').DataTable()
+
+            })
+    </script>
+}

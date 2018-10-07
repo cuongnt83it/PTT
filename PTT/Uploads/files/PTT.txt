@@ -1,0 +1,51 @@
+﻿- Trag chủ: hiên thị tất cả các dự án đang triển khai
+- Cập nhật dự án: Tất cả những thành viên trong nhóm đều có quyền cập nhật dự dự án( hỏi và trả lời đến cấp thứ 2, có rút gọn)
+Những người ko thuộc dự án ko có quyền xem cập nhật tiến độ,
+- Đóng góp ý kiến: Tất cả các thành viên đều có quyền góp ý tại tất cả các dự án đang triển khai.
+- Hồ sơ dự án: thêm tỉnh thành,
+CHọn dự án công khai tất cả thành viên đều có quyền xem, người khởi tạo dự án mới có quyền cập nhật tiến độ, kết thúc dự án.
+- Sản phẩm là cố định có thể chọn nhiều sản phẩm trong 1 dự án. giá trị, tỷ lệ phần trăm: nhập theo từng dự án.
+- Một dự án có nhiều đối thủ cạnh tranh, tương ứng với chiết khấu với sản phẩm của dự án đã chọn.
+- Người khởi tạo dự án không được quyền sửa mã dự án, ngày kết thúc dự án đối với các dự án chưa kết thúc.
+- Lãnh đạo được quyền sửa các thông tin dự án.
+- Trang duyệt khởi tạo: bao gồm trang hồ sơ, trang duyệt: bao gồm thông tin: thời gian bắt đầu thời gian kết thúc, trạng thái 
+- Thêm trang dự án không được duyệt khởi tạo.
+- Thêm trang duyệt kết thúc: chỉ lãnh đạo mới vào được:
+- Trạng thái dự án: Khởi tạo, đã duyệt khởi tạo, yêu cầu kết thúc, kết thúc(Hoàn thành, không hoàn thành: không được duyệt hoàn thành và quá thời gian quy định)
+ thêm ghi chú vào trạng thái dự án.
+- Tại xin duyệt kết thúc hiển thị các sản phẩm với tỉ lệ phầm trăm tại trang hồ sơ, giá trị của dự án, chọn nhà cung ứng sau đó gửi yêu cầu.
+- Cung ứng( trung tâm phân phối và điểm bán hàng, thành phố, quận, huyện,)
+- Thống kê báo cáo: 
++ Bao dự án hoàn thành, không hoàn thành, không được duyệt từ ngày đến ngày theo thời gian khởi tạo, xuất file exell(STT, Mã dự án, tên dự án, thời gian bắt đầu, thời gian kết thúc, danh sách nhóm phát triển, tên chủ đầu tư, đơn vị cung ứng, sản phẩm(cột tên, tỉ lệ phần trăm), tổng giá trị dự án
+ A 1/5 - 1/7 thống kê 1/6 -15/6
+ B 1/5 -KT 14/6 -  1/7 thống kê 1/6 -15/6
+a1 a2: a1>= 1/6 và a1 <=15/6 hoặc a2 >=1/6 a2<=15/6
+
++ báo cáo loại dự án:
++ báo cáo nhân viên:
++ đơn vị cung ứng:
+-------------------------------------------------------
+Ngày 6 tháng 7 năm 2018
+
+ 1. CHuyển trạng thái dự án khi kết thúc thời gian khởi tạo 
+2. Tại các ô giá trị, hiển thị thêm dấu .
+3. Tại các ô Chiết khấu, thêm ký tự %
+4. Nút duyệt khởi tạo tại trang duyệt khởi tạo đổi thành ---Xác Nhận(Xong)
+5. Thêm trạng thái không được duyệt khởi tạo(đã thêm-Thêm 3 trang không được duyệt khởi tạo)
+6. Xem lại hiển thị thông báo - thêm thông tin người phản hồi- 
+- Trang cập nhật tiến độ hiên thị sai tên(Xong)
+- Tại trang xin duyệt kết thúc:(0k)
+- Tại xin duyệt kết thúc hiển thị các sản phẩm với tỉ lệ phầm trăm tại trang hồ sơ, giá trị của dự án, chọn nhà cung ứng sau đó gửi yêu cầu.
+- Cung ứng( trung tâm phân phối và điểm bán hàng, thành phố, quận, huyện,) giá trị tại trang hồ sơ được sửa tương ứng. Lãnh đạo phòng tiếp nhận giá trị mới (0k)
+data: banp0376_PTT
+User: banp0_useradmin
+PTT@#$%12345ptt
+
+
+
+
+
+
+
+
+

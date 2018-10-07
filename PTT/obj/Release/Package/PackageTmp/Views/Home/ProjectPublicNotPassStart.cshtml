@@ -1,0 +1,129 @@
+﻿@using PTT.Common;
+@{
+    ViewBag.Title = "ProjectPublic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Dự án không được duyệt khởi tạo
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <table id="dtbPrivate" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Mã dự án
+                    </th>
+                    <th>
+                        Tên dự án
+                    </th>
+
+                    <th>
+                        Người khởi tạo
+                    </th>
+                    <th>Trạng thái</th>
+                    <th>Deadline</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var stt = 0;
+                    foreach (var p in ViewBag.ProjectGroup)
+                    {
+                        stt++;
+                        <tr>
+                            <td>@stt</td>
+                            <td>
+                                @p.Code
+                            </td>
+                            <td>
+                                @p.Name
+                            </td>
+                            <td>
+                                @p.FullName
+                            </td>
+                            <td>
+                                @{
+                                    var sStatus = "";
+                                    int iStus = Convert.ToInt32(p.Status);
+                                    switch (iStus)
+                                    {
+                                        case 0: sStatus = "Đợi duyệt khởi tạo"; break;
+                                        case 1: sStatus = "Đang triển khai"; break;
+                                        case 2: sStatus = "Yêu cầu kết thúc"; break;
+                                        case 3: sStatus = "Đã hoàn thành"; break;
+                                        case 4: sStatus = "Không hoàn thành"; break;
+                                        case 5: sStatus = "Không được duyệt khởi tạo"; break;
+                                        default: break;
+                                    }
+                                }
+                                @sStatus
+                            </td>
+                            <td>
+                                @{
+                                    DateTime sd = p.StartDate;
+                                    DateTime ed = p.DateLine;
+                                    int numday = Hepper.thisIsMagic(ed.Year, ed.Month, ed.Day) - Hepper.thisIsMagic(sd.Year, sd.Month, sd.Day);
+                                }
+                                @numday ngày
+                            </td>
+                            <td>
+                                @Html.ActionLink("Chi tiết", "Details", "Project", new { id = @p.ProjectID }, null)
+                            </td>
+
+                        </tr>
+                                    }
+
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Mã dự án
+                    </th>
+                    <th>
+                        Tên dự án
+                    </th>
+
+                    <th>
+                        Người khởi tạo
+                    </th>
+                    <th>Trạng thái</th>
+                    <th>Deadline</th>
+                    <th>Thao tác</th>
+                </tr>
+            </tfoot>
+        </table>
+
+
+    </div>
+</div>
+
+@section FooterClienScript{
+
+    <script>
+            $(function () {
+                $('#dtbPrivate').DataTable()
+
+            })
+    </script>
+
+}

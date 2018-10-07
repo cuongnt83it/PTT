@@ -1,0 +1,139 @@
+﻿@model Model.EF.Supplier
+
+@{
+    ViewBag.Title = "Supplier/Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Chi tiết nhà cung ứng
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+
+<div class="box">
+    <div class="box-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.SupplierID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SupplierID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SupplierName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SupplierName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FullName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CityID)
+            </dt>
+
+            <dd>
+                @ViewBag.CityName
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DistrictID)
+            </dt>
+
+            <dd>
+                @ViewBag.DistName
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Image)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Image)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreateDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreateBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @ViewBag.Status
+            </dd>
+
+        </dl>
+
+        <div>
+            @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Quay lại", "Index", "Supplier", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>
+

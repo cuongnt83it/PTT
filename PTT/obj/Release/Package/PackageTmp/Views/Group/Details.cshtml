@@ -1,0 +1,54 @@
+﻿@model Model.EF.Group
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Chi tiết nhóm người dùng
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+
+<div class="box">
+    <div class="box-body">
+        
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.GroupName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.GroupName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Note)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Note)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsAdmin)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsAdmin)
+                </dd>
+
+            </dl>
+            <div>
+                @Html.ActionLink("Sửa", "Edit", new { id = Model.GroupID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Quay lại", "Index", "Group", new { @class = "btn btn-primary" })
+            </div>
+    </div>
+</div>

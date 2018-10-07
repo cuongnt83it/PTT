@@ -1,0 +1,73 @@
+﻿@model Model.EF.Resource
+
+@{
+    ViewBag.Title = "Resource/Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Sửa nguồn vốn dự án
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        @using (Html.BeginForm("Edit", "Resource", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+
+                @Html.HiddenFor(model => model.ResourceID)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Tên loại" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MetaTite, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.MetaTite, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mô tả" })
+                        @Html.ValidationMessageFor(model => model.MetaTite, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Thứ tự", Type = "number" })
+                        @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.DropDownListFor(model => model.Status, new List<SelectListItem> { new SelectListItem { Text = "Kính hoạt", Value = "True" }, new SelectListItem { Text = "Khóa", Value = "false" } }, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Ghi lại" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Quay lại", "Index", "Resource", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>

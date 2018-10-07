@@ -1,0 +1,212 @@
+﻿@model Model.EF.Information
+
+@{
+    ViewBag.Title = "Chia sẻ thông tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/Access/plugins/iCheck/all.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Access/bower_components/select2/dist/css/select2.min.css">
+
+}
+@section FooterClienScript{
+
+    <script src="~/Access/js/controller/projectController.js"></script>
+
+    <!-- Select2 -->
+    <script src="~/Access/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/Access/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap datepicker -->
+    <script src="~/Access/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- bootstrap color picker -->
+    <script src="~/Access/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <!-- bootstrap time picker -->
+    <script src="~/Access/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="~/Access/plugins/iCheck/icheck.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Access/bower_components/fastclick/lib/fastclick.js"></script>
+    <script>
+        $(function () {
+
+
+
+            $('#EndCreate').datepicker({
+                autoclose: true
+            })
+            $('.select2').select2()
+        })
+    </script>
+}
+
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Thông tin chia sẻ
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng ký dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <a class="btn btn-app  bg-green  class=col-md-3" href="~/FeedbackInfor/Index/@ViewBag.Infomation.InformationID"><span class="badge bg-green">@ViewBag.Feedback.Length.ToString()</span><i class="fa fa-envelope"></i><b>Ý kiến đóng góp</b></a>
+    </div>
+    <div class="box-body">
+        @using (Html.BeginForm("Edit", "Information", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin dự án</h3>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Tên dự án</label>
+                    <div class="col-md-10">
+
+                        @Html.TextBox("Name", (string)ViewBag.Infomation.Name, new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @disabled = "disabled", @placeholder = "Tên dự án" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label class="control-label col-md-2">Địa chỉ </label>
+                    <div class="col-md-10">
+                        @Html.TextBox("Address", (string)ViewBag.Infomation.Address, new { @class = "form-control", @autoforcus = "autoforcus", @disabled = "disabled", @placeholder = "Địa chỉ" })
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label class="control-label col-md-2">Mô tả dự án </label>
+                    <div class="col-md-10">
+                        @Html.TextArea("txtDescription", (string)ViewBag.Infomation.Description, new { id = "txtDescription", @class = "form-control", @disabled = "disabled", @placeholder = "Mô tả thông tin dự án" })
+                    </div>
+                </div>
+
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title col-md-2">Chủ đầu tư</h3>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.TextBox("txtContratorID", (string)ViewBag.PrContraCode, new { @class = "form-control", @autoforcus = "autoforcus", @required = "required", @disabled = "disabled", @placeholder = "Mã chủ đầu tư" })
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div id="contentContrator">@Html.Raw(ViewBag.PrContraDetail)</div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title col-md-2">Nhà thầu thi công</h3>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.TextBox("txtBuilder", (string)ViewBag.PrBuiderCode, new { @class = "form-control", @disabled = "disabled", @required = "required", @autoforcus = "autoforcus", @placeholder = "Mã chủ thầu" })
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="box-body">
+
+                        <div id="contentBuilder">@Html.Raw(ViewBag.BuiderDetail)</div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <div class="form-group">
+
+                    <label class="control-label col-md-2">Phân công</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("drbMember", (MultiSelectList)ViewBag.Member, new { @class = "form-control select2", @multiple = "multiple", @placeholder = "Thành viên phát triển" })
+
+                    </div>
+
+                </div>
+                @{
+                    var selectList = new SelectList(
+                        new List<SelectListItem>
+                        {
+                                 new SelectListItem {Text = "Đợi duyệt chia sẻ", Value = "0"},
+                                 new SelectListItem {Text = "Đã duyệt", Value = "1"},
+                             new SelectListItem {Text = "Đã phân công", Value = "2"},
+                             new SelectListItem {Text = "Kết thúc", Value = "3"},
+                              new SelectListItem {Text = "Không duyệt", Value = "4"},
+                        }, "Value", "Text");
+                }
+                <div class="form-group">
+                    @Html.Hidden("hdIDInfor", (String)ViewBag.Infomation.InformationID.ToString())
+                    <label class="control-label col-md-2">Trạng thái </label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("drlStatus", (SelectList)ViewBag.Status, new { id = "drlStatus", @disabled = "disabled", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label class="control-label col-md-2">Ghi chú </label>
+                    <div class="col-md-10">
+                        @Html.TextArea("txtNote", (string)ViewBag.Infomation.Note, new { id = "txtNote", @class = "form-control", @disabled = "disabled", @placeholder = "Chi chú" })
+                    </div>
+                </div>
+            </div>
+
+                
+                    }
+
+    </div>
+</div>
+<!-- Modal -->
+<div id="ContratorModal" class="modal fade" style="display: none;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chọn chủ đầu tư</h4>
+            </div>
+            <div class="modal-body">
+                @Html.DropDownList("drlContrator", (SelectList)ViewBag.Contrator, new { @class = "form-control" })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="ContratorChoice" data-dismiss="modal">Chọn</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="BuilderModal" class="modal fade" style="display: none;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chọn nhà thầu</h4>
+            </div>
+            <div class="modal-body">
+                @Html.DropDownList("drlBuilder", (SelectList)ViewBag.Builder, new { @class = "form-control" })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="BuilderChoice" data-dismiss="modal">Chọn</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+
+    </div>
+</div>

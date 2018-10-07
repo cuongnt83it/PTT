@@ -1,0 +1,112 @@
+﻿@model Model.EF.Content
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Chi tiết thông báo
+        </h1>
+        <ol class="breadcrumb">
+             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+
+<div class="box">
+    <div class="box-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+           
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Image)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Image)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Detail)
+            </dt>
+
+            <dd>
+                @(Html.Raw(Html.DisplayFor(model => model.Detail)))
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreateDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreateBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+               
+                @(Convert.ToString(Html.DisplayFor(model => model.Status)) == "1" ? "Khích hoạt" : "Khóa")
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TopHot)
+            </dt>
+
+            <dd>
+               @(Convert.ToString(Html.DisplayFor(model => model.TopHot)) == "1" ? "Tin hot" : "Không")
+            </dd>
+
+        </dl>
+        <div>
+            @Html.ActionLink("Sửa", "Edit", new { id = Model.ContentID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Quay lại", "Index", "Mesage", null,new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>
+

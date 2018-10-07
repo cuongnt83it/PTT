@@ -1,0 +1,125 @@
+﻿
+
+@{
+    ViewBag.Title = "Thông tin chia sẻ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Thông tin chia sẻ
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <table id="dtbPrivate" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Tên dự án
+                    </th>
+                    <th>
+                        Địa chỉ
+                    </th>
+                    <th>
+                        Mô tả
+                    </th>
+
+                    <th>
+                        Ngày tạo
+                    </th>
+                    <th>
+                        Người tạo
+                    </th>
+
+                    <th>
+
+                        Trạng thái
+                    </th>
+
+                    <th></th>
+            </thead>
+
+            @{
+                var stt = 0;
+                foreach (var item in ViewBag.Info)
+                {
+
+                    stt++;
+                    <tr>
+                        <td>
+                            @stt
+                        </td>
+
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Address
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+
+                        <td>
+                            @{
+                                var creatDate = "";
+                                creatDate = Convert.ToDateTime(item.CreateDate).ToString("dd/MM/yyyy");
+                            }
+                            @creatDate
+                        </td>
+                        <td>
+                            @item.CreateBy
+                        </td>
+
+                        <td>
+                            @{
+                                var sStatus = "";
+                                int iStus = Convert.ToInt32(item.Status);
+                                switch (iStus)
+                                {
+                                    case 0: sStatus = "Đợi duyệt chia sẻ"; break;
+                                    case 1: sStatus = "Đã duyệt"; break;
+                                    case 2: sStatus = "Đã phân công"; break;
+                                    case 3: sStatus = "Kết thúc"; break;
+                                    default: break;
+                                }
+                            }
+                            @sStatus
+
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.InformationID })
+
+                        </td>
+                    </tr>
+                                } }
+
+        </table>
+    </div>
+</div>
+
+@section FooterClienScript{
+
+    <script>
+        $(function () {
+            $('#dtbPrivate').DataTable()
+
+        })
+    </script>
+
+}
