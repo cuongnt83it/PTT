@@ -237,25 +237,29 @@ namespace PTT.Controllers
               long infoID=  dbDao.Update(objProject);
                     //thêm danh sách nhóm vào trong dự án
                 InforUserDao prUSDao = new InforUserDao();
-                //Xóa nhóm thuộc dự án
-                prUSDao.Delete(objProject.InformationID);
-               // InforUser objPrUS = new InforUser();
-                //objPrUS.InforID = infoID;
-                //objPrUS.LoginID = us.UserID;
-                //objPrUS.IsAdmin = true;
-                //prUSDao.Insert(objPrUS);
-                foreach (string sUsID in members)
+                if (members != null)
                 {
-                    long usID = Convert.ToInt64(sUsID);
-                    if (usID != us.UserID)
+                    //Xóa nhóm thuộc dự án
+                    prUSDao.Delete(objProject.InformationID);
+                    // InforUser objPrUS = new InforUser();
+                    //objPrUS.InforID = infoID;
+                    //objPrUS.LoginID = us.UserID;
+                    //objPrUS.IsAdmin = true;
+                    //prUSDao.Insert(objPrUS);
+                    foreach (string sUsID in members)
                     {
-                        InforUser objPrUSM = new InforUser();
-                        objPrUSM.InforID = infoID;
-                        objPrUSM.LoginID = usID;
-                        objPrUSM.IsAdmin = false;
-                        prUSDao.Insert(objPrUSM);
+                        long usID = Convert.ToInt64(sUsID);
+                        if (usID != us.UserID)
+                        {
+                            InforUser objPrUSM = new InforUser();
+                            objPrUSM.InforID = infoID;
+                            objPrUSM.LoginID = usID;
+                            objPrUSM.IsAdmin = false;
+                            prUSDao.Insert(objPrUSM);
+                        }
                     }
                 }
+               
                 SetAlert("Cập nhật thành công", "success");
                 return RedirectToAction("Manager", "Information");
               
