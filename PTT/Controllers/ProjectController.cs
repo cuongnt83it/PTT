@@ -1211,11 +1211,15 @@ namespace PTT.Controllers
         {
             try
             {
+                ProjectDao bdDao = new ProjectDao();
+                long id = Convert.ToInt64(data["hdIDProject"].ToString());
+                ViewBag.Project = bdDao.FindByID(id);
+                SetViewBag();
                 if (ModelState.IsValid)
                 {
                     bool kt = true;
-                    ProjectDao bdDao = new ProjectDao();
-                    long id = Convert.ToInt64(data["hdIDProject"].ToString());
+                  
+                   
                     Project objProject = bdDao.FindByID(id);
                     string cityID = data["CityID"].ToString();
                     SetViewBag(cityID);
@@ -1446,7 +1450,7 @@ namespace PTT.Controllers
 
                   
                     SetAlert("Cập nhật thành công", "success");
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Details", "Project", new  { id = id });
                         // return View();
                     }
                     else
@@ -1556,11 +1560,14 @@ namespace PTT.Controllers
 
             try
             {
+                ProjectDao bdDao = new ProjectDao();
+                long id = Convert.ToInt64(data["hdIDProject"].ToString());
+                ViewBag.Project = bdDao.FindByID(id);
+                SetViewBag();
                 if (ModelState.IsValid)
                 {
                     bool kt = true;
-                    ProjectDao bdDao = new ProjectDao();
-                    long id = Convert.ToInt64(data["hdIDProject"].ToString());
+                   
                     Project objProject = bdDao.FindByID(id);
                     string cityID = data["CityID"].ToString();
                     SetViewBag(cityID);
