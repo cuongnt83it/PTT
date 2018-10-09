@@ -18,28 +18,30 @@ namespace PTT.Controllers
         {
             //Kiểm tra quyền truy cập của user
             UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
-            ProjectUserDao usDao = new ProjectUserDao();
-            List<ProjectUser> lstUP = usDao.FindByProjectID(id);
-            bool inGroup = false;
-            foreach(var u in lstUP)
-            {
-                if (u.LoginID == us.UserID)
-                {
-                    inGroup = true;
-                    break;
-                }
-            }
+            ProjectUserDao puDao = new ProjectUserDao();
+
             //Kiểm tra quyền truy cập của lạnh đạo
+            bool inGroup = false;
             GroupUserDao gru = new GroupUserDao();
+            //Kiểm tra theo user có thuộc nhóm lãnh đạo kho
             Guid grid = new Guid("964D283D-BEA0-4D85-B7C0-355487A5DF0C");
-            if (gru.FiindByID(grid, us.UserID )!= null){
+            if (gru.FiindByID(grid, us.UserID) != null)
+            {
                 inGroup = true;
             }
-            if (!inGroup)
+            //Kiểm tra theo user có thuộc nhóm trong dự án ko
+            ProjectUser objPU = puDao.FindByID(us.UserID, id);
+            if (objPU != null)
             {
-                RedirectToAction("NotiAuthorize", "Home");
-                 
+                inGroup = true;
+
             }
+            if (inGroup == false)
+            {
+                SetAlert("Bạn không có quyền cập nhật tiến độ dự án", Common.CommonConstant.ALERT_DANGER);
+                return RedirectToAction("Details", "Project", new { id = id });
+            }
+      
             ProjectDao bdDao = new ProjectDao();
             ViewBag.Project = bdDao.FindByID(id);
             if (ViewBag.Project.Status <1)
@@ -64,32 +66,37 @@ namespace PTT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(FormCollection data) {
+            long id = Convert.ToInt64(data["txtID"].ToString());
             try { 
             UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
             var dao = new ProcessDao();
             ViewBag.lstProjectProcessMessege = dao.GetListProjectProcessMessege(Convert.ToInt64(data["txtID"].ToString()));
             ViewBag.lstprocess = dao.ToListProcessUserByProjectID(Convert.ToInt64(data["txtID"].ToString()));
             Process objProcess = new Process();
-            objProcess.Name = data["txtName"].ToString();
-            objProcess.ProjectID = Convert.ToInt64( data["txtID"].ToString());
-            objProcess.Description = data["txtDescription"].ToString();
+              
+               
+                string sName = "Giai đoạn " + (dao.ToListByProjectID(id).Count() + 1).ToString();
+                objProcess.ProjectID = id;
+                //  objProcess.Name = data["txtName"].ToString();
+               objProcess.Name = sName;
+                objProcess.Description = data["txtDescription"].ToString();
             objProcess.CreateDate = Hepper.GetDateServer();
             objProcess.ModifiedDate = Hepper.GetDateServer();
             objProcess.CreateBy = us.UserName;
             objProcess.ModifiedBy = us.UserName;
             if(dao.Insert(objProcess)>0)
             {
-                SetAlert("Thêm thành công", "success");
+                SetAlert("Cập nhật tiến độ thành công", Common.CommonConstant.ALERT_SUCCESS);
                     ViewBag.lstprocess = dao.ToListProcessUserByProjectID(Convert.ToInt64(data["txtID"].ToString()));
                     ViewBag.lstProjectProcessMessege = dao.GetListProjectProcessMessege(Convert.ToInt64(data["txtID"].ToString()));
-                return RedirectToAction("Index");
-               
-            }
+                    return RedirectToAction("Index", "Process", new { id = id });
+
+                }
             }
             catch
             {
-                SetAlert("Không thêm được", "danger");
-                return View();
+                SetAlert("Không cập nhật được tiến độ", "danger");
+                return RedirectToAction("Index", "Process", new { id = id });
             }
             return View();
         }

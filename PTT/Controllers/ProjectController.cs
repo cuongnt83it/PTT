@@ -1128,11 +1128,37 @@ namespace PTT.Controllers
             ProjectDao bdDao = new ProjectDao();
             SetViewBag();
             ViewBag.Project = bdDao.FindByID(id);
+            UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+            ProjectUserDao puDao = new ProjectUserDao();
+           
+            //Kiểm tra quyền truy cập của lạnh đạo
+            bool inGroup = false;
+            GroupUserDao gru = new GroupUserDao();
+            //Kiểm tra theo user có thuộc nhóm lãnh đạo kho
+            Guid grid = new Guid("964D283D-BEA0-4D85-B7C0-355487A5DF0C");
+            if (gru.FiindByID(grid, us.UserID) != null)
+            {
+                inGroup = true;
+            }
+            //Kiểm tra theo user có thuộc nhóm trong dự án ko
+            ProjectUser objPU = puDao.FindByID(us.UserID, id);
+            if (objPU != null)
+            {
+                inGroup = true;
+                
+            }
+            if (inGroup == false)
+            {
+                SetAlert("Bạn không có quyền sửa dự án", Common.CommonConstant.ALERT_DANGER);
+                return RedirectToAction("Details", "Project", new { id = id });
+            }
             if (ViewBag.Project.Status > 2)
             {
                 SetAlert("Dự án đã được duyệt!", Common.CommonConstant.ALERT_WARNING);
-                return RedirectToAction("Index", "Home", null);
+                return RedirectToAction("Details", "Project", new { id = id });
             }
+           
+
             SetViewBag(ViewBag.Project.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
@@ -1483,6 +1509,24 @@ namespace PTT.Controllers
             //    SetAlert("Dự án đã được duyệt!", Common.CommonConstant.ALERT_WARNING);
             //    return RedirectToAction("Index", "Home", null);
             //}
+            UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+          
+
+            //Kiểm tra quyền truy cập của lạnh đạo
+            bool inGroup = false;
+            GroupUserDao gru = new GroupUserDao();
+            //Kiểm tra theo user có thuộc nhóm lãnh đạo kho
+            Guid grid = new Guid("964D283D-BEA0-4D85-B7C0-355487A5DF0C");
+            if (gru.FiindByID(grid, us.UserID) != null)
+            {
+                inGroup = true;
+            }
+           
+            if (inGroup == false)
+            {
+                SetAlert("Bạn không có quyền sửa dự án", Common.CommonConstant.ALERT_DANGER);
+                return RedirectToAction("Details", "Project", new { id = id });
+            }
             SetViewBag(ViewBag.Project.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
