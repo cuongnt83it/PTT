@@ -37,15 +37,8 @@
                         @Html.DisplayNameFor(model => model.FullName)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Address)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.Phone)
                     </th>
-
                     <th>
                         @Html.DisplayNameFor(model => model.Status)
                     </th>
@@ -69,16 +62,8 @@
                             @Html.DisplayFor(modelItem => item.FullName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-
-                        <td>
                             @Html.DisplayFor(modelItem => item.Phone)
                         </td>
-
                         <td>
                             @(item.Status == true ? "Kích hoạt" : "Không")
                         </td>
@@ -96,37 +81,7 @@
                     </tr>
                 }
             </tbody>
-            <tfoot>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ContratorID)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.ContraName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FullName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Address)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Phone)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Status)
-                    </th>
-                    <th>
-                        Thao tác
-                    </th>
-                </tr>
-            </tfoot>
+      
         </table>
     </div>
 </div>

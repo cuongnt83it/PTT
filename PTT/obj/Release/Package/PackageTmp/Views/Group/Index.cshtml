@@ -15,7 +15,7 @@
             Nhóm người dùng
         </h1>
         <ol class="breadcrumb">
-             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
         </ol>
     </section>
 }
@@ -55,22 +55,12 @@
                            Confirm = "Bạn có muốn xoá bản ghi này?",
                            OnComplete = "$('#row_" + @item.GroupID + "').remove()",
                            HttpMethod = "Delete"
-                       }) | @Html.ActionLink("GrantPermission", "Index", "GrantPermission", new { id = item.GroupID },null) 
-                        </td>
-                    </tr>
+                       }) | @Html.ActionLink("GrantPermission", "Index", "GrantPermission", new { id = item.GroupID }, null)
+                </td>
+            </tr>
                 }
             </tbody>
-<tfoot>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.GroupName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Note)
-                    </th>
-                    <th>Thao tác</th>
-                </tr>
-            </tfoot>
+           
         </table>
     </div>
 </div>

@@ -43,53 +43,37 @@
                     <th>Thao tác</th>
                 </tr>
             </thead>
-            @foreach (var item in Model)
+            <tbody>
+                @foreach (var item in Model)
             {
-                <tr id="row_@item.CategoryID">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MetaTite)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DisplayOrder)
-                    </td>
-                   
-                    <td>
-                        @(item.Status == true ? "Kích hoạt" : "Không")
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
-                        @Ajax.ActionLink("Xoá", "Delete", new { id = item.CategoryID }, new AjaxOptions
+                    <tr id="row_@item.CategoryID">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MetaTite)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DisplayOrder)
+                        </td>
+
+                        <td>
+                            @(item.Status == true ? "Kích hoạt" : "Không")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
+                            @Ajax.ActionLink("Xoá", "Delete", new { id = item.CategoryID }, new AjaxOptions
                        {
                            Confirm = "Bạn có muốn xoá bản ghi này?",
                            OnComplete = "$('#row_" + @item.CategoryID + "').remove()",
                            HttpMethod = "Delete"
                        })
-                    </td>
-                </tr>
-            }
-            <tfoot>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MetaTite)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DisplayOrder)
-                    </th>
-                    
-                    <th>
-                        @Html.DisplayNameFor(model => model.Status)
-                    </th>
-                    <th>Thao tác</th>
-                </tr>
-            </tfoot>
-        </table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+</table>
     </div>
 </div>
 @section FooterClienScript{

@@ -65,14 +65,8 @@
                 <a class="btn btn-app class=col-md-3" href="~/Project/End/@ViewBag.Project.ProjectID"><i class="fa fa-hourglass-end"></i><b>Kết thúc dự án</b></a>
                 @using (Html.BeginForm("Index", "Process", FormMethod.Post, new { @class = "form-horizontal" }))
                 { @Html.AntiForgeryToken()
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Tên giai đoạn: </label>
-                        <div class="col-md-10">
-                            @Html.Hidden("txtID", (string)ViewBag.Project.ProjectID.ToString(), new { @class = "form-control", id = "txtID" })
-                            @Html.TextBox("txtName", "", new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Tên giai đoạn", id = "txtName" })
-                        </div>
-
-                    </div>
+                    @Html.Hidden("txtID", (string)ViewBag.Project.ProjectID.ToString(), new { @class = "form-control", id = "txtID" })
+                
                     <div class="form-group">
                         <label class="control-label col-md-2">Mô tả giai đoạn: </label>
                         <div class="col-md-10">

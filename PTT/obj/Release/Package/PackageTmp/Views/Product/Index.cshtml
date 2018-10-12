@@ -15,7 +15,7 @@
             Sản phẩm
         </h1>
         <ol class="breadcrumb">
-             <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
         </ol>
     </section>
 }
@@ -43,52 +43,36 @@
                     <th>Thao tác</th>
                 </tr>
             </thead>
-            @foreach (var item in Model)
+            <tbody>
+                @foreach (var item in Model)
             {
-                <tr id="row_@item.ProductID">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MetaTite)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DisplayOrder)
-                    </td>
+                    <tr id="row_@item.ProductID">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MetaTite)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DisplayOrder)
+                        </td>
 
-                    <td>
-                        @(item.Status == true ? "Kích hoạt" : "Không")
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
-                        @Ajax.ActionLink("Xoá", "Delete", new { id = item.ProductID }, new AjaxOptions
-                   {
-                       Confirm = "Bạn có muốn xoá bản ghi này?",
-                       OnComplete = "$('#row_" + @item.ProductID + "').remove()",
-                       HttpMethod = "Delete"
-                   })
-                    </td>
-                </tr>
-            }
-            <tfoot>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MetaTite)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DisplayOrder)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Status)
-                    </th>
-                    <th>Thao tác</th>
-                </tr>
-            </tfoot>
+                        <td>
+                            @(item.Status == true ? "Kích hoạt" : "Không")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                            @Ajax.ActionLink("Xoá", "Delete", new { id = item.ProductID }, new AjaxOptions
+                       {
+                           Confirm = "Bạn có muốn xoá bản ghi này?",
+                           OnComplete = "$('#row_" + @item.ProductID + "').remove()",
+                           HttpMethod = "Delete"
+                       })
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>

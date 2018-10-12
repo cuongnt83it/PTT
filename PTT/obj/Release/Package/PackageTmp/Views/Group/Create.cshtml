@@ -8,7 +8,7 @@
 @section ContenHeader{
     <section class="content-header">
         <h1>
-            Thêm mới sản phẩm
+            Thêm mới nhóm người dùng
         </h1>
         <ol class="breadcrumb">
              <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
@@ -22,8 +22,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4>Group</h4>
-                <hr />
+                
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     @Html.LabelFor(model => model.GroupName, htmlAttributes: new { @class = "control-label col-md-2" })

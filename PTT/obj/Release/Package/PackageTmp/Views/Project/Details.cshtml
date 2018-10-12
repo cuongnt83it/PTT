@@ -86,11 +86,10 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label class="control-label col-md-2">Mã dự án </label>
-                        <div class="col-md-7">
+                        <div class="col-md-10">
                    
                             @Html.TextBox("txtCode", (string)ViewBag.Project.Code, new { @class = "form-control", @disabled= "disabled", @autoforcus = "autoforcus", @placeholder = "Mã dự án", id = "txtCode" })
                         </div>
-                        <button class="btn btn-primary class=col-md-3" type="button" disabled id="btnCreateCode">Tạo mã..</button>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Tên dự án </label>
@@ -252,9 +251,9 @@
                                                         <label data-toggle="tooltip" title="@tile">
                                                             <input type="checkbox" disabled value="@value" checked="@ccChek" id="@name" name="@name"> @p.Code
                                                         </label><br />
-                                                        <label for="@txtDiscount" class="control-label">Chiết khấu ngoài HĐ</label>
+                                                        <label for="@txtDiscount" class="control-label">CK % ngoài HĐ</label>
                                                         <input type="text" disabled value="@txtDiscountValue" class="form-control" id="@txtDiscount" name="@txtDiscount" placeholder="">
-                                                        <label for="@txtDiscount" class="control-label">Chiết khấu trên HĐ</label>
+                                                        <label for="@txtDiscount" class="control-label">CK % trên HĐ</label>
                                                         <input type="text" disabled value="@txtDiscountValueVAT" class="form-control" id="@txtDiscountVAT" name="@txtDiscountVAT" placeholder="">
                                                     </div>
                                                                 j += 1;
@@ -312,9 +311,9 @@
                                         </label><br />
                                         <label for="@txtPrice" class="control-label">Giá trị</label>
                                         <input type="text" class="form-control" id="@txtPrice" name="@txtPrice" disabled value="@txtPriceValue" >
-                                        <label for="@txtDiscount" class="control-label">Chiết khấu ngoài HĐ</label>
+                                        <label for="@txtDiscount" class="control-label">CK % ngoài HĐ</label>
                                         <input type="text" value="@txtDiscountValue" class="form-control" disabled id="@txtDiscount" name="@txtDiscount" >
-                                        <label for="@txtDiscountVAT" class="control-label">Chiết khấu trên HĐ</label>
+                                        <label for="@txtDiscountVAT" class="control-label">CK % trên HĐ</label>
                                         <input type="text" value="@txtDiscountValueVAT" class="form-control" disabled id="@txtDiscountVAT" name="@txtDiscountVAT" >
                                     </div>
                                                 i += 1;

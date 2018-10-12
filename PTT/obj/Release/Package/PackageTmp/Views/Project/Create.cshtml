@@ -66,13 +66,7 @@
                     <h3 class="box-title">Thông tin dự án</h3>
                 </div>
                 <div class="box-body">
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Mã dự án</label>
-                        <div class="col-md-7">
-                            @Html.TextBox("txtCode", "",new { @class = "form-control", @autoforcus = "autoforcus", @required= "required", @placeholder = "Mã dự án", id = "txtCode" })
-                        </div>
-                        <button class="btn btn-primary class=col-md-3" type="button" id="btnCreateCode">Tạo mã..</button>
-                    </div>
+                   
                     <div class="form-group">
                         <label class="control-label col-md-2">Tên dự án</label>
                         <div class="col-md-10">
@@ -95,14 +89,14 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Địa chỉ" })
+                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Địa chỉ" , @required = "required" })
                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.EndCreate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.EndCreate, new { @class = "form-control", @autoforcus = "autoforcus",id="EndCreate", @placeholder = "MM/dd/yyyy" })
+                            @Html.TextBoxFor(model => model.EndCreate, new { @class = "form-control", @autoforcus = "autoforcus",id="EndCreate", @placeholder = "MM/dd/yyyy", @required = "required" })
                             @Html.ValidationMessageFor(model => model.EndCreate, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -125,7 +119,7 @@
                     </div>
                     <div class="form-group">
                        
-                        <label class = "control-label col-md-2">Đăng ký hành viên</label>
+                        <label class = "control-label col-md-2">Đăng ký thành viên</label>
                         <div class="col-md-10">
                             @Html.DropDownList("drbMember", (MultiSelectList)ViewBag.Member, new {  @class = "form-control select2", @multiple = "multiple", @placeholder = "Thành viên phát triển" })
                            
@@ -220,10 +214,10 @@
                                                 <label data-toggle="tooltip" title="@tile">
                                                     <input type="checkbox" value="@value" id="@name" name="@name"> @p.Code
                                                 </label><br />
-                                                <label for="@txtDiscount" class="control-label">Chiết khấu ngoài HĐ</label>
-                                                <input type="text" class="form-control" id="@txtDiscount" name="@txtDiscount" placeholder="Chiết khấu ngoài HĐ">
-                                                <label for="@txtDiscountVAT" class="control-label">Chiết khấu trên HĐ</label>
-                                                <input type="text" class="form-control" id="@txtDiscountVAT" name="@txtDiscountVAT" placeholder="Chiết khấu trên HĐ">
+                                                <label for="@txtDiscount" class="control-label">CK % ngoài HĐ</label>
+                                                <input type="text" class="form-control" id="@txtDiscount" name="@txtDiscount" placeholder="Ck % ngoài HĐ">
+                                                <label for="@txtDiscountVAT" class="control-label">CK % trên HĐ</label>
+                                                <input type="text" class="form-control" id="@txtDiscountVAT" name="@txtDiscountVAT" placeholder="Ck % trên HĐ">
                                             </div>
                                                             j += 1;
 
@@ -264,12 +258,12 @@
                                         </label><br />
                                         <label for="@txtPrice" class="control-label">Giá trị</label>
                                         <input type="text" class="form-control" id="@txtPrice" name="@txtPrice" placeholder="Giá trị">
-                                        <label for="@txtDiscount" class="control-label">Chiết khấu ngoài HĐ</label>
-                                        <input type="text" class="form-control" id="@txtDiscount" name="@txtDiscount" placeholder="Chiết khấu ngoài HĐ ">
-                                        <label for="@txtDiscountVAT" class="control-label">Chiết khấu trên HĐ</label>
-                                        <input type="text" class="form-control" id="@txtDiscountVAT" name="@txtDiscountVAT" placeholder="Chiết khấu trên HĐ ">
+                                        <label for="@txtDiscount" class="control-label">CK % ngoài HĐ</label>
+                                        <input type="text" class="form-control" id="@txtDiscount" name="@txtDiscount" placeholder="CK % ngoài HĐ ">
+                                        <label for="@txtDiscountVAT" class="control-label">CK % trên HĐ</label>
+                                        <input type="text" class="form-control" id="@txtDiscountVAT" name="@txtDiscountVAT" placeholder="CK % trên HĐ ">
                                     </div>
-                                                i += 1;
+                                                i += 1; 
 
                                             }
 
@@ -289,7 +283,7 @@
                      
                 </div>
 
-               
+             
             </div>
             <div class="form-group">
                 <div class="col-md-offset-10 col-md-2">

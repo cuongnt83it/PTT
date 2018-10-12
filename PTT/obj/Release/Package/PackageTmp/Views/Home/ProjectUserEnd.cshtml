@@ -75,36 +75,17 @@
                                 @sStatus
                             </td>
                             <td>
-                             @p.EndDate.ToString("dd/MM/yyyy")
+                                @p.EndDate.ToString("dd/MM/yyyy")
                             </td>
                             <td>
-                             @Html.ActionLink("Chi tiết", "Details", "Project", new { id = @p.ProjectID }, null)
+                                @Html.ActionLink("Chi tiết", "Details", "Project", new { id = @p.ProjectID }, null)
                             </td>
 
                         </tr> }
 
                 }
             </tbody>
-            <tfoot>
-                <tr>
-                    <th>
-                        STT
-                    </th>
-                    <th>
-                        Mã dự án
-                    </th>
-                    <th>
-                        Tên dự án
-                    </th>
-
-                    <th>
-                        Người khởi tạo
-                    </th>
-                    <th>Trạng thái</th>
-                    <th>Deadline</th>
-                    <th>Thao tác</th>
-                </tr>
-            </tfoot>
+     
         </table>
 
     </div>

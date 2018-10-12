@@ -86,11 +86,10 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label class="control-label col-md-2">Mã dự án </label>
-                        <div class="col-md-7">
+                        <div class="col-md-10">
                             @Html.Hidden("hdIDProject", (String)ViewBag.Project.ProjectID.ToString())
-                            @Html.TextBox("txtCode", (string)ViewBag.Project.Code, new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @placeholder = "Mã dự án", id = "txtCode" })
+                            @Html.TextBox("txtCode", (string)ViewBag.Project.Code, new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @placeholder = "Mã dự án", id = "txtCode", @disabled = "disabled" })
                         </div>
-                        <button class="btn btn-primary class=col-md-3" type="button" disabled id="btnCreateCode">Tạo mã..</button>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Tên dự án </label>
@@ -113,14 +112,14 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Địa chỉ </label>
                         <div class="col-md-10">
-                            @Html.TextBox("Address", (string)ViewBag.Project.Address, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Địa chỉ" })
+                            @Html.TextBox("Address", (string)ViewBag.Project.Address, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Địa chỉ", @required = "required" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Kết thúc khởi tạo </label>
                         <div class="col-md-10">
                             @{ var sEndCreate = ViewBag.Project.EndCreate.ToString("MM/dd/yyyy"); }
-                            @Html.TextBox("EndCreate", (string)sEndCreate, new { @class = "form-control", @autoforcus = "autoforcus", id = "EndCreate", @placeholder = "MM/dd/yyyy" })
+                            @Html.TextBox("EndCreate", (string)sEndCreate, new { @class = "form-control", @autoforcus = "autoforcus", id = "EndCreate", @placeholder = "MM/dd/yyyy", @required = "required" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -140,7 +139,7 @@
                     </div>
                     <div class="form-group">
 
-                        <label class="control-label col-md-2">Đăng ký hành viên</label>
+                        <label class="control-label col-md-2">Đăng ký thành viên</label>
                         <div class="col-md-10">
                             @Html.DropDownList("drbMember", (MultiSelectList)ViewBag.Member, new { @class = "form-control select2", @multiple = "multiple", @placeholder = "Thành viên phát triển" })
 
@@ -165,7 +164,7 @@
                             <h3 class="box-title col-md-2">Chủ đầu tư</h3>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    @Html.TextBox("txtContratorID", (string)ViewBag.PrContraCode, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã chủ đầu tư" })
+                                    @Html.TextBox("txtContratorID", (string)ViewBag.PrContraCode, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã chủ đầu tư", @required = "required" })
                                 </div>
                                 <button class="btn btn-primary class=col-md-3" type="button" id="btnContraID">Chọn mã..</button>
                             </div>
@@ -181,7 +180,7 @@
                             <h3 class="box-title col-md-2">Nhà thầu thi công</h3>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    @Html.TextBox("txtBuilder", (string)ViewBag.PrBuiderCode, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã chủ thầu" })
+                                    @Html.TextBox("txtBuilder", (string)ViewBag.PrBuiderCode, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã chủ thầu", @required = "required" })
                                 </div>
                                 <button class="btn btn-primary class=col-md-3" type="button" id="btnBuilderID">Chọn mã..</button>
                             </div>
@@ -258,9 +257,9 @@
                                                         <label data-toggle="tooltip" title="@tile">
                                                             <input type="checkbox" value="@value" checked="@ccChek" id="@name" name="@name"> @p.Code
                                                         </label><br />
-                                                        <label for="@txtDiscount" class="control-label">Chiết khấu ngoài HĐ</label>
+                                                        <label for="@txtDiscount" class="control-label">CK % ngoài HĐ</label>
                                                         <input type="text"  value="@txtDiscountValue" class="form-control" id="@txtDiscount" name="@txtDiscount" placeholder="">
-                                                        <label for="@txtDiscount" class="control-label">Chiết khấu trên HĐ</label>
+                                                        <label for="@txtDiscount" class="control-label">CK % trên HĐ</label>
                                                         <input type="text"  value="@txtDiscountValueVAT" class="form-control" id="@txtDiscountVAT" name="@txtDiscountVAT" placeholder="">
                                                     </div>
                                                                 j += 1;
@@ -318,9 +317,9 @@
                                         </label><br />
                                         <label for="@txtPrice" class="control-label">Giá trị</label>
                                         <input type="text" class="form-control" id="@txtPrice" name="@txtPrice"  value="@txtPriceValue">
-                                        <label for="@txtDiscount" class="control-label">Chiết khấu ngoài HĐ</label>
+                                        <label for="@txtDiscount" class="control-label">CK % ngoài HĐ</label>
                                         <input type="text" value="@txtDiscountValue" class="form-control"  id="@txtDiscount" name="@txtDiscount">
-                                        <label for="@txtDiscountVAT" class="control-label">Chiết khấu trên HĐ</label>
+                                        <label for="@txtDiscountVAT" class="control-label">CK %trên HĐ</label>
                                         <input type="text" value="@txtDiscountValueVAT" class="form-control"  id="@txtDiscountVAT" name="@txtDiscountVAT">
                                     </div>
                                                 i += 1;
