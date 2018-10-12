@@ -33,10 +33,34 @@ namespace PTT.Controllers
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
             SetViewSupplier(ViewBag.Project.SupplierID);
+            UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+            ProjectUserDao puDao = new ProjectUserDao();
+
+            //Kiểm tra quyền truy cập của lạnh đạo
+            bool inGroup = false;
+            //GroupUserDao gru = new GroupUserDao();
+            ////Kiểm tra theo user có thuộc nhóm lãnh đạo kho
+            //Guid grid = new Guid("964D283D-BEA0-4D85-B7C0-355487A5DF0C");
+            //if (gru.FiindByID(grid, us.UserID) != null)
+            //{
+            //    inGroup = true;
+            //}
+            //Kiểm tra theo user có thuộc nhóm trong dự án ko
+            ProjectUser objPU = puDao.FindByID(us.UserID, id);
+            if (objPU != null)
+            {
+                inGroup = true;
+
+            }
+            if (inGroup == false)
+            {
+                SetAlert("Bạn không có quyền yêu cầu kết thúc dự án", Common.CommonConstant.ALERT_DANGER);
+                return RedirectToAction("Details", "Project", new { id = id });
+            }
             if (ViewBag.Project.Status != 1)
             {
                 SetAlert("Dự đã hoàn thành!", Common.CommonConstant.ALERT_WARNING);
-                return RedirectToAction("Index", "Home", null);
+                return RedirectToAction("Details", "Project", new { id = id });
             }
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);

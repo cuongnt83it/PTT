@@ -12,8 +12,8 @@
                 @foreach (var item in Model)
                 {
                     <li>
-                        <a href="~/Feedback/Index/@item.ProjectID">
-                            <i class="fa fa-users text-aqua"></i>@item.FullName.ToString(): @item.Description.ToString()
+                        <a href="#" class="btn-topFeedback" data-prid="@item.ProjectID" data-id="@item.FeedbackID">
+                            <i class="fa fa-users text-aqua"></i> @item.FullName.ToString(): @item.Description.ToString()
                         </a>
                     </li>
                 }

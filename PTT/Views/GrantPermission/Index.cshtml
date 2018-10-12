@@ -42,9 +42,9 @@
                 $("#listaction").html('');
                     $.each(data, function (index, value) {
                         if (value.isGranted)
-                            $("#listaction").append("<input type='checkbox' checked='true' onchange='updatePermissions(" + "\"/Admin/GrantPermission/updatePermissions/\" + this.value ,\"@Session["groupgrant"]\")' value='" + value.PermissionID + "'>" + value.Description + "<br>");
+                            $("#listaction").append("<input type='checkbox' checked='true' onchange='updatePermissions(" + "\"/GrantPermission/updatePermissions/\" + this.value ,\"@Session["groupgrant"]\")' value='" + value.PermissionID + "'>" + value.Description + "<br>");
                         else
-                            $("#listaction").append("<input type='checkbox'   onchange='updatePermissions(" + "\"/Admin/GrantPermission/updatePermissions/\" + this.value ,\"@Session["groupgrant"]\")' value='" + value.PermissionID + "'>" + value.Description + "<br>");
+                            $("#listaction").append("<input type='checkbox'   onchange='updatePermissions(" + "\"/GrantPermission/updatePermissions/\" + this.value ,\"@Session["groupgrant"]\")' value='" + value.PermissionID + "'>" + value.Description + "<br>");
                     });
                 },
                 failure: function (response) {

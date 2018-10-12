@@ -269,6 +269,12 @@ namespace PTT.Common
 
             return tmString;
         }
+     public   static string ConvertStringArrayToStringJoin(string[] array)
+        {
+            // Use string Join to concatenate the string elements.
+            string result = string.Join(".", array);
+            return result;
+        }
         /// <summary>
         ///Chuan hoa ho Ten Nguyen Tam Cuong
         /// </summary>

@@ -18,7 +18,7 @@ namespace PTT.Controllers
         {
             return View();
         }
-        
+
         // GET: Information/Details/5
         public ActionResult Manager()
         {
@@ -65,10 +65,11 @@ namespace PTT.Controllers
 
             var listInfo = db.Information.ToList();
             var listUser = db.InforUsers.Where(u => u.LoginID == us.UserID).ToList();
-            foreach(var inf in listInfo){
-                foreach(var u in listUser)
+            foreach (var inf in listInfo)
+            {
+                foreach (var u in listUser)
                 {
-                    if(u.InforID== inf.InformationID)
+                    if (u.InforID == inf.InformationID)
                     {
                         listInfUser.Add(inf);
 
@@ -79,16 +80,16 @@ namespace PTT.Controllers
             return View();
         }
 
-      
+
 
         // GET: Information/Create
         public ActionResult Create()
         {
             SetViewBag();
-          
-           
+
+
             SetUserBag();
-           
+
             SetViewSupplier();
             return View();
         }
@@ -193,7 +194,7 @@ namespace PTT.Controllers
         // POST: Information/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( FormCollection data)
+        public ActionResult Edit(FormCollection data)
         {
             try
             {
@@ -216,11 +217,11 @@ namespace PTT.Controllers
                 SetUserBag(members);
 
                 objProject.Address = address;
-                
-              
+
+
                 objProject.ContratorID = (new ContratorDao().FindByCode(contratorID.Trim()).ID);
                 objProject.BuilderID = (new BuilderDao().FindByCode(builderID.Trim()).ID);
-              //  objProject.SupplierID = Convert.ToInt64(data["drlSupplier"]);
+                //  objProject.SupplierID = Convert.ToInt64(data["drlSupplier"]);
                 UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
 
 
@@ -234,8 +235,8 @@ namespace PTT.Controllers
                 objProject.Note = Note;
                 objProject.Name = name;
 
-              long infoID=  dbDao.Update(objProject);
-                    //thêm danh sách nhóm vào trong dự án
+                long infoID = dbDao.Update(objProject);
+                //thêm danh sách nhóm vào trong dự án
                 InforUserDao prUSDao = new InforUserDao();
                 if (members != null)
                 {
@@ -259,10 +260,10 @@ namespace PTT.Controllers
                         }
                     }
                 }
-               
+
                 SetAlert("Cập nhật thành công", "success");
                 return RedirectToAction("Manager", "Information");
-              
+
             }
             catch
             {
@@ -280,54 +281,90 @@ namespace PTT.Controllers
         // POST: Information/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( FormCollection data)
+        public ActionResult Create(FormCollection data)
         {
             try
             {
-                SetViewBag();
-             //  /  string[] members = data.GetValues("drbMember");
+                if (ModelState.IsValid)
+                {
+                    SetViewBag();
+                    //  /  string[] members = data.GetValues("drbMember");
 
-                //SetUserBag(members);
-                string name = data["Name"].ToString();
-                string address = data["Address"].ToString();
-                string contratorID = data["txtContratorID"].ToString();
-                string builderID = data["txtBuilder"].ToString();
-                
-                //string IsGroup = data["IsGroup"].ToString();
-                //string IsPublic = data["IsPublic"].ToString();
+                    //SetUserBag(members);
+                    string name = data["Name"].ToString();
+                    string address = data["Address"].ToString();
+                    string contratorID = data["txtContratorID"].ToString();
+                    string builderID = data["txtBuilder"].ToString();
+                    bool kt = true;
+                    //Kiem tra ma chu dau tu
+                    ContratorDao contraDAO = new ContratorDao();
+                    Contrator objContra = contraDAO.FindByCode(contratorID.Trim());
+                    if (objContra == null)
+                    {
+                        kt = false;
+                        ModelState.AddModelError("", "Mã chủ đầu tư không đúng!");
+
+                    }
 
 
+                    BuilderDao buiderDao = new BuilderDao();
+                    Builder objBuider = buiderDao.FindByCode(builderID.Trim());
+                    if (objBuider == null)
+                    {
+                        kt = false;
+                        ModelState.AddModelError("", "Mã nhà thầu thi công không đúng!");
 
+                    }
+                    //string IsGroup = data["IsGroup"].ToString();
+                    //string IsPublic = data["IsPublic"].ToString();
+                    if (kt == true)
+                    {
+                        UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+                        InformationDao bdDao = new InformationDao();
+                        Information objProject = new Information();
+                        // long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
+                        // objProject.SupplierID = iSupplierID;
+                        objProject.CreateDate = Hepper.GetDateServer();
+                        objProject.ModifiedDate = Hepper.GetDateServer();
+                        objProject.CreateBy = us.UserName;
+                        objProject.ModifiedBy = us.UserName;
+                        objProject.Name = name;
+                        objProject.Description = data["txtDescription"].ToString();
+                        objProject.Address = address;
 
-                UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
-                InformationDao bdDao = new InformationDao();
-                Information objProject = new Information();
-               // long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
-               // objProject.SupplierID = iSupplierID;
-                objProject.CreateDate = Hepper.GetDateServer();
-                objProject.ModifiedDate = Hepper.GetDateServer();
-                objProject.CreateBy = us.UserName;
-                objProject.ModifiedBy = us.UserName;
-                objProject.Name = name;
-                objProject.Description = data["txtDescription"].ToString();
-                objProject.Address = address;
-              
-                objProject.ContratorID = (new ContratorDao().FindByCode(contratorID.Trim()).ID);
-                objProject.BuilderID = (new BuilderDao().FindByCode(builderID.Trim()).ID);
-              
-                objProject.Status = 0;
-                objProject.DateLine = Hepper.GetDateServer();
-                //Thêm dự án vào CSDL
-                long projectID = bdDao.Insert(objProject);
+                        objProject.ContratorID = (new ContratorDao().FindByCode(contratorID.Trim()).ID);
+                        objProject.BuilderID = (new BuilderDao().FindByCode(builderID.Trim()).ID);
 
-                SetAlert("Thêm thành công", "success");
+                        objProject.Status = 0;
+                        objProject.DateLine = Hepper.GetDateServer();
+                        //Thêm dự án vào CSDL
+                        long projectID = bdDao.Insert(objProject);
 
-                return RedirectToAction("Index", "Home");
+                        SetAlert("Thêm thành công", Common.CommonConstant.ALERT_SUCCESS);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        SetAlert("Không thêm được", Common.CommonConstant.ALERT_WARNING);
+
+                        return View();
+
+                    }
+                }
+
+                else
+                {
+                    SetAlert("Không thêm được", Common.CommonConstant.ALERT_WARNING);
+
+                    return View();
+
+                }
             }
             catch
             {
                 SetAlert("Không thêm được", "danger");
-                return View();
+                return RedirectToAction("Create", "Information");
             }
         }
         public void SetViewSupplier(long? selectedId = null, string cityid = null, string districtid = null)
@@ -350,7 +387,7 @@ namespace PTT.Controllers
                              new SelectListItem {Text = "Đã phân công", Value = "2"},
                              new SelectListItem {Text = "Kết thúc", Value = "3"},
                               new SelectListItem {Text = "Không duyệt", Value = "4"},
-                       }, "Value", "Text",selectedId);
+                       }, "Value", "Text", selectedId);
 
 
             ViewBag.Status = selectList;
@@ -366,7 +403,7 @@ namespace PTT.Controllers
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
         }
-        
+
         public void SetViewBag(string selectedId = null)
         {
             var dao = new CityDao();

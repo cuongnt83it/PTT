@@ -65,6 +65,7 @@ namespace Model.DAO
             bd.ModifiedDate = buider.ModifiedDate;
             bd.Status= buider.Status;
             bd.TopHot = buider.TopHot;
+            bd.UsersRead = buider.UsersRead;
             db.SaveChanges();
             return buider.ContentID;
         }

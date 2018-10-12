@@ -52,5 +52,7 @@ namespace Model.EF
 
         [DisplayName("Tin hot")]
         public bool? TopHot { get; set; }
+        [StringLength(500)]
+        public string UsersRead { get; set; }
     }
 }

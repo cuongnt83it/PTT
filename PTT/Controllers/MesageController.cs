@@ -31,8 +31,8 @@ namespace PTT.Controllers
         public ActionResult DetailMesage(long id)
         {
             ContentDao bdDao = new ContentDao();
-            var ms = bdDao.FindByID(id);
-            var list = new ContentDao().ListHot();
+            Content ms = bdDao.FindByID(id);
+          var list = new ContentDao().ListHot();
             list.Remove(ms);
             ViewBag.listHot = list;
             return View(ms);
@@ -54,10 +54,27 @@ namespace PTT.Controllers
         [ChildActionOnly]
         public PartialViewResult TopMesage()
         {
-
+            UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+            string usID = us.UserID.ToString();
             var list = new ContentDao().ListHot();
-            
-            return PartialView(list);
+            List<Content> ls = new List<Content>();
+            //Lấy danh sách những tin user này chưa xem
+            foreach (Content ct in list)
+            {
+                if(ct.UsersRead!=null) {
+                    string[] listUerID = ct.UsersRead.Split('.');
+                    if (!listUerID.Contains(usID))
+                    {
+                        ls.Add(ct);
+                    }
+                }
+                else
+                {
+                    ls.Add(ct);
+                }
+                
+            }
+            return PartialView(ls);
         }
 
         // POST: Mesage/Create
@@ -141,7 +158,7 @@ namespace PTT.Controllers
             }
         }
 
-     
+
         // POST: Mesage/Delete/5
         [HttpDelete]
         public ActionResult Delete(long id)
@@ -161,6 +178,46 @@ namespace PTT.Controllers
                 // SetAlert("Không xóa được", "danger");
                 return View();
             }
+        }
+        [HttpPost]
+        public JsonResult UpdateUserRead(long msID)
+        {
+            UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+
+            var dao = new ContentDao();
+            long data = 0;
+            Content objMS = dao.FindByID(msID);
+            string usID = us.UserID.ToString();
+            string sUserID = objMS.UsersRead;
+
+            string[] listUerID;
+            bool kt = false;
+
+            if (sUserID == null)
+            {
+                sUserID = usID;
+                kt = true;
+            }
+            else
+            {
+                listUerID = objMS.UsersRead.Split('.');
+                if (!listUerID.Contains(usID))
+                {
+                    sUserID += "." + usID;
+                    kt = true;
+                }
+
+            }
+            if (kt == true)
+            {
+                objMS.UsersRead = sUserID;
+                data = dao.Update(objMS);
+            }
+
+            JsonResult result = new JsonResult();
+            result.Data = data;
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return result;
         }
     }
 }

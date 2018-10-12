@@ -223,6 +223,7 @@
   <ItemGroup>
     <Content Include="Access\bower_components\jquery\dist\jquery.js" />
     <Content Include="Access\bower_components\jquery\dist\jquery.min.js" />
+    <Content Include="Access\js\controller\layoutController.js" />
     <Content Include="Access\js\controller\feedbackInfoController.js" />
     <Content Include="Access\js\controller\feedbackController.js" />
     <Content Include="Access\js\controller\projectController.js" />

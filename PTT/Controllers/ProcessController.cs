@@ -47,13 +47,13 @@ namespace PTT.Controllers
             if (ViewBag.Project.Status <1)
             {
                 SetAlert("Dự án chưa được duyệt!", Common.CommonConstant.ALERT_WARNING);
-                return RedirectToAction("Index", "Home", null);
+                return RedirectToAction("Details", "Project", new { id = id });
             }
            
             if (ViewBag.Project.Status > 2)
             {
                 SetAlert("Dự án đã kết thúc!", Common.CommonConstant.ALERT_WARNING);
-                return RedirectToAction("Index", "Home", null);
+                return RedirectToAction("Details", "Project", new { id = id });
             }
             ProcessDao prcessDao = new ProcessDao();
             ViewBag.lstprocess = prcessDao.ToListProcessUserByProjectID(id);
