@@ -82,7 +82,7 @@
                             </td>
                             <td>
                                 @{
-                                    DateTime sd = p.StartDate;
+                                    DateTime sd = Hepper.GetDateServer(); 
                                     DateTime ed = p.DateLine;
                                     int numday = Hepper.thisIsMagic(ed.Year, ed.Month, ed.Day) - Hepper.thisIsMagic(sd.Year, sd.Month, sd.Day);
                                 }

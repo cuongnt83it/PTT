@@ -57,6 +57,13 @@ namespace Model.DAO
             db.SaveChanges();
             return buider.ProcessID;
         }
+       public long CountProcessMessage(long projectID)
+        {
+            long msgNumber = 0;
+            msgNumber = db.Processes.Where(p => p.ProjectID == projectID).ToList<Process>().Count();
+            msgNumber += GetListProjectProcessMessege(projectID).Count();
+            return msgNumber;
+        }
         public List<ProjectMessage> GetListProjectProcessMessege(long projectID)
         {
             List<ProjectMessage> lstProjectMessege = new List<ProjectMessage>();

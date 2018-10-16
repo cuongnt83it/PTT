@@ -58,7 +58,7 @@ namespace PTT.Controllers
             ProcessDao prcessDao = new ProcessDao();
             ViewBag.lstprocess = prcessDao.ToListProcessUserByProjectID(id);
             ViewBag.lstProjectProcessMessege = prcessDao.GetListProjectProcessMessege(id).ToArray<ProjectMessage>();
-            ViewBag.Messege = ViewBag.lstProjectProcessMessege.Length.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
             return View();

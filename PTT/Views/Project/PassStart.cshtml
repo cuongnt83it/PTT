@@ -63,8 +63,11 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 @{
-                    DateTime sd = ViewBag.Project.StartDate;
-                    DateTime ed = @ViewBag.Project.DateLine;
+                    DateTime ed = @ViewBag.Project.EndCreate;
+                    if (@ViewBag.Project.DateLine != null)
+                        ed = @ViewBag.Project.DateLine;
+                    //DateTime sd = ViewBag.Project.StartDate;
+                    DateTime sd = Hepper.GetDateServer();
                     int numday = Hepper.thisIsMagic(ed.Year, ed.Month, ed.Day) - Hepper.thisIsMagic(sd.Year, sd.Month, sd.Day);
                 }
                 <h3 class="box-title">Dự án: @ViewBag.Project.Name. Mã dự án: @ViewBag.Project.Code. Ngày khởi tạo: @ViewBag.Project.CreateDate.ToString("dd/MM/yyyy")   </h3>

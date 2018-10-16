@@ -120,7 +120,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
             return View();
@@ -203,7 +203,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
 
@@ -343,7 +343,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
             return View();
@@ -426,7 +426,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
 
@@ -522,7 +522,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
             return View();
@@ -605,7 +605,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
 
@@ -869,7 +869,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
             return View();
@@ -1248,7 +1248,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
             return View();
@@ -1616,7 +1616,7 @@ namespace PTT.Controllers
 
             ViewBag.lstComeProduct = lstProComProd;
             ProcessDao prcessDao = new ProcessDao();
-            ViewBag.Messege = prcessDao.GetListProjectProcessMessege(id).Count.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListByProjectID(id).Count.ToString();
             return View();

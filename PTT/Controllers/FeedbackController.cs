@@ -56,10 +56,10 @@ namespace PTT.Controllers
                 return RedirectToAction("Details", "Project", new { id = id });
             }
             
-            //ProcessDao prcessDao = new ProcessDao();
+            ProcessDao prcessDao = new ProcessDao();
             //ViewBag.lstprocess = prcessDao.ToListProcessUserByProjectID(id);
             //ViewBag.lstProjectProcessMessege = prcessDao.GetListProjectProcessMessege(id).ToArray<ProjectMessage>();
-            //ViewBag.Messege = ViewBag.lstProjectProcessMessege.Length.ToString();
+            ViewBag.Messege = prcessDao.CountProcessMessage(id).ToString();
             FeedbackDao feedDao = new FeedbackDao();
             ViewBag.Feedback = feedDao.ToListFeebBackUser(id).ToArray<FeedbackUser>();
            List<FeedbackUser> fdnul = new List<FeedbackUser>();
@@ -88,7 +88,7 @@ namespace PTT.Controllers
                 ProcessDao prcessDao = new ProcessDao();
                 ViewBag.lstprocess = prcessDao.ToListProcessUserByProjectID(projectID);
                 ViewBag.lstProjectProcessMessege = prcessDao.GetListProjectProcessMessege(projectID).ToArray<ProjectMessage>();
-                ViewBag.Messege = ViewBag.lstProjectProcessMessege.Length.ToString();
+                ViewBag.Messege = prcessDao.CountProcessMessage(projectID).ToString();
                 Feedback objFeedback= new Feedback();
                
                 objFeedback.ProjectID = projectID;
