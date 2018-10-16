@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model.EF;
+using System.Data.SqlClient;
+
 namespace Model.DAO
 {
     public class SupplierDao
@@ -37,7 +39,10 @@ namespace Model.DAO
 
             return db.Suppliers.Find(ID);
         }
-        
+        public string GenaraCode(string str, int lengh)
+        {
+            return db.Database.SqlQuery<string>("exec proc_t_GenaraSupplierCode @Code,@len", new SqlParameter("@Code", str), new SqlParameter("@len", lengh)).SingleOrDefault();
+        }
         public List<Supplier> FindByDistrist(string cityID,string districtID)
         {
             var lst = db.Suppliers.Where(a => a.CityID == cityID && a.DistrictID == districtID).ToList<Supplier>();
@@ -51,7 +56,7 @@ namespace Model.DAO
         public long Update(Supplier buider)
         {
             var bd = db.Suppliers.Find(buider.ID);
-            bd.SupplierID = buider.SupplierID;
+           // bd.SupplierID = buider.SupplierID;
             bd.FullName = buider.FullName;
 
             //bd.CreateBy = buider.CreateBy;

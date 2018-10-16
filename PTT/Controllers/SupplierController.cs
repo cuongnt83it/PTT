@@ -61,6 +61,7 @@ namespace PTT.Controllers
 
                     SupplierDao bdDao = new SupplierDao();
                     UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+                    collection.SupplierID = bdDao.GenaraCode("CU", 4);
                     collection.CreateDate = Hepper.GetDateServer();
                     collection.ModifiedDate = Hepper.GetDateServer();
                     collection.CreateBy = us.UserName;

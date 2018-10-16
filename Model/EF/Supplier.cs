@@ -14,7 +14,7 @@ namespace Model.EF
 
 
         [DisplayName("Mã nhà cung ứng")]
-        [Required(ErrorMessage = "Mời nhập mã nhà cung ứng!")]
+        
         [StringLength(30)]
         public string SupplierID { get; set; }
 
