@@ -13,7 +13,6 @@ namespace Model.EF
         public long ID { get; set; }
 
         [DisplayName("Mã nhà thầu")]
-        [Required(ErrorMessage = "Mời nhập mã nhà thầu!")]
         [StringLength(30)]
         public string BuilderID { get; set; }
 

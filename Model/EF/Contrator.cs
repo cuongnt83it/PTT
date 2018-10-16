@@ -13,7 +13,6 @@ namespace Model.EF
         public long ID { get; set; }
 
         [DisplayName("Mã chủ đầu tư")]
-        [Required(ErrorMessage = "Mời nhập mã chủ đầu tư!")]
         [StringLength(30)]
         public string ContratorID { get; set; }
 

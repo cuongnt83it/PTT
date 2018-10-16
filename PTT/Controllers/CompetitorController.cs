@@ -48,6 +48,7 @@ namespace PTT.Controllers
                     UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
                     collection.CreateDate = Hepper.GetDateServer();
                     collection.ModifiedDate = Hepper.GetDateServer();
+                    collection.CompetitorID = bdDao.GenaraCode("H",3);
                     collection.CreateBy = us.UserName;
                     collection.ModifiedBy = us.UserName;
                     if (bdDao.Insert(collection) > 0)

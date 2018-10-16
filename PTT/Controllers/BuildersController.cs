@@ -47,6 +47,7 @@ namespace PTT.Controllers
 
                     BuilderDao bdDao = new BuilderDao();
                     UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+                    collection.BuilderID = bdDao.GenaraCode("NT",4);
                     collection.CreateDate = Hepper.GetDateServer();
                     collection.ModifiedDate = Hepper.GetDateServer();
                     collection.CreateBy = us.UserName;
@@ -69,7 +70,7 @@ namespace PTT.Controllers
                 return View();
             }
         }
-
+       
         // GET: Builders/Edit/5
         public ActionResult Edit(long id)
         {

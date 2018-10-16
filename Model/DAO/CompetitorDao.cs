@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model.EF;
+using System.Data.SqlClient;
+
 namespace Model.DAO
 {
     public class CompetitorDao
@@ -41,10 +43,14 @@ namespace Model.DAO
             
              return db.Competitors.Find(ID);
         }
+        public string GenaraCode(string str, int lengh)
+        {
+            return db.Database.SqlQuery<string>("exec proc_t_GenaraCompetitorCode @Code,@len", new SqlParameter("@Code", str), new SqlParameter("@len", lengh)).SingleOrDefault();
+        }
         public long Update(Competitor buider)
         {
             var bd = db.Competitors.Find(buider.ID);
-            bd.CompetitorID = buider.CompetitorID;
+          //  bd.CompetitorID = buider.CompetitorID;
             bd.FullName = buider.FullName;
             //bd.CreateBy = buider.CreateBy;
             //bd.CreateDate = buider.CreateDate;

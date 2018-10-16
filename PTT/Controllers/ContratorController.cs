@@ -48,6 +48,7 @@ namespace PTT.Controllers
 
                     ContratorDao bdDao = new ContratorDao();
                     UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+                    collection.ContratorID = bdDao.GenaraCode("CĐT",4);
                     collection.CreateDate = Hepper.GetDateServer();
                     collection.ModifiedDate = Hepper.GetDateServer();
                     collection.CreateBy = us.UserName;

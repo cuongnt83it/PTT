@@ -13,7 +13,7 @@ namespace Model.EF
         public long ID { get; set; }
 
         [DisplayName("Mã đối thủ")]
-        [Required(ErrorMessage = "Mời nhập mã đối thủ cạnh tranh!")]
+     
         [StringLength(30)]
         public string CompetitorID { get; set; }
 

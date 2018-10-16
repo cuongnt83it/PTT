@@ -51,7 +51,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.BuilderID, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.BuilderID, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã nhà thầu" })
+                        @Html.TextBoxFor(model => model.BuilderID, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã nhà thầu", @disabled = "disabled" })
                         @Html.ValidationMessageFor(model => model.BuilderID, "", new { @class = "text-danger" })
                     </div>
                 </div>

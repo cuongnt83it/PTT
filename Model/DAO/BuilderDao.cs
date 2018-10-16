@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model.EF;
+using System.Data.SqlClient;
+
 namespace Model.DAO
 {
     public class BuilderDao
@@ -36,6 +38,10 @@ namespace Model.DAO
             db.SaveChanges();
             return bd.ID;
         }
+        public string GenaraCode(string str, int lengh)
+        {
+            return db.Database.SqlQuery<string>("exec proc_t_GenaraBuilderCode @Code,@len", new SqlParameter("@Code", str), new SqlParameter("@len", lengh)).SingleOrDefault();
+        }
         public Builder FindByID(long ID)
         {
             
@@ -49,7 +55,7 @@ namespace Model.DAO
         public long Update(Builder buider)
         {
             var bd = db.Builders.Find(buider.ID);
-            bd.BuilderID = buider.BuilderID;
+           // bd.BuilderID = buider.BuilderID;
             bd.FullName = buider.FullName;
             //bd.CreateBy = buider.CreateBy;
             //bd.CreateDate = buider.CreateDate;

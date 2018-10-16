@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model.EF;
+using System.Data.SqlClient;
+
 namespace Model.DAO
 {
     public class ContratorDao
@@ -41,6 +43,10 @@ namespace Model.DAO
             
              return db.Contrators.Find(ID);
         }
+        public string GenaraCode(string str, int lengh)
+        {
+            return db.Database.SqlQuery<string>("exec proc_t_GenaraContratorCode @Code,@len", new SqlParameter("@Code", str), new SqlParameter("@len", lengh)).SingleOrDefault();
+        }
         public Contrator FindByCode(string code)
         {
             var ct = db.Contrators.SingleOrDefault<Contrator>(c => c.ContratorID == code&&c.Status==true);
@@ -49,7 +55,7 @@ namespace Model.DAO
         public long Update(Contrator buider)
         {
             var bd = db.Contrators.Find(buider.ID);
-            bd.ContratorID = buider.ContratorID;
+           // bd.ContratorID = buider.ContratorID;
             bd.FullName = buider.FullName;
             //bd.CreateBy = buider.CreateBy;
             //bd.CreateDate = buider.CreateDate;
