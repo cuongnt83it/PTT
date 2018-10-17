@@ -42,11 +42,13 @@ namespace Model.DAO
         }
         public int DeleteByProjectID(long id)
         {
+            CompetiorProductDao cmpDao = new CompetiorProductDao();
             int i = 0;
             var lst = this.FindByID(id);
             foreach(var pc in lst)
             {
                 this.Delete(pc.ID);
+                cmpDao.Delete(pc.ID);
                 i++;
             }
             return i;

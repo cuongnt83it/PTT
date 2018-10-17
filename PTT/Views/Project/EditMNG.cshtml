@@ -70,7 +70,7 @@
             </div>
             <div class="box-body">
                 <a class="btn btn-app class=col-md-3 " href="~/Project/Details/@ViewBag.Project.ProjectID"><i class="fa fa-file-picture-o"></i><b>Hồ sơ dự án</b></a>
-                <a class="btn btn-app class=col-md-3" href="~/Process/Index/@ViewBag.Project.ProjectID"><i class="fa fa-building-o"></i><b>Cập nhật tiến độ</b></a>
+                <a class="btn btn-app class=col-md-3" href="~/Process/Index/@ViewBag.Project.ProjectID"><span class="badge bg-green">@ViewBag.Messege</span><i class="fa fa-building-o"></i><b>Cập nhật tiến độ</b></a>
                 <a class="btn btn-app class=col-md-3" href="~/Feedback/Index/@ViewBag.Project.ProjectID"><span class="badge bg-green">@ViewBag.Feedback</span><i class="fa fa-envelope"></i><b>Ý kiến đóng góp</b></a>
                 <a class="btn btn-app class=col-md-3" href="~/Project/End/@ViewBag.Project.ProjectID"><i class="fa fa-hourglass-end"></i><b>Kết thúc dự án</b></a>
 
@@ -101,13 +101,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2">Quận huyện </label>
-                        <div class="col-md-4">
-                            @Html.DropDownList("CityID", (SelectList)ViewBag.CityID, new { id = "Cities", @class = "form-control", @placeholder = "Thành phố" })
-                        </div>
                         <label class="control-label col-md-2">Thành phố </label>
                         <div class="col-md-4">
-                            @Html.DropDownList("DistrictID", (SelectList)ViewBag.DistrictID, new { id = "District", @class = "form-control", @placeholder = "Quận huyện" })
+                            @Html.DropDownList("drlCityID", (SelectList)ViewBag.CityID, new { @id = "drlCityID", @class = "form-control", @placeholder = "Thành phố" })
+                        </div>
+                        <label class="control-label col-md-2">Quận huyện </label>
+                        <div class="col-md-4">
+                            @Html.DropDownList("drlDistrict", (SelectList)ViewBag.DistrictID, new { @id = "drlDistrict", @class = "form-control", @placeholder = "Quận huyện" })
 
                         </div>
                     </div>
@@ -127,16 +127,16 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Loại dự án </label>
                         <div class="col-md-2">
-                            @Html.DropDownList("CategoryID", (SelectList)ViewBag.CategoryID, new { id = "CategoryID", @class = "form-control", @placeholder = "Loại dự án" })
+                            @Html.DropDownList("drlCategoryID", (SelectList)ViewBag.CategoryID, new { @id = "drlCategoryID", @class = "form-control", @placeholder = "Loại dự án" })
 
                         </div>
                         <label class="control-label col-md-2">Nguồn vốn </label>
                         <div class="col-md-2">
-                            @Html.DropDownList("ResourceID", (SelectList)ViewBag.ResourceID, new { id = "ResourceID", @class = "form-control", @placeholder = "Nguồn vốn" })
+                            @Html.DropDownList("drlResourceID", (SelectList)ViewBag.ResourceID, new { @id = "drlResourceID", @class = "form-control", @placeholder = "Nguồn vốn" })
                         </div>
                         <label class="control-label col-md-2">Giá dự án </label>
                         <div class="col-md-2">
-                            @Html.DropDownList("PriceID", (SelectList)ViewBag.PriceID, new { id = "PriceID", @class = "form-control", @placeholder = "Giá dự án" })
+                            @Html.DropDownList("drlPriceID", (SelectList)ViewBag.PriceID, new { @id = "drlPriceID", @class = "form-control", @placeholder = "Giá dự án" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -151,7 +151,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Khu vực nhà cung ứng</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("drlCity", (SelectList)ViewBag.CityID, new { id = "drlCity", @class = "form-control", @placeholder = "Thành phố" })
+                            @Html.DropDownList("drlCitySupplier", (SelectList)ViewBag.CityIDSupplier, new { id = "drlCitySupplier", @class = "form-control", @placeholder = "Thành phố" })
                         </div>
 
                     </div>
@@ -336,14 +336,15 @@
 
                         <label class="control-label col-md-2">Giá trị dự án </label>
                         <div class="col-md-10">
-                            @Html.TextBox("txtPriceProject", "", new { id = "txtPriceProject", @class = "form-control", @placeholder = "Giá trị dự án", @required = "required" })
+                            @{string valueproject = ViewBag.Project.Value.ToString();}
+                            @Html.TextBox("txtPriceProject", valueproject, new { id = "txtPriceProject", @class = "form-control", @placeholder = "Giá trị dự án", @required = "required" })
                         </div>
                     </div>
                     <div class="form-group">
 
                         <label class="control-label col-md-2">Mô tả dự án </label>
                         <div class="col-md-10">
-                            @Html.TextArea("txtDescription", (string)ViewBag.Project.Description, new { id = "txtDescription", @class = "form-control", @placeholder = "Mô tả thông tin dự án" })
+                            @Html.TextArea("txtDescription", (string)ViewBag.Project.Description, new { @id = "txtDescription", @class = "form-control", @placeholder = "Mô tả thông tin dự án" })
                         </div>
                     </div>
                     <div class="form-group">

@@ -27,7 +27,9 @@ namespace PTT.Controllers
             ProjectDao bdDao = new ProjectDao();
             SetViewBag();
             ViewBag.Project = bdDao.FindByID(id);
-            SetViewBag(ViewBag.Project.CityID);
+            SetViewBagCity(ViewBag.Project.CityID);
+            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
+            SetViewBagCitySuplier(objSupplier.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
@@ -139,7 +141,8 @@ namespace PTT.Controllers
                 return RedirectToAction("Index", "Home", null);
             }
             SetViewBag();
-            SetViewBag(ViewBag.Project.CityID);
+            SetViewBagCity(ViewBag.Project.CityID);
+            SetViewBagCitySuplier();
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
@@ -279,12 +282,17 @@ namespace PTT.Controllers
             ProjectDao bdDao = new ProjectDao();
             SetViewBag();
             ViewBag.Project = bdDao.FindByID(id);
-            SetViewBag(ViewBag.Project.CityID);
+            SetViewBagCity(ViewBag.Project.CityID);
+
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
+
             SetViewSupplier(ViewBag.Project.SupplierID);
+
+            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
+            SetViewBagCitySuplier(objSupplier.CityID);
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -458,7 +466,9 @@ namespace PTT.Controllers
             ProjectDao bdDao = new ProjectDao();
             SetViewBag();
             ViewBag.Project = bdDao.FindByID(id);
-            SetViewBag(ViewBag.Project.CityID);
+            SetViewBagCity(ViewBag.Project.CityID);
+            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
+            SetViewBagCitySuplier(objSupplier.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
@@ -541,7 +551,9 @@ namespace PTT.Controllers
                 return RedirectToAction("Index", "Home", null);
             }
             SetViewBag();
-            SetViewBag(ViewBag.Project.CityID);
+            SetViewBagCity(ViewBag.Project.CityID);
+            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
+            SetViewBagCitySuplier(objSupplier.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
@@ -805,7 +817,9 @@ namespace PTT.Controllers
             ProjectDao bdDao = new ProjectDao();
             SetViewBag();
             ViewBag.Project = bdDao.FindByID(id);
-            SetViewBag(ViewBag.Project.CityID);
+            SetViewBagCity(ViewBag.Project.CityID);
+            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
+            SetViewBagCitySuplier(objSupplier.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
@@ -879,13 +893,20 @@ namespace PTT.Controllers
         public ActionResult Create()
         {
             SetViewBag();
+            SetViewBagCity();
             SetViewBagDistrict();
+            SetViewBagCitySuplier();
             SetCatagoryBag();
             SetPriceIDViewBag();
             SetResourceIDViewBag();
             SetUserBag();
             SetCompetitorViewBag();
             SetViewSupplier();
+            ViewBag.Name = "";
+            ViewBag.Address = "";
+            ViewBag.EndCreate = "";
+            ViewBag.ContratorID = "";
+            ViewBag.BuilderID = "";
             return View();
         }
 
@@ -900,17 +921,21 @@ namespace PTT.Controllers
                 {
 
                     bool kt = true;
-                    string cityID = data["CityID"].ToString();
-                    SetViewBag(cityID);
-                    long categoryID = Convert.ToInt64(data["CategoryID"].ToString());
+                    string cityID = data["drlCityID"].ToString();
+                    string citySupplier = data["drlCitySupplier"].ToString();
+                    SetViewBag();
+                    SetViewBagCity(cityID);
+                    SetViewBagCitySuplier(citySupplier);
+                    long categoryID = Convert.ToInt64(data["drlCategoryID"].ToString());
                     SetCatagoryBag(categoryID);
-                    long priceID = Convert.ToInt64(data["PriceID"].ToString());
+                    long priceID = Convert.ToInt64(data["drlPriceID"].ToString());
                     SetPriceIDViewBag(priceID);
-                    SetViewBagDistrict(data["DistrictID"], data["CityID"]);
-                    SetResourceIDViewBag(Convert.ToInt64(data["ResourceID"]));
-                    SetPriceIDViewBag(Convert.ToInt64(data["PriceID"]));
+                    SetViewBagDistrict(data["drlCityID"], data["drlCityID"]);
+                    SetResourceIDViewBag(Convert.ToInt64(data["drlResourceID"]));
+                    SetPriceIDViewBag(Convert.ToInt64(data["drlPriceID"]));
                     string[] members = data.GetValues("drbMember");
-
+                    //Danh sách  đối thủ cạnh tranh được chọn
+                    string[] lstCompetitors = data.GetValues("drlCompetitor");
                     SetUserBag(members);
 
 
@@ -925,6 +950,12 @@ namespace PTT.Controllers
                     string contratorID = data["txtContratorID"].ToString();
                     string builderID = data["txtBuilder"].ToString();
                     string[] lstproductID = data.GetValues("cblProduct");
+
+                    ViewBag.Address = address;
+                    ViewBag.Name = name;
+                    ViewBag.EndCreate = data["EndCreate"].ToString();
+                    ViewBag.ContratorID = contratorID;
+                    ViewBag.BuilderID = builderID;
                     //string IsGroup = data["IsGroup"].ToString();
                     //string IsPublic = data["IsPublic"].ToString();
 
@@ -947,17 +978,108 @@ namespace PTT.Controllers
                         ModelState.AddModelError("", "Mã nhà thầu thi công không đúng!");
 
                     }
-                    long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
-                    SetViewSupplier(iSupplierID);
-                    //Danh sách  đối thủ cạnh tranh được chọn
-                    string[] lstCompetitors = data.GetValues("drlCompetitor");
-                    if (lstCompetitors == null)
+                    List<long> lstProductIDProject = new List<long>();
+                    if (lstproductID == null)
                     {
                         kt = false;
-                        ModelState.AddModelError("", "Bạn chưa chọn đối thủ cạnh tranh!");
+                        ModelState.AddModelError("", "Bạn chưa chọn sản phẩm của dự án!");
 
                     }
+                    else
+                    {
+                        //Kiểm tra dữ liệu của chiết khấu đã nhập chưa
+                        try
+                        {
+                            decimal priceProduct = 0;
+                            double discoutProdct = 0;
+                            double discoutProdctVAT = 0;
+                            long productID = 0;
+                            foreach (string sprodID in lstproductID)
+                            {
+                                productID = Convert.ToInt64(sprodID);
+                                string txtPrice = "txtPrice" + sprodID;
+                                string txtDiscount = "txtDiscount" + sprodID;
+                                string txtDiscountVAT = "txtDiscountVAT" + sprodID;
+                                if (data[txtPrice].ToString() != null)
+                                {
+                                    priceProduct = Convert.ToDecimal(data[txtPrice].ToString());
+                                }
+                                if (data[txtDiscount].ToString() != null)
+                                {
+                                    discoutProdct = Convert.ToDouble(data[txtDiscount].ToString());
+                                }
+                                if (data[txtDiscountVAT].ToString() != null)
+                                {
+                                    discoutProdctVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                }
+                                lstProductIDProject.Add(productID);
+                            }
+                        }
+                        catch
+                        {
+                            kt = false;
+                            ModelState.AddModelError("", "Nhập giá và chiết khấu kiểu số tương ứng với sản phẩm dự án!");
+                        }
+
+                    }
+                    //Kiểm tra sản phẩm của đối thủ cạnh tranh đã chọn
                     SetCompetitorViewBag(lstCompetitors);
+                    if (lstCompetitors != null)
+                    {
+                        foreach (string scpID in lstCompetitors)
+                        {
+                            //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
+                            string[] lstProdctCom;
+                            string drlProuctCom = "cblProduct" + scpID;
+                            lstProdctCom = data.GetValues(drlProuctCom);
+                            List<long> lstProductIDCompare = new List<long>();
+                            try
+                            {
+                                if (lstProdctCom.Length > 0)
+                                {
+                                    double discount = 0;
+                                    double discountVAT = 0;
+                                    long prID = 0;
+                                    foreach (string sProID in lstProdctCom)
+                                    {
+                                        prID = Convert.ToInt64(sProID);
+                                        lstProductIDCompare.Add(prID);
+                                        string txtDiscount = "txtDiscount" + scpID + "_" + sProID;
+                                        string txtDiscountVAT = "txtDiscountVAT" + scpID + "_" + sProID;
+                                        if (data[txtDiscountVAT].ToString() != null)
+                                        {
+                                            discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                        }
+                                        if (data[txtDiscount].ToString() != null)
+                                        {
+                                            discount = Convert.ToDouble(data[txtDiscount].ToString());
+                                        }
+                                    }
+                                    if (Hepper.compareList(lstProductIDProject, lstProductIDCompare) == false)
+                                    {
+                                        kt = false;
+                                        ModelState.AddModelError("", "Bạn phải chọn sản phẩm của đối thủ cạnh tranh giống sản phẩm của dự án!");
+                                        break;
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                                kt = false;
+                                ModelState.AddModelError("", "Nhập giá và chiết khấu kiểu số tương ứng với sản phẩm của đối thủ cạnh tranh!");
+                            }
+
+
+
+                        }
+
+                    }
+
+                    long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
+                    SetViewSupplier(iSupplierID);
+
+
+
                     UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
                     ProjectDao bdDao = new ProjectDao();
                     Project objProject = new Project();
@@ -978,7 +1100,7 @@ namespace PTT.Controllers
                     objProject.ResourceID = Convert.ToInt64(data["ResourceID"].ToString());
                     objProject.CategoryID = categoryID;
                     objProject.CityID = cityID;
-                    objProject.DistrictID = data["DistrictID"].ToString();
+                    objProject.DistrictID = data["drlDistrictID"].ToString();
                     objProject.Description = data["txtDescription"].ToString();
                     objProject.Address = address;
                     objProject.Code = projectCode;
@@ -987,7 +1109,7 @@ namespace PTT.Controllers
                     objProject.DateLine = Hepper.GetDateServer();
                     objProject.StartDate = Hepper.GetDateServer();
                     //Thêm dự án vào CSDL
-                    if (kt)
+                    if (kt == true)
                     {
                         objProject.ContratorID = objContra.ID;
                         objProject.BuilderID = (objBuider.ID);
@@ -1000,18 +1122,22 @@ namespace PTT.Controllers
                         objPrUS.LoginID = us.UserID;
                         objPrUS.IsAdmin = true;
                         prUSDao.Insert(objPrUS);
-                        foreach (string sUsID in members)
+                        if (members != null)
                         {
-                            long usID = Convert.ToInt64(sUsID);
-                            if (usID != us.UserID)
+                            foreach (string sUsID in members)
                             {
-                                ProjectUser objPrUSM = new ProjectUser();
-                                objPrUSM.ProjectID = projectID;
-                                objPrUSM.LoginID = usID;
-                                objPrUSM.IsAdmin = false;
-                                prUSDao.Insert(objPrUSM);
+                                long usID = Convert.ToInt64(sUsID);
+                                if (usID != us.UserID)
+                                {
+                                    ProjectUser objPrUSM = new ProjectUser();
+                                    objPrUSM.ProjectID = projectID;
+                                    objPrUSM.LoginID = usID;
+                                    objPrUSM.IsAdmin = false;
+                                    prUSDao.Insert(objPrUSM);
+                                }
                             }
                         }
+
                         //Lấy danh sách sản phẩm được chọn với chiết khấu và giá kèm theo
                         List<ProjectProduct> lstProductPrject = new List<ProjectProduct>();
                         if (lstproductID.Length > 0)
@@ -1055,71 +1181,74 @@ namespace PTT.Controllers
                             ppdtDao.Insert(prpd);
                         }
 
-
-                        //Lấy danh sách chiết khấu giá của sản phẩm mà đối thủ cạnh tranh
-                        List<ProjectCompetitor> lstprojectConpetitor = new List<ProjectCompetitor>();
-                        ProjectCompetitorDao prcDao = new ProjectCompetitorDao();
-                        if (lstCompetitors.Length > 0)
+                        if (lstCompetitors != null)
                         {
-                            long competitorID = 0;
-                            foreach (string scpID in lstCompetitors)
-                            {
-                                competitorID = Convert.ToInt64(scpID);
 
-                                ProjectCompetitor objProCompt = new ProjectCompetitor();
-                                objProCompt.CompetiorID = competitorID;
-                                //objProCompt.ID = 0;
-                                objProCompt.ProjectID = projectID;
-                                // Insert vào Bang lấy được lại ID cho vào danh sách
-                                objProCompt.ID = prcDao.Insert(objProCompt);
-                                lstprojectConpetitor.Add(objProCompt);
-                            }
-                        }
-                        //Kiểm tra những sản phẩm thuộc đối thủ đã chọn lấy chiết khấu của sản phẩm đấy
-                        List<CompetiorProduct> lstComProduct = new List<CompetiorProduct>();
-                        foreach (ProjectCompetitor objProCom in lstprojectConpetitor)
-                        {
-                            //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
-                            string[] lstProdctCom;
-                            string drlProuctCom = "cblProduct" + objProCom.CompetiorID;
-                            lstProdctCom = data.GetValues(drlProuctCom);
-                            if (lstProdctCom.Length > 0)
+                            //Lấy danh sách chiết khấu giá của sản phẩm mà đối thủ cạnh tranh
+                            List<ProjectCompetitor> lstprojectConpetitor = new List<ProjectCompetitor>();
+                            ProjectCompetitorDao prcDao = new ProjectCompetitorDao();
+                            if (lstCompetitors.Length > 0)
                             {
-                                double discount = 0;
-                                double discountVAT = 0;
-                                long prID = 0;
-                                foreach (string sProID in lstProdctCom)
+                                long competitorID = 0;
+                                foreach (string scpID in lstCompetitors)
                                 {
-                                    string txtDiscount = "txtDiscount" + objProCom.CompetiorID + "_" + sProID;
-                                    string txtDiscountVAT = "txtDiscountVAT" + objProCom.CompetiorID + "_" + sProID;
-                                    if (data[txtDiscountVAT].ToString() != null)
-                                    {
-                                        discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
-                                    }
-                                    if (data[txtDiscount].ToString() != null)
-                                    {
-                                        discount = Convert.ToDouble(data[txtDiscount].ToString());
+                                    competitorID = Convert.ToInt64(scpID);
 
-                                        prID = Convert.ToInt64(sProID);
-                                        CompetiorProduct objComProdt = new CompetiorProduct();
-                                        objComProdt.Discount = discount;
-                                        objComProdt.DiscountVAT = discountVAT;
-                                        objComProdt.ID = objProCom.ID;
-                                        objComProdt.ProductID = prID;
-                                        lstComProduct.Add(objComProdt);
-
-                                    }
+                                    ProjectCompetitor objProCompt = new ProjectCompetitor();
+                                    objProCompt.CompetiorID = competitorID;
+                                    //objProCompt.ID = 0;
+                                    objProCompt.ProjectID = projectID;
+                                    // Insert vào Bang lấy được lại ID cho vào danh sách
+                                    objProCompt.ID = prcDao.Insert(objProCompt);
+                                    lstprojectConpetitor.Add(objProCompt);
                                 }
-
                             }
-                        }
-                        //Thêm sản phẩm và chiết khấu của đối thủ vào CSDL
-                        CompetiorProductDao compdtDao = new CompetiorProductDao();
-                        foreach (CompetiorProduct objCPDT in lstComProduct)
-                        {
-                            compdtDao.Insert(objCPDT);
-                        }
+                            //Kiểm tra những sản phẩm thuộc đối thủ đã chọn lấy chiết khấu của sản phẩm đấy
+                            List<CompetiorProduct> lstComProduct = new List<CompetiorProduct>();
+                            foreach (ProjectCompetitor objProCom in lstprojectConpetitor)
+                            {
+                                //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
+                                string[] lstProdctCom;
+                                string drlProuctCom = "cblProduct" + objProCom.CompetiorID;
+                                lstProdctCom = data.GetValues(drlProuctCom);
+                                if (lstProdctCom.Length > 0)
+                                {
+                                    double discount = 0;
+                                    double discountVAT = 0;
+                                    long prID = 0;
+                                    foreach (string sProID in lstProdctCom)
+                                    {
+                                        string txtDiscount = "txtDiscount" + objProCom.CompetiorID + "_" + sProID;
+                                        string txtDiscountVAT = "txtDiscountVAT" + objProCom.CompetiorID + "_" + sProID;
+                                        if (data[txtDiscountVAT].ToString() != null)
+                                        {
+                                            discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                        }
+                                        if (data[txtDiscount].ToString() != null)
+                                        {
+                                            discount = Convert.ToDouble(data[txtDiscount].ToString());
 
+                                            prID = Convert.ToInt64(sProID);
+                                            CompetiorProduct objComProdt = new CompetiorProduct();
+                                            objComProdt.Discount = discount;
+                                            objComProdt.DiscountVAT = discountVAT;
+                                            objComProdt.ID = objProCom.ID;
+                                            objComProdt.ProductID = prID;
+                                            lstComProduct.Add(objComProdt);
+
+                                        }
+                                    }
+
+                                }
+                            }
+                            //Thêm sản phẩm và chiết khấu của đối thủ vào CSDL
+                            CompetiorProductDao compdtDao = new CompetiorProductDao();
+                            foreach (CompetiorProduct objCPDT in lstComProduct)
+                            {
+                                compdtDao.Insert(objCPDT);
+                            }
+
+                        }
 
                         SetAlert("Thêm thành công", "success");
                         return RedirectToAction("Index", "Home");
@@ -1150,11 +1279,11 @@ namespace PTT.Controllers
         public ActionResult Edit(long id)
         {
             ProjectDao bdDao = new ProjectDao();
-            SetViewBag();
+
             ViewBag.Project = bdDao.FindByID(id);
             UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
             ProjectUserDao puDao = new ProjectUserDao();
-           
+
             //Kiểm tra quyền truy cập của lạnh đạo
             bool inGroup = false;
             GroupUserDao gru = new GroupUserDao();
@@ -1169,7 +1298,7 @@ namespace PTT.Controllers
             if (objPU != null)
             {
                 inGroup = true;
-                
+
             }
             if (inGroup == false)
             {
@@ -1181,10 +1310,13 @@ namespace PTT.Controllers
                 SetAlert("Dự án đã được duyệt!", Common.CommonConstant.ALERT_WARNING);
                 return RedirectToAction("Details", "Project", new { id = id });
             }
-           
 
-            SetViewBag(ViewBag.Project.CityID);
+
+            SetViewBag();
+            SetViewBagCity(ViewBag.Project.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
+            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
+            SetViewBagCitySuplier(objSupplier.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
@@ -1265,26 +1397,87 @@ namespace PTT.Controllers
                 long id = Convert.ToInt64(data["hdIDProject"].ToString());
                 ViewBag.Project = bdDao.FindByID(id);
                 SetViewBag();
+
+                ProjectUserDao usDao = new ProjectUserDao();
+                List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
+                List<string> lstUPlogin = new List<string>();
+                foreach (var pUs in lstUP)
+                {
+                    //string sLogin = pUs.LoginID.ToString();
+                    lstUPlogin.Add(pUs.LoginID.ToString());
+                }
+                SetUserBag(lstUPlogin.ToArray<string>());
+                ContratorDao contrDao = new ContratorDao();
+                Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
+                string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
+                str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
+                str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
+                ViewBag.PrContraDetail = str;
+                ViewBag.PrContraCode = objConTra.ContratorID;
+                BuilderDao buiDao = new BuilderDao();
+                Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
+                ViewBag.PrBuiderCode = objBuilder.BuilderID;
+                str = "";
+                str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
+                str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
+                str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
+                ViewBag.BuiderDetail = str;
+
+                ProjectProductDao prProdDao = new ProjectProductDao();
+
+                ViewBag.lstProjectProdut = prProdDao.FindByID(ViewBag.Project.ProjectID);
+
+                ProjectCompetitorDao prComDao = new ProjectCompetitorDao();
+                ViewBag.lstProjectCompe = prComDao.FindByID(ViewBag.Project.ProjectID);
+                List<string> lstCompeID = new List<string>();
+                foreach (var compeId in ViewBag.lstProjectCompe)
+                {
+                    lstCompeID.Add(compeId.CompetiorID.ToString());
+                }
+                SetCompetitorViewBag(lstCompeID.ToArray<string>());
+
+                CompetiorProductDao comProductDao = new CompetiorProductDao();
+                List<ProjectCompeProduct> lstProComProd = new List<ProjectCompeProduct>();
+                foreach (var prcompe in ViewBag.lstProjectCompe)
+                {
+                    var lstComProduct = comProductDao.FindByID(prcompe.ID);
+                    foreach (var comPro in lstComProduct)
+                    {
+                        ProjectCompeProduct pcp = new ProjectCompeProduct();
+                        pcp.ID = prcompe.ID;
+                        pcp.CompetiorID = prcompe.CompetiorID;
+                        pcp.ProjectID = prcompe.ProjectID;
+                        pcp.ProductID = comPro.ProductID;
+                        pcp.Discount = comPro.Discount;
+                        pcp.DiscountVAT = comPro.DiscountVAT;
+                        lstProComProd.Add(pcp);
+                    }
+
+                }
+
+                ViewBag.lstComeProduct = lstProComProd;
                 if (ModelState.IsValid)
                 {
                     bool kt = true;
-                  
-                   
+
+
                     Project objProject = bdDao.FindByID(id);
-                    string cityID = data["CityID"].ToString();
-                    SetViewBag(cityID);
-                    long categoryID = Convert.ToInt64(data["CategoryID"].ToString());
+                    string cityID = data["drlCityID"].ToString();
+                    string citySupplier = data["drlCitySupplier"].ToString();
+                    SetViewBagCitySuplier(citySupplier);
+                    SetViewBagCity(cityID);
+                    long categoryID = Convert.ToInt64(data["drlCategoryID"].ToString());
                     SetCatagoryBag(categoryID);
-                    long priceID = Convert.ToInt64(data["PriceID"].ToString());
+                    long priceID = Convert.ToInt64(data["drlPriceID"].ToString());
                     SetPriceIDViewBag(priceID);
-                    SetViewBagDistrict(data["DistrictID"], data["CityID"]);
-                    SetResourceIDViewBag(Convert.ToInt64(data["ResourceID"]));
-                    SetPriceIDViewBag(Convert.ToInt64(data["PriceID"]));
+                    SetViewBagDistrict(data["drlCityID"], data["drlCityID"]);
+                    SetResourceIDViewBag(Convert.ToInt64(data["drlResourceID"]));
+                    SetPriceIDViewBag(Convert.ToInt64(data["drlPriceID"]));
                     string[] members = data.GetValues("drbMember");
 
                     SetUserBag(members);
-                 
-                  
+
+
                     //string projectCode = data["txtCode"].ToString();
                     string name = data["Name"].ToString();
                     string address = data["Address"].ToString();
@@ -1315,192 +1508,296 @@ namespace PTT.Controllers
                     }
                     long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
                     SetViewSupplier(iSupplierID);
-                    //Danh sách  đối thủ cạnh tranh được chọn
-                    string[] lstCompetitors = data.GetValues("drlCompetitor");
-                    if (lstCompetitors == null)
+
+                    List<long> lstProductIDProject = new List<long>();
+                    if (lstproductID == null)
                     {
                         kt = false;
-                        ModelState.AddModelError("", "Bạn chưa chọn đối thủ cạnh tranh!");
+                        ModelState.AddModelError("", "Bạn chưa chọn sản phẩm của dự án!");
+
+                    }
+                    else
+                    {
+                        //Kiểm tra dữ liệu của chiết khấu đã nhập chưa
+                        try
+                        {
+                            decimal priceProduct = 0;
+                            double discoutProdct = 0;
+                            double discoutProdctVAT = 0;
+                            long productID = 0;
+                            foreach (string sprodID in lstproductID)
+                            {
+                                productID = Convert.ToInt64(sprodID);
+                                string txtPrice = "txtPrice" + sprodID;
+                                string txtDiscount = "txtDiscount" + sprodID;
+                                string txtDiscountVAT = "txtDiscountVAT" + sprodID;
+                                if (data[txtPrice].ToString() != null)
+                                {
+                                    priceProduct = Convert.ToDecimal(data[txtPrice].ToString());
+                                }
+                                if (data[txtDiscount].ToString() != null)
+                                {
+                                    discoutProdct = Convert.ToDouble(data[txtDiscount].ToString());
+                                }
+                                if (data[txtDiscountVAT].ToString() != null)
+                                {
+                                    discoutProdctVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                }
+                                lstProductIDProject.Add(productID);
+                            }
+                        }
+                        catch
+                        {
+                            kt = false;
+                            ModelState.AddModelError("", "Nhập giá và chiết khấu kiểu số tương ứng với sản phẩm dự án!");
+                        }
+
+                    }
+
+
+
+                    //Danh sách  đối thủ cạnh tranh được chọn
+                    string[] lstCompetitors = data.GetValues("drlCompetitor");
+                    //Kiểm tra sản phẩm của đối thủ cạnh tranh đã chọn
+
+                    if (lstCompetitors != null)
+                    {
+                        foreach (string scpID in lstCompetitors)
+                        {
+                            //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
+                            string[] lstProdctCom;
+                            string drlProuctCom = "cblProduct" + scpID;
+                            lstProdctCom = data.GetValues(drlProuctCom);
+                            List<long> lstProductIDCompare = new List<long>();
+                            try
+                            {
+                                if (lstProdctCom.Length > 0)
+                                {
+                                    double discount = 0;
+                                    double discountVAT = 0;
+                                    long prID = 0;
+                                    foreach (string sProID in lstProdctCom)
+                                    {
+                                        prID = Convert.ToInt64(sProID);
+                                        lstProductIDCompare.Add(prID);
+                                        string txtDiscount = "txtDiscount" + scpID + "_" + sProID;
+                                        string txtDiscountVAT = "txtDiscountVAT" + scpID + "_" + sProID;
+                                        if (data[txtDiscountVAT].ToString() != null)
+                                        {
+                                            discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                        }
+                                        if (data[txtDiscount].ToString() != null)
+                                        {
+                                            discount = Convert.ToDouble(data[txtDiscount].ToString());
+                                        }
+                                    }
+                                    if (Hepper.compareList(lstProductIDProject, lstProductIDCompare) == false)
+                                    {
+                                        kt = false;
+                                        ModelState.AddModelError("", "Bạn phải chọn sản phẩm của đối thủ cạnh tranh giống sản phẩm của dự án!");
+                                        break;
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                                kt = false;
+                                ModelState.AddModelError("", "Nhập giá và chiết khấu kiểu số tương ứng với sản phẩm của đối thủ cạnh tranh!");
+                            }
+
+
+
+                        }
 
                     }
 
                     // string a = Competitors[0].ToString();
                     SetCompetitorViewBag(lstCompetitors);
-                    if (kt == true) { 
-                
-
-                    UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
-
-
-
-                    objProject.ModifiedDate = Hepper.GetDateServer();
-
-                    objProject.ModifiedBy = us.UserName;
-                    objProject.Name = name;
-                    //bool bPublic = true;
-                    //if (IsPublic.Equals("false")) bPublic = false;
-                    //objProject.IsPublic = bPublic;
-                    //bool bGroup = true;
-                    //if (IsGroup.Equals("false")) bGroup = false;
-                    //objProject.IsGroup = bGroup;
-                    objProject.PriceID = Convert.ToInt64(priceID);
-                    objProject.ResourceID = Convert.ToInt64(data["ResourceID"].ToString());
-                    objProject.CategoryID = categoryID;
-                    objProject.CityID = cityID;
-                    objProject.DistrictID = data["DistrictID"].ToString();
-                    objProject.Address = address;
-                    //objProject.Code = projectCode;
-                    objProject.ContratorID = objContra.ID;
-                    objProject.BuilderID = objBuider.ID;
-                    objProject.SupplierID = iSupplierID;
-                    // objProject.EndCreate = Convert.ToDateTime(data["EndCreate"].ToString());
-                    //objProject.Status = 0;
-                    // objProject.DateLine = Hepper.GetDateServer();
-                    // objProject.StartDate = Hepper.GetDateServer();
-                    //Thêm dự án vào CSDL
-                    long projectID = bdDao.Update(objProject);
-
-                    //thêm danh sách nhóm vào trong dự án
-                    ProjectUserDao prUSDao = new ProjectUserDao();
-                    //Xóa nhóm thuộc dự án
-                    prUSDao.Delete(objProject.ProjectID);
-                    ProjectUser objPrUS = new ProjectUser();
-                    objPrUS.ProjectID = projectID;
-                    objPrUS.LoginID = us.UserID;
-                    objPrUS.IsAdmin = true;
-                    prUSDao.Insert(objPrUS);
-                    foreach (string sUsID in members)
+                    if (kt == true)
                     {
-                        long usID = Convert.ToInt64(sUsID);
-                        if (usID != us.UserID)
+
+
+                        UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+
+
+
+                        objProject.ModifiedDate = Hepper.GetDateServer();
+
+                        objProject.ModifiedBy = us.UserName;
+                        objProject.Name = name;
+                        //bool bPublic = true;
+                        //if (IsPublic.Equals("false")) bPublic = false;
+                        //objProject.IsPublic = bPublic;
+                        //bool bGroup = true;
+                        //if (IsGroup.Equals("false")) bGroup = false;
+                        //objProject.IsGroup = bGroup;
+                        objProject.PriceID = Convert.ToInt64(priceID);
+                        objProject.ResourceID = Convert.ToInt64(data["drlResourceID"].ToString());
+                        objProject.CategoryID = categoryID;
+                        objProject.CityID = cityID;
+                        objProject.DistrictID = data["drlCityID"].ToString();
+                        objProject.Address = address;
+                        //objProject.Code = projectCode;
+                        objProject.ContratorID = objContra.ID;
+                        objProject.BuilderID = objBuider.ID;
+                        objProject.SupplierID = iSupplierID;
+                        // objProject.EndCreate = Convert.ToDateTime(data["EndCreate"].ToString());
+                        //objProject.Status = 0;
+                        // objProject.DateLine = Hepper.GetDateServer();
+                        // objProject.StartDate = Hepper.GetDateServer();
+                        //Thêm dự án vào CSDL
+                        long projectID = bdDao.Update(objProject);
+
+                        //thêm danh sách nhóm vào trong dự án
+                        ProjectUserDao prUSDao = new ProjectUserDao();
+                        //Xóa nhóm thuộc dự án
+                        prUSDao.Delete(objProject.ProjectID);
+                        ProjectUser objPrUS = new ProjectUser();
+                        objPrUS.ProjectID = projectID;
+                        objPrUS.LoginID = us.UserID;
+                        objPrUS.IsAdmin = true;
+                        prUSDao.Insert(objPrUS);
+                        if (members != null)
                         {
-                            ProjectUser objPrUSM = new ProjectUser();
-                            objPrUSM.ProjectID = projectID;
-                            objPrUSM.LoginID = usID;
-                            objPrUSM.IsAdmin = false;
-                            prUSDao.Insert(objPrUSM);
-                        }
-                    }
-                    //Lấy danh sách sản phẩm được chọn với chiết khấu và giá kèm theo
-                    List<ProjectProduct> lstProductPrject = new List<ProjectProduct>();
-                    if (lstproductID.Length > 0)
-                    {
-                        decimal priceProduct = 0;
-                        double discoutProdct = 0;
-                        double discoutProdctVAT = 0;
-                        long productID = 0;
-                        foreach (string sprodID in lstproductID)
-                        {
-                            productID = Convert.ToInt64(sprodID);
-                            string txtPrice = "txtPrice" + sprodID;
-                            string txtDiscount = "txtDiscount" + sprodID;
-                            string txtDiscountVAT = "txtDiscountVAT" + sprodID;
-                            if (data[txtPrice].ToString() != null)
+                            foreach (string sUsID in members)
                             {
-                                priceProduct = Convert.ToDecimal(data[txtPrice].ToString());
-                            }
-                            if (data[txtDiscount].ToString() != null)
-                            {
-                                discoutProdct = Convert.ToDouble(data[txtDiscount].ToString());
-                            }
-                            if (data[txtDiscountVAT].ToString() != null)
-                            {
-                                discoutProdctVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
-                            }
-                            ProjectProduct objProPrd = new ProjectProduct();
-                            objProPrd.ProductID = productID;
-                            objProPrd.Price = priceProduct;
-                            objProPrd.ProjectID = projectID;
-                            objProPrd.Discount = discoutProdct;
-                            objProPrd.DiscountVAT = discoutProdctVAT;
-                            lstProductPrject.Add(objProPrd);
-                        }
-                    }
-                    //Thêm sản phẩm của dự án với giá và chiết khấu vào CSDL
-                    ProjectProductDao ppdtDao = new ProjectProductDao();
-                    //Xóa sản phẩm đã tồn tại của dự án
-                    ppdtDao.Delete(objProject.ProjectID);
-                    foreach (ProjectProduct prpd in lstProductPrject)
-                    {
-                        ppdtDao.Insert(prpd);
-                    }
-
-
-                    //Lấy danh sách chiết khấu giá của sản phẩm mà đối thủ cạnh tranh
-                    List<ProjectCompetitor> lstprojectConpetitor = new List<ProjectCompetitor>();
-                    ProjectCompetitorDao prcDao = new ProjectCompetitorDao();
-                    //Xóa danh sách các đối thủ cạnh tranh của dự án
-                    prcDao.DeleteByProjectID(objProject.ProjectID);
-                    if (lstCompetitors.Length > 0)
-                    {
-                        long competitorID = 0;
-                        foreach (string scpID in lstCompetitors)
-                        {
-                            competitorID = Convert.ToInt64(scpID);
-
-                            ProjectCompetitor objProCompt = new ProjectCompetitor();
-                            objProCompt.CompetiorID = competitorID;
-                            //objProCompt.ID = 0;
-                            objProCompt.ProjectID = projectID;
-                            // Insert vào Bang lấy được lại ID cho vào danh sách
-                            objProCompt.ID = prcDao.Insert(objProCompt);
-                            lstprojectConpetitor.Add(objProCompt);
-                        }
-                    }
-
-                    //Kiểm tra những sản phẩm thuộc đối thủ đã chọn lấy chiết khấu của sản phẩm đấy
-                    List<CompetiorProduct> lstComProduct = new List<CompetiorProduct>();
-                    CompetiorProductDao compdtDao = new CompetiorProductDao();
-                    foreach (ProjectCompetitor objProCom in lstprojectConpetitor)
-                    {
-                        //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
-                        string[] lstProdctCom;
-                        string drlProuctCom = "cblProduct" + objProCom.CompetiorID;
-                        lstProdctCom = data.GetValues(drlProuctCom);
-                        if (lstProdctCom.Length > 0)
-                        {
-                            double discount = 0;
-                            double discountVAT = 0;
-                            long prID = 0;
-                            foreach (string sProID in lstProdctCom)
-                            {
-                                string txtDiscount = "txtDiscount" + objProCom.CompetiorID + "_" + sProID;
-                                string txtDiscountVAT = "txtDiscountVAT" + objProCom.CompetiorID + "_" + sProID;
-                                if (data[txtDiscountVAT].ToString() != null)
+                                long usID = Convert.ToInt64(sUsID);
+                                if (usID != us.UserID)
                                 {
-                                    discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                    ProjectUser objPrUSM = new ProjectUser();
+                                    objPrUSM.ProjectID = projectID;
+                                    objPrUSM.LoginID = usID;
+                                    objPrUSM.IsAdmin = false;
+                                    prUSDao.Insert(objPrUSM);
+                                }
+                            }
+                        }
+
+                        //Lấy danh sách sản phẩm được chọn với chiết khấu và giá kèm theo
+                        List<ProjectProduct> lstProductPrject = new List<ProjectProduct>();
+                        if (lstproductID.Length > 0)
+                        {
+                            decimal priceProduct = 0;
+                            double discoutProdct = 0;
+                            double discoutProdctVAT = 0;
+                            long productID = 0;
+                            foreach (string sprodID in lstproductID)
+                            {
+                                productID = Convert.ToInt64(sprodID);
+                                string txtPrice = "txtPrice" + sprodID;
+                                string txtDiscount = "txtDiscount" + sprodID;
+                                string txtDiscountVAT = "txtDiscountVAT" + sprodID;
+                                if (data[txtPrice].ToString() != null)
+                                {
+                                    priceProduct = Convert.ToDecimal(data[txtPrice].ToString());
                                 }
                                 if (data[txtDiscount].ToString() != null)
                                 {
-                                    discount = Convert.ToDouble(data[txtDiscount].ToString());
+                                    discoutProdct = Convert.ToDouble(data[txtDiscount].ToString());
+                                }
+                                if (data[txtDiscountVAT].ToString() != null)
+                                {
+                                    discoutProdctVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                }
+                                ProjectProduct objProPrd = new ProjectProduct();
+                                objProPrd.ProductID = productID;
+                                objProPrd.Price = priceProduct;
+                                objProPrd.ProjectID = projectID;
+                                objProPrd.Discount = discoutProdct;
+                                objProPrd.DiscountVAT = discoutProdctVAT;
+                                lstProductPrject.Add(objProPrd);
+                            }
+                        }
+                        //Thêm sản phẩm của dự án với giá và chiết khấu vào CSDL
+                        ProjectProductDao ppdtDao = new ProjectProductDao();
+                        //Xóa sản phẩm đã tồn tại của dự án
+                        ppdtDao.Delete(objProject.ProjectID);
+                        foreach (ProjectProduct prpd in lstProductPrject)
+                        {
+                            ppdtDao.Insert(prpd);
+                        }
 
-                                    prID = Convert.ToInt64(sProID);
-                                    CompetiorProduct objComProdt = new CompetiorProduct();
-                                    objComProdt.Discount = discount;
-                                    objComProdt.DiscountVAT = discountVAT;
-                                    objComProdt.ID = objProCom.ID;
-                                    objComProdt.ProductID = prID;
-                                    lstComProduct.Add(objComProdt);
-                                    //xóa từng sản phẩm và chiết khấu của đối thủ trong bảng sản phẩm và chiết khấu của đối thủ
-                                    compdtDao.Delete(objProCom.ID);
+                        ProjectCompetitorDao prcDao = new ProjectCompetitorDao();
+                        //Xóa danh sách các đối thủ cạnh tranh của dự án
+                        prcDao.DeleteByProjectID(objProject.ProjectID);
+
+                        if (lstCompetitors != null)
+                        {
+                            //Lấy danh sách chiết khấu giá của sản phẩm mà đối thủ cạnh tranh
+                            List<ProjectCompetitor> lstprojectConpetitor = new List<ProjectCompetitor>();
+
+                            if (lstCompetitors.Length > 0)
+                            {
+                                long competitorID = 0;
+                                foreach (string scpID in lstCompetitors)
+                                {
+                                    competitorID = Convert.ToInt64(scpID);
+
+                                    ProjectCompetitor objProCompt = new ProjectCompetitor();
+                                    objProCompt.CompetiorID = competitorID;
+                                    //objProCompt.ID = 0;
+                                    objProCompt.ProjectID = projectID;
+                                    // Insert vào Bang lấy được lại ID cho vào danh sách
+                                    objProCompt.ID = prcDao.Insert(objProCompt);
+                                    lstprojectConpetitor.Add(objProCompt);
+                                }
+                            }
+
+                            //Kiểm tra những sản phẩm thuộc đối thủ đã chọn lấy chiết khấu của sản phẩm đấy
+                            List<CompetiorProduct> lstComProduct = new List<CompetiorProduct>();
+                            CompetiorProductDao compdtDao = new CompetiorProductDao();
+                            foreach (ProjectCompetitor objProCom in lstprojectConpetitor)
+                            {
+                                //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
+                                string[] lstProdctCom;
+                                string drlProuctCom = "cblProduct" + objProCom.CompetiorID;
+                                lstProdctCom = data.GetValues(drlProuctCom);
+                                if (lstProdctCom.Length > 0)
+                                {
+                                    double discount = 0;
+                                    double discountVAT = 0;
+                                    long prID = 0;
+                                    foreach (string sProID in lstProdctCom)
+                                    {
+                                        string txtDiscount = "txtDiscount" + objProCom.CompetiorID + "_" + sProID;
+                                        string txtDiscountVAT = "txtDiscountVAT" + objProCom.CompetiorID + "_" + sProID;
+                                        if (data[txtDiscountVAT].ToString() != null)
+                                        {
+                                            discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                        }
+                                        if (data[txtDiscount].ToString() != null)
+                                        {
+                                            discount = Convert.ToDouble(data[txtDiscount].ToString());
+
+                                            prID = Convert.ToInt64(sProID);
+                                            CompetiorProduct objComProdt = new CompetiorProduct();
+                                            objComProdt.Discount = discount;
+                                            objComProdt.DiscountVAT = discountVAT;
+                                            objComProdt.ID = objProCom.ID;
+                                            objComProdt.ProductID = prID;
+                                            lstComProduct.Add(objComProdt);
+                                            //xóa từng sản phẩm và chiết khấu của đối thủ trong bảng sản phẩm và chiết khấu của đối thủ
+                                            // compdtDao.Delete(objProCom.ID);
+
+                                        }
+                                    }
 
                                 }
                             }
 
+                            //Thêm sản phẩm và chiết khấu của đối thủ vào CSDL
+
+
+                            foreach (CompetiorProduct objCPDT in lstComProduct)
+                            {
+                                compdtDao.Insert(objCPDT);
+                            }
+
                         }
-                    }
-
-                    //Thêm sản phẩm và chiết khấu của đối thủ vào CSDL
 
 
-                    foreach (CompetiorProduct objCPDT in lstComProduct)
-                    {
-                        compdtDao.Insert(objCPDT);
-                    }
-
-                  
-                    SetAlert("Cập nhật thành công", "success");
-                    return RedirectToAction("Details", "Project", new  { id = id });
+                        SetAlert("Cập nhật thành công", "success");
+                        return RedirectToAction("Details", "Project", new { id = id });
                         // return View();
                     }
                     else
@@ -1526,7 +1823,7 @@ namespace PTT.Controllers
         public ActionResult EditMNG(long id)
         {
             ProjectDao bdDao = new ProjectDao();
-            SetViewBag();
+
             ViewBag.Project = bdDao.FindByID(id);
             //if (ViewBag.Project.Status > 2)
             //{
@@ -1534,7 +1831,7 @@ namespace PTT.Controllers
             //    return RedirectToAction("Index", "Home", null);
             //}
             UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
-          
+
 
             //Kiểm tra quyền truy cập của lạnh đạo
             bool inGroup = false;
@@ -1545,14 +1842,17 @@ namespace PTT.Controllers
             {
                 inGroup = true;
             }
-           
+
             if (inGroup == false)
             {
                 SetAlert("Bạn không có quyền sửa dự án", Common.CommonConstant.ALERT_DANGER);
                 return RedirectToAction("Details", "Project", new { id = id });
             }
-            SetViewBag(ViewBag.Project.CityID);
+            SetViewBag();
+            SetViewBagCity(ViewBag.Project.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
+            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
+            SetViewBagCitySuplier(objSupplier.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
@@ -1632,20 +1932,81 @@ namespace PTT.Controllers
                 long id = Convert.ToInt64(data["hdIDProject"].ToString());
                 ViewBag.Project = bdDao.FindByID(id);
                 SetViewBag();
+
+                ProjectUserDao usDao = new ProjectUserDao();
+                List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
+                List<string> lstUPlogin = new List<string>();
+                foreach (var pUs in lstUP)
+                {
+                    //string sLogin = pUs.LoginID.ToString();
+                    lstUPlogin.Add(pUs.LoginID.ToString());
+                }
+                SetUserBag(lstUPlogin.ToArray<string>());
+                ContratorDao contrDao = new ContratorDao();
+                Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
+                string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
+                str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
+                str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
+                ViewBag.PrContraDetail = str;
+                ViewBag.PrContraCode = objConTra.ContratorID;
+                BuilderDao buiDao = new BuilderDao();
+                Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
+                ViewBag.PrBuiderCode = objBuilder.BuilderID;
+                str = "";
+                str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
+                str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
+                str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
+                ViewBag.BuiderDetail = str;
+
+                ProjectProductDao prProdDao = new ProjectProductDao();
+
+                ViewBag.lstProjectProdut = prProdDao.FindByID(ViewBag.Project.ProjectID);
+
+                ProjectCompetitorDao prComDao = new ProjectCompetitorDao();
+                ViewBag.lstProjectCompe = prComDao.FindByID(ViewBag.Project.ProjectID);
+                List<string> lstCompeID = new List<string>();
+                foreach (var compeId in ViewBag.lstProjectCompe)
+                {
+                    lstCompeID.Add(compeId.CompetiorID.ToString());
+                }
+                SetCompetitorViewBag(lstCompeID.ToArray<string>());
+
+                CompetiorProductDao comProductDao = new CompetiorProductDao();
+                List<ProjectCompeProduct> lstProComProd = new List<ProjectCompeProduct>();
+                foreach (var prcompe in ViewBag.lstProjectCompe)
+                {
+                    var lstComProduct = comProductDao.FindByID(prcompe.ID);
+                    foreach (var comPro in lstComProduct)
+                    {
+                        ProjectCompeProduct pcp = new ProjectCompeProduct();
+                        pcp.ID = prcompe.ID;
+                        pcp.CompetiorID = prcompe.CompetiorID;
+                        pcp.ProjectID = prcompe.ProjectID;
+                        pcp.ProductID = comPro.ProductID;
+                        pcp.Discount = comPro.Discount;
+                        pcp.DiscountVAT = comPro.DiscountVAT;
+                        lstProComProd.Add(pcp);
+                    }
+
+                }
+
+                ViewBag.lstComeProduct = lstProComProd;
                 if (ModelState.IsValid)
                 {
                     bool kt = true;
-                   
+
                     Project objProject = bdDao.FindByID(id);
-                    string cityID = data["CityID"].ToString();
-                    SetViewBag(cityID);
-                    long categoryID = Convert.ToInt64(data["CategoryID"].ToString());
+                    string cityID = data["drlCityID"].ToString();
+                    SetViewBagCity(cityID);
+                    string citySupplier = data["drlCitySupplier"].ToString();
+                    SetViewBagCitySuplier(citySupplier);
+                    long categoryID = Convert.ToInt64(data["drlCategoryID"].ToString());
                     SetCatagoryBag(categoryID);
-                    long priceID = Convert.ToInt64(data["PriceID"].ToString());
+                    long priceID = Convert.ToInt64(data["drlPriceID"].ToString());
                     SetPriceIDViewBag(priceID);
-                    SetViewBagDistrict(data["DistrictID"], data["CityID"]);
-                    SetResourceIDViewBag(Convert.ToInt64(data["ResourceID"]));
-                    SetPriceIDViewBag(Convert.ToInt64(data["PriceID"]));
+                    SetViewBagDistrict(data["drlDistrict"], data["drlCityID"]);
+                    SetResourceIDViewBag(Convert.ToInt64(data["drlResourceID"]));
+                    SetPriceIDViewBag(Convert.ToInt64(data["drlPriceID"]));
                     SetViewSupplier(Convert.ToInt64(data["drlSupplier"]));
                     string[] members = data.GetValues("drbMember");
 
@@ -1681,12 +2042,106 @@ namespace PTT.Controllers
                     }
                     long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
                     SetViewSupplier(iSupplierID);
-                    //Danh sách  đối thủ cạnh tranh được chọn
-                    string[] lstCompetitors = data.GetValues("drlCompetitor");
-                    if (lstCompetitors == null)
+
+                    List<long> lstProductIDProject = new List<long>();
+                    if (lstproductID == null)
                     {
                         kt = false;
-                        ModelState.AddModelError("", "Bạn chưa chọn đối thủ cạnh tranh!");
+                        ModelState.AddModelError("", "Bạn chưa chọn sản phẩm của dự án!");
+
+                    }
+                    else
+                    {
+                        //Kiểm tra dữ liệu của chiết khấu đã nhập chưa
+                        try
+                        {
+                            decimal priceProduct = 0;
+                            double discoutProdct = 0;
+                            double discoutProdctVAT = 0;
+                            long productID = 0;
+                            foreach (string sprodID in lstproductID)
+                            {
+                                productID = Convert.ToInt64(sprodID);
+                                string txtPrice = "txtPrice" + sprodID;
+                                string txtDiscount = "txtDiscount" + sprodID;
+                                string txtDiscountVAT = "txtDiscountVAT" + sprodID;
+                                if (data[txtPrice].ToString() != null)
+                                {
+                                    priceProduct = Convert.ToDecimal(data[txtPrice].ToString());
+                                }
+                                if (data[txtDiscount].ToString() != null)
+                                {
+                                    discoutProdct = Convert.ToDouble(data[txtDiscount].ToString());
+                                }
+                                if (data[txtDiscountVAT].ToString() != null)
+                                {
+                                    discoutProdctVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                }
+                                lstProductIDProject.Add(productID);
+                            }
+                        }
+                        catch
+                        {
+                            kt = false;
+                            ModelState.AddModelError("", "Nhập giá và chiết khấu kiểu số tương ứng với sản phẩm dự án!");
+                        }
+
+                    }
+
+
+
+                    //Danh sách  đối thủ cạnh tranh được chọn
+                    string[] lstCompetitors = data.GetValues("drlCompetitor");
+                    //Kiểm tra sản phẩm của đối thủ cạnh tranh đã chọn
+
+                    if (lstCompetitors != null)
+                    {
+                        foreach (string scpID in lstCompetitors)
+                        {
+                            //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
+                            string[] lstProdctCom;
+                            string drlProuctCom = "cblProduct" + scpID;
+                            lstProdctCom = data.GetValues(drlProuctCom);
+                            List<long> lstProductIDCompare = new List<long>();
+                            try
+                            {
+                                if (lstProdctCom.Length > 0)
+                                {
+                                    double discount = 0;
+                                    double discountVAT = 0;
+                                    long prID = 0;
+                                    foreach (string sProID in lstProdctCom)
+                                    {
+                                        prID = Convert.ToInt64(sProID);
+                                        lstProductIDCompare.Add(prID);
+                                        string txtDiscount = "txtDiscount" + scpID + "_" + sProID;
+                                        string txtDiscountVAT = "txtDiscountVAT" + scpID + "_" + sProID;
+                                        if (data[txtDiscountVAT].ToString() != null)
+                                        {
+                                            discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                        }
+                                        if (data[txtDiscount].ToString() != null)
+                                        {
+                                            discount = Convert.ToDouble(data[txtDiscount].ToString());
+                                        }
+                                    }
+                                    if (Hepper.compareList(lstProductIDProject, lstProductIDCompare) == false)
+                                    {
+                                        kt = false;
+                                        ModelState.AddModelError("", "Bạn phải chọn sản phẩm của đối thủ cạnh tranh giống sản phẩm của dự án!");
+                                        break;
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                                kt = false;
+                                ModelState.AddModelError("", "Nhập giá và chiết khấu kiểu số tương ứng với sản phẩm của đối thủ cạnh tranh!");
+                            }
+
+
+
+                        }
 
                     }
 
@@ -1712,10 +2167,10 @@ namespace PTT.Controllers
                         //if (IsGroup.Equals("false")) bGroup = false;
                         //objProject.IsGroup = bGroup;
                         objProject.PriceID = Convert.ToInt64(priceID);
-                        objProject.ResourceID = Convert.ToInt64(data["ResourceID"].ToString());
+                        objProject.ResourceID = Convert.ToInt64(data["drlResourceID"].ToString());
                         objProject.CategoryID = categoryID;
                         objProject.CityID = cityID;
-                        objProject.DistrictID = data["DistrictID"].ToString();
+                        objProject.DistrictID = data["drlDistrict"].ToString();
                         objProject.Description = data["txtDescription"].ToString();
                         objProject.Note = data["txtNote"].ToString();
                         objProject.NotePass = data["txtNotePass"].ToString();
@@ -1746,16 +2201,19 @@ namespace PTT.Controllers
                         objPrUS.LoginID = us.UserID;
                         objPrUS.IsAdmin = true;
                         prUSDao.Insert(objPrUS);
-                        foreach (string sUsID in members)
+                        if (members != null)
                         {
-                            long usID = Convert.ToInt64(sUsID);
-                            if (usID != us.UserID)
+                            foreach (string sUsID in members)
                             {
-                                ProjectUser objPrUSM = new ProjectUser();
-                                objPrUSM.ProjectID = projectID;
-                                objPrUSM.LoginID = usID;
-                                objPrUSM.IsAdmin = false;
-                                prUSDao.Insert(objPrUSM);
+                                long usID = Convert.ToInt64(sUsID);
+                                if (usID != us.UserID)
+                                {
+                                    ProjectUser objPrUSM = new ProjectUser();
+                                    objPrUSM.ProjectID = projectID;
+                                    objPrUSM.LoginID = usID;
+                                    objPrUSM.IsAdmin = false;
+                                    prUSDao.Insert(objPrUSM);
+                                }
                             }
                         }
                         //Lấy danh sách sản phẩm được chọn với chiết khấu và giá kèm theo
@@ -1801,89 +2259,83 @@ namespace PTT.Controllers
                         {
                             ppdtDao.Insert(prpd);
                         }
-
-
-                        //Lấy danh sách chiết khấu giá của sản phẩm mà đối thủ cạnh tranh
-                        List<ProjectCompetitor> lstprojectConpetitor = new List<ProjectCompetitor>();
                         ProjectCompetitorDao prcDao = new ProjectCompetitorDao();
                         //Xóa danh sách các đối thủ cạnh tranh của dự án
                         prcDao.DeleteByProjectID(objProject.ProjectID);
-                        if (lstCompetitors.Length > 0)
+                        //Lấy danh sách chiết khấu giá của sản phẩm mà đối thủ cạnh tranh
+                        if (lstCompetitors != null)
                         {
-                            long competitorID = 0;
-                            foreach (string scpID in lstCompetitors)
-                            {
-                                competitorID = Convert.ToInt64(scpID);
+                            List<ProjectCompetitor> lstprojectConpetitor = new List<ProjectCompetitor>();
 
-                                ProjectCompetitor objProCompt = new ProjectCompetitor();
-                                objProCompt.CompetiorID = competitorID;
-                                //objProCompt.ID = 0;
-                                objProCompt.ProjectID = projectID;
-                                // Insert vào Bang lấy được lại ID cho vào danh sách
-                                objProCompt.ID = prcDao.Insert(objProCompt);
-                                lstprojectConpetitor.Add(objProCompt);
-                            }
-                        }
 
-                        //Kiểm tra những sản phẩm thuộc đối thủ đã chọn lấy chiết khấu của sản phẩm đấy
-                        List<CompetiorProduct> lstComProduct = new List<CompetiorProduct>();
-                        CompetiorProductDao compdtDao = new CompetiorProductDao();
-                        foreach (ProjectCompetitor objProCom in lstprojectConpetitor)
-                        {
-                            //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
-                            string[] lstProdctCom;
-                            string drlProuctCom = "cblProduct" + objProCom.CompetiorID;
-                            lstProdctCom = data.GetValues(drlProuctCom);
-                            if (lstProdctCom.Length > 0)
+                            if (lstCompetitors.Length > 0)
                             {
-                                double discount = 0;
-                                double discountVAT = 0;
-                                long prID = 0;
-                                foreach (string sProID in lstProdctCom)
+                                long competitorID = 0;
+                                foreach (string scpID in lstCompetitors)
                                 {
-                                    string txtDiscount = "txtDiscount" + objProCom.CompetiorID + "_" + sProID;
-                                    string txtDiscountVAT = "txtDiscountVAT" + objProCom.CompetiorID + "_" + sProID;
-                                    if (data[txtDiscountVAT].ToString() != null)
-                                    {
-                                        discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
-                                    }
-                                    if (data[txtDiscount].ToString() != null)
-                                    {
-                                        discount = Convert.ToDouble(data[txtDiscount].ToString());
+                                    competitorID = Convert.ToInt64(scpID);
 
-                                        prID = Convert.ToInt64(sProID);
-                                        CompetiorProduct objComProdt = new CompetiorProduct();
-                                        objComProdt.Discount = discount;
-                                        objComProdt.DiscountVAT = discountVAT;
-                                        objComProdt.ID = objProCom.ID;
-                                        objComProdt.ProductID = prID;
-                                        lstComProduct.Add(objComProdt);
-                                        //xóa từng sản phẩm và chiết khấu của đối thủ trong bảng sản phẩm và chiết khấu của đối thủ
-                                        compdtDao.Delete(objProCom.ID);
-
-                                    }
+                                    ProjectCompetitor objProCompt = new ProjectCompetitor();
+                                    objProCompt.CompetiorID = competitorID;
+                                    //objProCompt.ID = 0;
+                                    objProCompt.ProjectID = projectID;
+                                    // Insert vào Bang lấy được lại ID cho vào danh sách
+                                    objProCompt.ID = prcDao.Insert(objProCompt);
+                                    lstprojectConpetitor.Add(objProCompt);
                                 }
+                            }
 
+                            //Kiểm tra những sản phẩm thuộc đối thủ đã chọn lấy chiết khấu của sản phẩm đấy
+                            List<CompetiorProduct> lstComProduct = new List<CompetiorProduct>();
+                            CompetiorProductDao compdtDao = new CompetiorProductDao();
+                            foreach (ProjectCompetitor objProCom in lstprojectConpetitor)
+                            {
+                                //Lấy danh sách các sản phẩm của từng đối thủ được chọn rồi lấy chiết khấu của sản phẩm đấy
+                                string[] lstProdctCom;
+                                string drlProuctCom = "cblProduct" + objProCom.CompetiorID;
+                                lstProdctCom = data.GetValues(drlProuctCom);
+                                if (lstProdctCom.Length > 0)
+                                {
+                                    double discount = 0;
+                                    double discountVAT = 0;
+                                    long prID = 0;
+                                    foreach (string sProID in lstProdctCom)
+                                    {
+                                        string txtDiscount = "txtDiscount" + objProCom.CompetiorID + "_" + sProID;
+                                        string txtDiscountVAT = "txtDiscountVAT" + objProCom.CompetiorID + "_" + sProID;
+                                        if (data[txtDiscountVAT].ToString() != null)
+                                        {
+                                            discountVAT = Convert.ToDouble(data[txtDiscountVAT].ToString());
+                                        }
+                                        if (data[txtDiscount].ToString() != null)
+                                        {
+                                            discount = Convert.ToDouble(data[txtDiscount].ToString());
+
+                                            prID = Convert.ToInt64(sProID);
+                                            CompetiorProduct objComProdt = new CompetiorProduct();
+                                            objComProdt.Discount = discount;
+                                            objComProdt.DiscountVAT = discountVAT;
+                                            objComProdt.ID = objProCom.ID;
+                                            objComProdt.ProductID = prID;
+                                            lstComProduct.Add(objComProdt);
+                                            //xóa từng sản phẩm và chiết khấu của đối thủ trong bảng sản phẩm và chiết khấu của đối thủ
+                                            // compdtDao.Delete(objProCom.ID);
+
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            //Thêm sản phẩm và chiết khấu của đối thủ vào CSDL
+
+
+                            foreach (CompetiorProduct objCPDT in lstComProduct)
+                            {
+                                compdtDao.Insert(objCPDT);
                             }
                         }
 
-                        //Thêm sản phẩm và chiết khấu của đối thủ vào CSDL
-
-
-                        foreach (CompetiorProduct objCPDT in lstComProduct)
-                        {
-                            compdtDao.Insert(objCPDT);
-                        }
-
-                        //if (bdDao.Insert(collection) > 0)
-                        //{
-                        //    SetAlert("Thêm thành công", "success");
-                        //    return RedirectToAction("Index");
-                        //}
-                        //else
-                        //{
-                        //    SetAlert("Không thêm được", "danger");
-                        //}
                         SetAlert("Cập nhật thành công", "success");
                         return RedirectToAction("Index", "Home");
                         // return View();
@@ -1933,15 +2385,27 @@ namespace PTT.Controllers
         }
         public void SetViewBag(string selectedId = null)
         {
-            var dao = new CityDao();
+
             var condao = new ContratorDao();
             var builderdao = new BuilderDao();
             var productdao = new ProductDao();
-            ViewBag.CityID = new SelectList(dao.ToList(), "CityID", "Name", selectedId);
+
             ViewBag.Contrator = new SelectList(condao.ToListActive(), "ContratorID", "ContraName", selectedId);
 
             ViewBag.Builder = new SelectList(builderdao.ToListActive(), "BuilderID", "BuilderName", selectedId);
             ViewBag.Products = productdao.ToListActive();
+        }
+        public void SetViewBagCity(string selectedId = null)
+        {
+            var dao = new CityDao();
+            ViewBag.CityID = new SelectList(dao.ToList(), "CityID", "Name", selectedId);
+
+        }
+        public void SetViewBagCitySuplier(string selectedId = null)
+        {
+            var dao = new CityDao();
+            ViewBag.CityIDSupplier = new SelectList(dao.ToList(), "CityID", "Name", selectedId);
+
         }
         public void SetCatagoryBag(long? selectedId = null)
         {

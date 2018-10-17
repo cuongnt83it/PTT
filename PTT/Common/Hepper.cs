@@ -18,6 +18,28 @@ namespace PTT.Common
         {
             return  db.Database.SqlQuery<DateTime> ("spGetSystemDate").SingleOrDefault();
         }
+        public static bool compareList(List<long> lst1, List<long> lst2)
+        {
+            bool kt = true;
+            if (lst1 == null && lst1 == null)
+            {
+                return true;
+            }
+            else if (lst1 == null || lst1 == null)
+            {
+                return false;
+            }
+            if (lst1.Count != lst1.Count)
+                return false;
+           lst1.Sort();
+            lst2.Sort();
+            for(int i = 0; i < lst1.Count; i++)
+            {
+                if (lst1[i] != lst2[i]) return false;
+            }
+            return kt;
+
+        }
        public static  int thisIsMagic(int year, int month, int day)
         {
             if (month < 3)

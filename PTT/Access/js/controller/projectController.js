@@ -3,8 +3,8 @@
         project.registerEvents();
     },
     registerEvents: function () {
-        $('#Cities').on('change', function (e) {
-           // e.preventDefault();
+        $('#drlCityID').on('change', function (e) {
+            e.preventDefault();
             var drlCity = $(this);
             var id = drlCity.val();
             $.ajax({
@@ -13,9 +13,9 @@
                 dataType: "json",
                 type: "POST",
                 success: function (district) {
-                    $("#District").html(""); // clear before appending new list 
+                    $("#drlDistrict").html(""); // clear before appending new list 
                     $.each(district, function (i, dt) {
-                        $("#District").append(
+                        $("#drlDistrict").append(
                             $('<option></option>').val(dt.DistrictCode).html(dt.Name));
                     });
                 }
@@ -175,7 +175,7 @@
                       
         });
         //Trang duyệt kết thúc
-        $('#drlCity').on('change', function (e) {
+        $('#drlCitySupplier').on('change', function (e) {
             // e.preventDefault();
             var drlCity = $(this);
             var id = drlCity.val();
@@ -197,6 +197,8 @@
             });
 
         });
+        //Kiểm tra bntSubmit validate form
+      
     }
 }
 project.init();
