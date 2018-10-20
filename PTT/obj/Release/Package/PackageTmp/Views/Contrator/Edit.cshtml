@@ -51,14 +51,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.ContratorID, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.ContratorID, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã nhà thầu" })
+                        @Html.TextBoxFor(model => model.ContratorID, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã chủ đầu tư", @disabled = "disabled" })
                         @Html.ValidationMessageFor(model => model.ContratorID, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.ContraName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.ContraName, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Tên nhà thầu" })
+                        @Html.TextBoxFor(model => model.ContraName, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Tên chủ đầu tư" })
                         @Html.ValidationMessageFor(model => model.ContraName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.FullName, new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @placeholder = "Đại diện nhà thầu" })
+                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @placeholder = "Đại diện chủ đầu tư" })
                         @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                     </div>
                 </div>

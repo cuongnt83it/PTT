@@ -43,13 +43,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ContratorID, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.ContratorID, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã chủ đầu tư" })
-                        @Html.ValidationMessageFor(model => model.ContratorID, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+              
                 <div class="form-group">
                     @Html.LabelFor(model => model.ContraName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">

@@ -70,51 +70,47 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Tên dự án</label>
                         <div class="col-md-10">
-                            @Html.TextBox("Name","", new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @placeholder = "Tên dự án" })
+                            @Html.TextBox("Name",(string) ViewBag.Name, new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @placeholder = "Tên dự án" })
                            
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Thành phố </label>
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.CityID, null, new { id = "Cities", @class = "form-control", @placeholder = "Thành phố" })
-                            @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlCityID", (SelectList)ViewBag.CityID, new { @id = "drlCityID", @class = "form-control", @placeholder = "Thành phố" })
                         </div>
-                        @Html.LabelFor(model => model.DistrictID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Quận huyện </label>
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.DistrictID, null, new { id = "District", @class = "form-control", @placeholder = "Quận huyện" })
-                            @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlDistrict", (SelectList)ViewBag.DistrictID, new { @id = "drlDistrict", @class = "form-control", @placeholder = "Quận huyện" })
+
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Địa chỉ" , @required = "required" })
-                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            @Html.TextBox("Address", (string)ViewBag.Address, new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @placeholder = "Địa chỉ" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.EndCreate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.EndCreate, new { @class = "form-control", @autoforcus = "autoforcus",id="EndCreate", @placeholder = "MM/dd/yyyy", @required = "required" })
+                            @Html.TextBoxFor(model => model.EndCreate, (string)ViewBag.EndCreate, new { @class = "form-control", @autoforcus = "autoforcus",id="EndCreate", @placeholder = "MM/dd/yyyy", @required = "required" })
                             @Html.ValidationMessageFor(model => model.EndCreate, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Loại dự án </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(model => model.CategoryID, null, new { id = "CategoryID", @class = "form-control", @placeholder = "Loại dự án" })
-                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlCategoryID", (SelectList)ViewBag.CategoryID, new { @id = "drlCategoryID", @class = "form-control", @placeholder = "Loại dự án" })
+
                         </div>
-                        @Html.LabelFor(model => model.ResourceID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Nguồn vốn </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(model => model.ResourceID, null, new { id = "ResourceID", @class = "form-control", @placeholder = "Nguồn vốn" })
-                            @Html.ValidationMessageFor(model => model.ResourceID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlResourceID", (SelectList)ViewBag.ResourceID, new { @id = "drlResourceID", @class = "form-control", @placeholder = "Nguồn vốn" })
                         </div>
-                        @Html.LabelFor(model => model.PriceID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Giá dự án </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(model => model.PriceID, null, new { id = "PriceID", @class = "form-control", @placeholder = "Giá dự án" })
-                            @Html.ValidationMessageFor(model => model.PriceID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlPriceID", (SelectList)ViewBag.PriceID, new { @id = "drlPriceID", @class = "form-control", @placeholder = "Giá dự án" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -129,7 +125,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Khu vực nhà cung ứng</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("drlCity", (SelectList)ViewBag.CityID, new { id = "drlCity", @class = "form-control", @placeholder = "Thành phố" })
+                            @Html.DropDownList("drlCitySupplier", (SelectList)ViewBag.CityIDSupplier, new { id = "drlCitySupplier", @class = "form-control", @placeholder = "Thành phố" })
                         </div>
 
                     </div>
@@ -144,7 +140,7 @@
                             <h3 class="box-title col-md-2">Chủ đầu tư</h3>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    @Html.TextBox("txtContratorID", null, new { @class = "form-control", @autoforcus = "autoforcus", @required = "required", @placeholder = "Mã chủ đầu tư" })
+                                    @Html.TextBox("txtContratorID",(string)ViewBag.ContratorID, new { @class = "form-control", @autoforcus = "autoforcus", @required = "required", @placeholder = "Mã chủ đầu tư" })
                                 </div>
                                 <button class="btn btn-primary class=col-md-3" type="button" id="btnContraID">Chọn mã..</button>
                             </div>
@@ -160,7 +156,7 @@
                             <h3 class="box-title col-md-2">Nhà thầu thi công</h3>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    @Html.TextBox("txtBuilder", null, new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @placeholder = "Mã chủ thầu" })
+                                    @Html.TextBox("txtBuilder", (string)ViewBag.BuilderID, new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @placeholder = "Mã chủ thầu" })
                                 </div>
                                 <button class="btn btn-primary class=col-md-3" type="button" id="btnBuilderID">Chọn mã..</button>
                             </div>
@@ -290,7 +286,7 @@
                     <input type="submit" value="Đăng ký" class="btn btn-primary" />
                 </div>
             </div>
-                                            }
+             }
 
     </div>
 </div>

@@ -66,11 +66,14 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 @{
-                    DateTime sd = ViewBag.Project.StartDate;
-                    DateTime ed = @ViewBag.Project.DateLine;
+                    DateTime ed = @ViewBag.Project.EndCreate;
+                    if (@ViewBag.Project.DateLine != null)
+                        ed = @ViewBag.Project.DateLine;
+                    //DateTime sd = ViewBag.Project.StartDate;
+                    DateTime sd = Hepper.GetDateServer();
                     int numday = Hepper.thisIsMagic(ed.Year, ed.Month, ed.Day) - Hepper.thisIsMagic(sd.Year, sd.Month, sd.Day);
                 }
-                <h3 class="box-title">Dự án: @ViewBag.Project.Name. Mã dự án: @ViewBag.Project.Code. Ngày khởi tạo: @ViewBag.Project.CreateDate.ToString("dd/MM/yyyy")   </h3>
+                <h3 class="box-title">Dự án: @ViewBag.Project.Name. Mã dự án: @ViewBag.Project.Code.  Dealine: @numday ngày </h3>
             </div>
             <div class="box-body">
                 <a class="btn btn-app class=col-md-3 " href="~/Project/Details/@ViewBag.Project.ProjectID"><i class="fa fa-file-picture-o"></i><b>Hồ sơ dự án</b></a>
@@ -91,11 +94,10 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label class="control-label col-md-2">Mã dự án </label>
-                        <div class="col-md-7">
+                        <div class="col-md-10">
 
                             @Html.TextBox("txtCode", (string)ViewBag.Project.Code, new { @class = "form-control", @disabled = "disabled", @autoforcus = "autoforcus", @placeholder = "Mã dự án", id = "txtCode" })
                         </div>
-                        <button class="btn btn-primary class=col-md-3" type="button" disabled id="btnCreateCode">Tạo mã..</button>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Tên dự án </label>
@@ -105,13 +107,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2">Quận huyện </label>
-                        <div class="col-md-4">
-                            @Html.DropDownList("CityID", (SelectList)ViewBag.CityID, new { id = "Cities", @class = "form-control", @disabled = "disabled", @placeholder = "Thành phố" })
-                        </div>
                         <label class="control-label col-md-2">Thành phố </label>
                         <div class="col-md-4">
-                            @Html.DropDownList("DistrictID", (SelectList)ViewBag.DistrictID, new { id = "District", @class = "form-control", @disabled = "disabled", @placeholder = "Quận huyện" })
+                            @Html.DropDownList("drlCityID", (SelectList)ViewBag.CityID, new { @id = "drlCities", @class = "form-control", @disabled = "disabled", @placeholder = "Thành phố" })
+                        </div>
+                        <label class="control-label col-md-2">Quận huyện </label>
+                        <div class="col-md-4">
+                            @Html.DropDownList("drlDistrictID", (SelectList)ViewBag.DistrictID, new { @id = "drlDistrict", @class = "form-control", @disabled = "disabled", @placeholder = "Quận huyện" })
 
                         </div>
                     </div>

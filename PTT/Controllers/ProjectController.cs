@@ -930,7 +930,7 @@ namespace PTT.Controllers
                     SetCatagoryBag(categoryID);
                     long priceID = Convert.ToInt64(data["drlPriceID"].ToString());
                     SetPriceIDViewBag(priceID);
-                    SetViewBagDistrict(data["drlCityID"], data["drlCityID"]);
+                    SetViewBagDistrict(data["drlDistrict"], data["drlCityID"]); 
                     SetResourceIDViewBag(Convert.ToInt64(data["drlResourceID"]));
                     SetPriceIDViewBag(Convert.ToInt64(data["drlPriceID"]));
                     string[] members = data.GetValues("drbMember");
@@ -1097,10 +1097,10 @@ namespace PTT.Controllers
                     //if (IsGroup.Equals("false")) bGroup = false;
                     // objProject.IsGroup = bGroup;
                     objProject.PriceID = Convert.ToInt64(priceID);
-                    objProject.ResourceID = Convert.ToInt64(data["ResourceID"].ToString());
+                    objProject.ResourceID = Convert.ToInt64(data["drlResourceID"].ToString());
                     objProject.CategoryID = categoryID;
                     objProject.CityID = cityID;
-                    objProject.DistrictID = data["drlDistrictID"].ToString();
+                    objProject.DistrictID = data["drlDistrict"].ToString();
                     objProject.Description = data["txtDescription"].ToString();
                     objProject.Address = address;
                     objProject.Code = projectCode;
@@ -1108,6 +1108,7 @@ namespace PTT.Controllers
                     objProject.Status = 0;
                     objProject.DateLine = Hepper.GetDateServer();
                     objProject.StartDate = Hepper.GetDateServer();
+                    objProject.Value = 0;
                     //Thêm dự án vào CSDL
                     if (kt == true)
                     {

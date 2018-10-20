@@ -75,15 +75,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Thành phố </label>
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.CityID, null, new { @id = "drlCityID", @class = "form-control", @placeholder = "Thành phố" })
-                            @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlCityID", (SelectList)ViewBag.CityID, new { @id = "drlCityID", @class = "form-control", @placeholder = "Thành phố" })
                         </div>
-                        @Html.LabelFor(model => model.DistrictID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Quận huyện </label>
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.DistrictID, null, new { @id = "drlDistrict", @class = "form-control", @placeholder = "Quận huyện" })
-                            @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlDistrict", (SelectList)ViewBag.DistrictID, new { @id = "drlDistrict", @class = "form-control", @placeholder = "Quận huyện" })
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -100,20 +99,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Loại dự án </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(model => model.CategoryID, null, new { id = "CategoryID", @class = "form-control", @placeholder = "Loại dự án" })
-                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlCategoryID", (SelectList)ViewBag.CategoryID, new { @id = "drlCategoryID", @class = "form-control", @placeholder = "Loại dự án" })
+
                         </div>
-                        @Html.LabelFor(model => model.ResourceID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Nguồn vốn </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(model => model.ResourceID, null, new { id = "ResourceID", @class = "form-control", @placeholder = "Nguồn vốn" })
-                            @Html.ValidationMessageFor(model => model.ResourceID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlResourceID", (SelectList)ViewBag.ResourceID, new { @id = "drlResourceID", @class = "form-control", @placeholder = "Nguồn vốn" })
                         </div>
-                        @Html.LabelFor(model => model.PriceID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Giá dự án </label>
                         <div class="col-md-2">
-                            @Html.DropDownListFor(model => model.PriceID, null, new { id = "PriceID", @class = "form-control", @placeholder = "Giá dự án" })
-                            @Html.ValidationMessageFor(model => model.PriceID, "", new { @class = "text-danger" })
+                            @Html.DropDownList("drlPriceID", (SelectList)ViewBag.PriceID, new { @id = "drlPriceID", @class = "form-control", @placeholder = "Giá dự án" })
                         </div>
                     </div>
                     <div class="form-group">
