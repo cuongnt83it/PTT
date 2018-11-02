@@ -148,13 +148,15 @@ namespace Model.DAO
             }
             //ID nhóm manager
             Guid guIDManager = Guid.Parse("964D283D-BEA0-4D85-B7C0-355487A5DF0C");
-            
-           
+
+            //ID nhóm IT
+            Guid guIDIT = Guid.Parse("76974ade-0804-4dcf-9948-3c9f027a0417");
             foreach (var GroupUser in sqlgu)
             {
                 var sqlgroup = (from g in db.Groups where g.GroupID == GroupUser.GroupID select g).FirstOrDefault();
                 //Nhom la admin co toan quyen.
                 if (sqlgroup.GroupID== guIDManager) return 1;
+                if (sqlgroup.GroupID == guIDIT) return 3;
                 if (sqlgroup.IsAdmin ) return 2;
             }
             return 0;
