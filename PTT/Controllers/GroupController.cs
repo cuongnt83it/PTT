@@ -10,7 +10,7 @@ using PTT.Models;
 
 namespace PTT.Controllers
 {
-    
+    [AuthorizeBusiness]
     public class GroupController : BaseController
     {
         // GET: Group

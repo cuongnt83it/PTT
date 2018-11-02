@@ -6,10 +6,11 @@ using System.Web.Mvc;
 using Model.DAO;
 using Model.EF;
 using PTT.Common;
-
+using PTT.Models;
 
 namespace PTT.Controllers
 {
+    [AuthorizeBusiness]
     public class BusinessController : BaseController
     {
         // GET: Business
