@@ -514,7 +514,7 @@ namespace PTT.Controllers
                                    join pu in db.ProjectUsers on pr.ProjectID equals pu.ProjectID
 
                                    orderby pr.ProjectID ascending
-                                   where pr.Status == 1 && pu.LoginID == user.UserID
+                                   where pr.Status == 1 && pu.LoginID == user.UserID  && ( db.ProjectUsers.Where(pus => pus.ProjectID == pr.ProjectID).ToList().Count>1)
                                    select new ProjectMember
                                    {
                                        ProjectID = pr.ProjectID,

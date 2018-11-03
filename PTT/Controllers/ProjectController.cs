@@ -88,7 +88,7 @@ namespace PTT.Controllers
             }
             if (ViewBag.Project.Status != 1)
             {
-                SetAlert("Dự đã hoàn thành!", Common.CommonConstant.ALERT_WARNING);
+                SetAlert("Dự đã kết thúc!", Common.CommonConstant.ALERT_WARNING);
                 return RedirectToAction("Details", "Project", new { id = id });
             }
             ProjectUserDao usDao = new ProjectUserDao();
@@ -295,7 +295,7 @@ namespace PTT.Controllers
             {
 
                 SetAlert("Gửi thành công!", "success");
-                return RedirectToAction("ProjectWaitStart", "Project", null);
+                return RedirectToAction("ProjectUserWait", "Home", null);
             }
             else
             {
@@ -1333,7 +1333,7 @@ namespace PTT.Controllers
                 SetAlert("Bạn không có quyền sửa dự án", Common.CommonConstant.ALERT_DANGER);
                 return RedirectToAction("Details", "Project", new { id = id });
             }
-            if (ViewBag.Project.Status > 2)
+            if (ViewBag.Project.Status >= 2)
             {
                 SetAlert("Dự án đã được duyệt!", Common.CommonConstant.ALERT_WARNING);
                 return RedirectToAction("Details", "Project", new { id = id });
@@ -2443,7 +2443,10 @@ namespace PTT.Controllers
         public void SetUserBag(string[] selectedId = null)
         {
             var dao = new UserDao();
-            ViewBag.Member = new MultiSelectList(dao.ToList(), "LoginID", "FullName", selectedId);
+            User objUS = dao.FindByID(3);
+            var lst = dao.ToList();
+            lst.Remove(objUS);
+            ViewBag.Member = new MultiSelectList(lst, "LoginID", "FullName", selectedId);
         }
         public void SetResourceIDViewBag(long? selectedId = null)
         {

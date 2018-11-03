@@ -18,7 +18,10 @@ namespace PTT.Controllers
         {
             UserDao bdDao = new UserDao();
             SetGroupViewBag();
-            return View(bdDao.ToList());
+            User objUS = bdDao.FindByID(3);
+            var lst = bdDao.ToList();
+            lst.Remove(objUS);
+            return View(lst);
         }
 
         // GET: User/Details/5
