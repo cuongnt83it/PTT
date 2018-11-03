@@ -107,6 +107,15 @@ namespace Model.DAO
             db.SaveChanges();
             return bd.ProcessID;
         }
+        public void DeleteByProject(long ID)
+        {
+            var lst= db.Processes.Where(p => p.ProjectID == ID).ToList();
+            foreach (var p in lst)
+            {
+                this.Delete(p.ProcessID);
+            }
+
+        }
         public Process FindByID(long ID)
         {
             

@@ -17,9 +17,36 @@ namespace PTT.Controllers
         // GET: Project
         public ActionResult Index()
         {
-            ProjectDao bdDao = new ProjectDao();
+            //ProjectDao bdDao = new ProjectDao();
+            //ViewBag.ProjectGroup = bdDao.ToList();
+            UserLogin user = (UserLogin)Session[CommonConstant.USER_SESSION];
+            db = new PTTDataContext();
+            ViewBag.ProjectGroup = from pr in db.Projects
+                                   join us in db.Users on pr.CreateBy equals us.UserName
+                                   orderby pr.ProjectID ascending
+                                   //where pr.Status == 0
+                                   select new ProjectMember
+                                   {
+                                       ProjectID = pr.ProjectID,
+                                       Address = pr.Address,
+                                       CategoryID = pr.CategoryID,
+                                       CityID = pr.CityID,
+                                       Code = pr.Code,
+                                       CreateBy = pr.CreateBy,
+                                       CreateDate = pr.CreateDate,
+                                       DateLine = pr.DateLine,
+                                       DistrictID = pr.DistrictID,
+                                       FullName = us.FullName,
+                                       IsGroup = pr.IsGroup,
+                                       IsPublic = pr.IsPublic,
+                                       MetaTite = pr.MetaTite,
+                                       Name = pr.Name,
+                                       StartDate = pr.StartDate,
+                                       Status = pr.Status
 
-            return View(bdDao.ToList());
+                                   };
+
+            return View();
         }
         [HttpGet]
         public ActionResult End(long id)

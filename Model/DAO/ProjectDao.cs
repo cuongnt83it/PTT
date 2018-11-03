@@ -33,6 +33,26 @@ namespace Model.DAO
         }
         public long Delete(long ID)
         {
+            //Xóa project USER
+            ProjectUserDao prUerDB = new ProjectUserDao();
+            prUerDB.Delete(ID);
+
+            //Xóa sản phẩm và của dự án
+            ProjectProductDao prProductDB = new ProjectProductDao();
+            prProductDB.Delete(ID);
+
+            //Xóa danh sách đối thủ cạnh tranh, sản phẩm của đối thủ cạnh tranh
+            ProjectCompetitorDao prCompetitorDB = new ProjectCompetitorDao();
+            prCompetitorDB.DeleteByProjectID(ID);
+
+            // Xóa cập nhật tiến độ của dự án
+            ProcessDao processDB = new ProcessDao();
+            processDB.DeleteByProject(ID);
+
+            //Xóa đóng góp ý kiến
+            FeedbackDao fbDB = new FeedbackDao();
+            fbDB.DeleteByProject(ID);
+
             var bd = db.Projects.Find(ID);
             db.Projects.Remove(bd);
             db.SaveChanges();

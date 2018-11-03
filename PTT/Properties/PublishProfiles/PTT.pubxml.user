@@ -103,7 +103,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2012 15:23:58</publishTime>
     </File>
     <File Include="bin/Model.dll">
-      <publishTime>11/02/2018 09:54:56</publishTime>
+      <publishTime>11/03/2018 16:31:21</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/03/2014 20:33:56</publishTime>
@@ -112,7 +112,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2003 01:38:06</publishTime>
     </File>
     <File Include="bin/PTT.dll">
-      <publishTime>11/02/2018 10:08:34</publishTime>
+      <publishTime>11/03/2018 16:31:26</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -376,19 +376,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/09/2018 10:49:30</publishTime>
     </File>
     <File Include="Views/Information/Details.cshtml">
-      <publishTime>09/18/2018 00:29:35</publishTime>
+      <publishTime>11/03/2018 14:48:16</publishTime>
     </File>
     <File Include="Views/Information/Edit.cshtml">
-      <publishTime>09/17/2018 15:34:03</publishTime>
+      <publishTime>11/03/2018 14:48:41</publishTime>
     </File>
     <File Include="Views/Information/Jobs.cshtml">
-      <publishTime>10/05/2018 09:06:33</publishTime>
+      <publishTime>11/03/2018 14:48:59</publishTime>
     </File>
     <File Include="Views/Information/Manager.cshtml">
-      <publishTime>10/18/2018 01:41:54</publishTime>
+      <publishTime>11/03/2018 14:49:22</publishTime>
     </File>
     <File Include="Views/Information/Shared.cshtml">
-      <publishTime>10/05/2018 09:08:02</publishTime>
+      <publishTime>11/03/2018 14:49:36</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
       <publishTime>06/13/2018 23:00:30</publishTime>
@@ -508,7 +508,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/10/2018 22:30:40</publishTime>
     </File>
     <File Include="Views/Shared/_Navigation.cshtml">
-      <publishTime>11/02/2018 09:54:39</publishTime>
+      <publishTime>11/03/2018 15:40:30</publishTime>
     </File>
     <File Include="Views/Static/Project.cshtml">
       <publishTime>07/13/2018 15:39:47</publishTime>

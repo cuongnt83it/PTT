@@ -1,191 +1,122 @@
-﻿@model IEnumerable<Model.EF.Project>
-
+﻿@using PTT.Common;
 @{
-    ViewBag.Title = "Project/Index";
+    ViewBag.Title = "List project";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section ClienCSS{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Access/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+}
+@section ContenHeader{
+    <section class="content-header">
+        <h1>
+            Danh sách dự án
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
+        </ol>
+    </section>
+}
+<div class="box">
+    <div class="box-body">
+        <table id="dtbPrivate" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Mã dự án
+                    </th>
+                    <th>
+                        Tên dự án
+                    </th>
 
-<h2>Index</h2>
+                    <th>
+                        Người khởi tạo
+                    </th>
+                    <th>
+                        Ngày tạo
+                    </th>
+                    <th>Trạng thái</th>
+                    <th>Deadline</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var stt = 0;
+                    foreach (var p in ViewBag.ProjectGroup)
+                    {
+                        stt++;
+                        <tr id="row_@p.ProjectID">
+                            <td>@stt</td>
+                            <td>
+                                @p.Code
+                            </td>
+                            <td>
+                                @p.Name
+                            </td>
+                            <td>
+                                @p.FullName
+                            </td>
+                            <td>
+                                @p.CreateDate.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @{
+                                    var sStatus = "";
+                                    int iStus = Convert.ToInt32(p.Status);
+                                    switch (iStus)
+                                    {
+                                        case 0: sStatus = "Đợi duyệt khởi tạo"; break;
+                                        case 1: sStatus = "Đang triển khai"; break;
+                                        case 2: sStatus = "Yêu cầu kết thúc"; break;
+                                        case 3: sStatus = "Đã hoàn thành"; break;
+                                        case 4: sStatus = "Không hoàn thành"; break;
+                                        case 5: sStatus = "Không được duyệt khởi tạo"; break;
+                                        default: break;
+                                    }
+                                }
+                                @sStatus
+                            </td>
+                            <td>
+                                @{
+                                    DateTime sd = Hepper.GetDateServer();
+                                    DateTime ed = p.DateLine;
+                                    int numday = Hepper.thisIsMagic(ed.Year, ed.Month, ed.Day) - Hepper.thisIsMagic(sd.Year, sd.Month, sd.Day);
+                                }
+                                @numday ngày
+                            </td>
+                            <td>
+                                @Html.ActionLink(" Sửa ", "EditMNG", "Project", new { id = @p.ProjectID }, null) |
+                                @Ajax.ActionLink("Xoá", "Delete", new { id = @p.ProjectID }, new AjaxOptions
+                       {
+                           Confirm = "Bạn có muốn xoá bản ghi này?",
+                           OnComplete = "$('#row_" + @p.ProjectID + "').remove()",
+                           HttpMethod = "Delete"
+                       })
+                            </td>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CityID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DistrictID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MetaTite)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContratorID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BuilderID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SupplierID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Value)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DisplayOrder)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndCreate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateLine)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsPublic)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsGroup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Member)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Note)
-        </th>
-        <th></th>
-    </tr>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CityID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DistrictID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MetaTite)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContratorID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BuilderID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SupplierID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PriceID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DisplayOrder)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreateDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreateBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModifiedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModifiedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndCreate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateLine)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsPublic)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsGroup)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Member)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ProjectID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectID })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                        </tr>
+                                    }
+
+                }
+            </tbody>
+
+        </table>
+
+
+    </div>
+</div>
+
+@section FooterClienScript{
+
+    <script>
+            $(function () {
+                $('#dtbPrivate').DataTable()
+
+            })
+    </script>
+
+}

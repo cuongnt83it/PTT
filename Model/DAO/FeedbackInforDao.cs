@@ -61,6 +61,14 @@ namespace Model.DAO
             db.SaveChanges();
             return bd.FeedbackID;
         }
+        public void DeleteByProject(long projectID)
+        {
+            var lst = db.Feedbacks.Where(p => p.ProjectID == projectID).ToList();
+            foreach(var f in lst)
+            {
+                this.Delete(f.FeedbackID);
+            }
+        }
         public Feedback FindByID(long ID)
         {
             
