@@ -16,6 +16,10 @@ namespace Model.EF
         [StringLength(30)]
         public string BuilderID { get; set; }
 
+        [DisplayName("Mã số thuế")]
+        [Required(ErrorMessage = "Mời nhập mã số thuế!")]
+        [StringLength(100)]
+        public string TaxID { get; set; }
 
         [DisplayName("Tên nhà thầu")]
         [Required(ErrorMessage = "Mời nhập tên nhà thầu!")]
@@ -35,6 +39,7 @@ namespace Model.EF
 
 
         [StringLength(100)]
+        [Required(ErrorMessage = "Mời nhập email!")]
         public string Email { get; set; }
 
         [DisplayName("Ảnh đại diện")]

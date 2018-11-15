@@ -37,6 +37,19 @@ namespace Model.DAO
             ProjectUserDao prUerDB = new ProjectUserDao();
             prUerDB.Delete(ID);
 
+
+            //Xóa danh sách nhà cung ứng
+            ProjectSupplierDao prSupplierDB = new ProjectSupplierDao();
+            prSupplierDB.DeleteByProjectID(ID);
+
+            //Xóa danh sách chủ đầu tư
+            ProjectContratorDao prContratorDB = new ProjectContratorDao();
+            prContratorDB.DeleteByProjectID(ID);
+
+            //Xóa danh sách nhà thầu
+            ProjectBuilderDao prBuilderDB = new ProjectBuilderDao();
+            prBuilderDB.DeleteByProjectID(ID);
+
             //Xóa sản phẩm và của dự án
             ProjectProductDao prProductDB = new ProjectProductDao();
             prProductDB.Delete(ID);

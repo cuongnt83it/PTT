@@ -47,21 +47,33 @@ namespace PTT.Controllers
                     // TODO: Add insert logic here
 
                     ContratorDao bdDao = new ContratorDao();
-                    UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
-                    collection.ContratorID = bdDao.GenaraCode("CĐT",4);
-                    collection.CreateDate = Hepper.GetDateServer();
-                    collection.ModifiedDate = Hepper.GetDateServer();
-                    collection.CreateBy = us.UserName;
-                    collection.ModifiedBy = us.UserName;
-                    if (bdDao.Insert(collection) > 0)
+                    bool kt = true;
+                    if (bdDao.FindByTaxID(collection.TaxID)!=null)
                     {
-                        SetAlert("Thêm thành công", "success");
-                        return RedirectToAction("Index");
+                        ModelState.AddModelError("", "Mã số thuế đã tồn tại!");
+                        kt = false;
+
                     }
-                    else
+                    if (kt == true)
                     {
-                        SetAlert("Không thêm được", "danger");
+                        UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+                        collection.ContratorID = bdDao.GenaraCode("CĐT", 4);
+                        collection.CreateDate = Hepper.GetDateServer();
+                        collection.ModifiedDate = Hepper.GetDateServer();
+                        collection.CreateBy = us.UserName;
+                        collection.ModifiedBy = us.UserName;
+                        if (bdDao.Insert(collection) > 0)
+                        {
+                            SetAlert("Thêm thành công", "success");
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            SetAlert("Không thêm được", "danger");
+                        }
+
                     }
+                    
                 }
                 return View();
             }
@@ -92,20 +104,39 @@ namespace PTT.Controllers
                     // TODO: Add insert logic here
 
                     ContratorDao bdDao = new ContratorDao();
-                    UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
 
-                    collection.ModifiedDate = Hepper.GetDateServer();
 
-                    collection.ModifiedBy = us.UserName;
-                    if (bdDao.Update(collection) > 0)
+                    bool kt = true;
+                    string taxid = collection.TaxID;
+                    Contrator objContrac = bdDao.FindByTaxID(taxid);
+                    if (objContrac != null)
                     {
-                        SetAlert("Sửa thành công", "success");
-                        return RedirectToAction("Index");
+                        if (objContrac.ID != collection.ID)
+                        {
+                            ModelState.AddModelError("", "Mã số thuế đã tồn tại!");
+                            kt = false;
+                        }
+
                     }
-                    else
+
+                    if (kt == true)
                     {
-                        SetAlert("Không sửa được", "danger");
+                        UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+
+                        collection.ModifiedDate = Hepper.GetDateServer();
+
+                        collection.ModifiedBy = us.UserName;
+                        if (bdDao.Update(collection) > 0)
+                        {
+                            SetAlert("Sửa thành công", "success");
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            SetAlert("Không sửa được", "danger");
+                        }
                     }
+                   
                 }
                 return View();
 

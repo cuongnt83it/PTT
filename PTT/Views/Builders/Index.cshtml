@@ -30,6 +30,9 @@
                         @Html.DisplayNameFor(model => model.BuilderID)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.TaxID)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.BuilderName)
                     </th>
                     <th>
@@ -54,6 +57,9 @@
                     <tr id="row_@item.ID">
                         <td>
                             @Html.DisplayFor(modelItem => item.BuilderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaxID)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.BuilderName)

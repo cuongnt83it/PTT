@@ -55,13 +55,12 @@ namespace PTT.Controllers
             SetViewBag();
             ViewBag.Project = bdDao.FindByID(id);
             SetViewBagCity(ViewBag.Project.CityID);
-            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
-            SetViewBagCitySuplier(objSupplier.CityID);
+         
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
-            SetViewSupplier(ViewBag.Project.SupplierID);
+          
             UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
             ProjectUserDao puDao = new ProjectUserDao();
 
@@ -100,21 +99,44 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+
+
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
             ProjectProductDao prProdDao = new ProjectProductDao();
 
             ViewBag.lstProjectProdut = prProdDao.FindByID(ViewBag.Project.ProjectID);
@@ -169,12 +191,12 @@ namespace PTT.Controllers
             }
             SetViewBag();
             SetViewBagCity(ViewBag.Project.CityID);
-            SetViewBagCitySuplier();
+          
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
-            SetViewSupplier(ViewBag.Project.SupplierID);
+           
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -184,21 +206,43 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
 
             ProjectProductDao prProdDao = new ProjectProductDao();
 
@@ -316,10 +360,7 @@ namespace PTT.Controllers
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
 
-            SetViewSupplier(ViewBag.Project.SupplierID);
-
-            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
-            SetViewBagCitySuplier(objSupplier.CityID);
+          
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -329,21 +370,44 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
+
             ProjectProductDao prProdDao = new ProjectProductDao();
 
             ViewBag.lstProjectProdut = prProdDao.FindByID(ViewBag.Project.ProjectID);
@@ -402,7 +466,7 @@ namespace PTT.Controllers
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
-            SetViewSupplier(ViewBag.Project.SupplierID);
+           
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -412,21 +476,43 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
 
             ProjectProductDao prProdDao = new ProjectProductDao();
 
@@ -494,13 +580,12 @@ namespace PTT.Controllers
             SetViewBag();
             ViewBag.Project = bdDao.FindByID(id);
             SetViewBagCity(ViewBag.Project.CityID);
-            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
-            SetViewBagCitySuplier(objSupplier.CityID);
+           
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
-            SetViewSupplier(ViewBag.Project.SupplierID);
+          
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -510,21 +595,45 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+
+
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
+
             ProjectProductDao prProdDao = new ProjectProductDao();
 
             ViewBag.lstProjectProdut = prProdDao.FindByID(ViewBag.Project.ProjectID);
@@ -579,13 +688,12 @@ namespace PTT.Controllers
             }
             SetViewBag();
             SetViewBagCity(ViewBag.Project.CityID);
-            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
-            SetViewBagCitySuplier(objSupplier.CityID);
+          
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
-            SetViewSupplier(ViewBag.Project.SupplierID);
+           
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -595,21 +703,42 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
 
             ProjectProductDao prProdDao = new ProjectProductDao();
 
@@ -845,13 +974,12 @@ namespace PTT.Controllers
             SetViewBag();
             ViewBag.Project = bdDao.FindByID(id);
             SetViewBagCity(ViewBag.Project.CityID);
-            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
-            SetViewBagCitySuplier(objSupplier.CityID);
+          
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
-            SetViewSupplier(ViewBag.Project.SupplierID);
+          
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -861,21 +989,44 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
+
             ProjectProductDao prProdDao = new ProjectProductDao();
 
             ViewBag.lstProjectProdut = prProdDao.FindByID(ViewBag.Project.ProjectID);
@@ -928,12 +1079,14 @@ namespace PTT.Controllers
             SetResourceIDViewBag();
             SetUserBag();
             SetCompetitorViewBag();
+            SetContratorViewBag();
             SetViewSupplier();
+            SetBuilderViewBag();
             ViewBag.Name = "";
             ViewBag.Address = "";
             ViewBag.EndCreate = "";
-            ViewBag.ContratorID = "";
-            ViewBag.BuilderID = "";
+         //   ViewBag.ContratorID = "";
+         //   ViewBag.BuilderID = "";
             return View();
         }
 
@@ -942,17 +1095,23 @@ namespace PTT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection data)
         {
+
             try
+
             {
+                //SetViewSupplier();
+                //SetContratorViewBag();
+                //SetBuilderViewBag();
+                //SetCompetitorViewBag();
                 if (ModelState.IsValid)
                 {
 
                     bool kt = true;
                     string cityID = data["drlCityID"].ToString();
-                    string citySupplier = data["drlCitySupplier"].ToString();
+                   
                     SetViewBag();
                     SetViewBagCity(cityID);
-                    SetViewBagCitySuplier(citySupplier);
+       
                     long categoryID = Convert.ToInt64(data["drlCategoryID"].ToString());
                     SetCatagoryBag(categoryID);
                     long priceID = Convert.ToInt64(data["drlPriceID"].ToString());
@@ -961,12 +1120,22 @@ namespace PTT.Controllers
                     SetResourceIDViewBag(Convert.ToInt64(data["drlResourceID"]));
                     SetPriceIDViewBag(Convert.ToInt64(data["drlPriceID"]));
                     string[] members = data.GetValues("drbMember");
+                  
                     //Danh sách  đối thủ cạnh tranh được chọn
                     string[] lstCompetitors = data.GetValues("drlCompetitor");
+                    SetCompetitorViewBag(lstCompetitors);
+
                     SetUserBag(members);
+                    //Danh sách nhà cung ứng
+                    string[] iSupplierID = data.GetValues("drlSupplier");
+                    SetViewSupplier(iSupplierID);
 
-
-                    // string a = Competitors[0].ToString();
+                    //Danh sách nhà thầu thi công
+                    string[] lstBuilders = data.GetValues("drlBuilder");
+                    SetBuilderViewBag(lstBuilders);
+                    //Danh sách chủ đầu tư
+                    string[] lstContrators = data.GetValues("drlContrator");
+                    SetContratorViewBag(lstContrators);
 
                     //  string projectCode = data["txtCode"].ToString();
                     var dao = new ProjectDao();
@@ -974,37 +1143,40 @@ namespace PTT.Controllers
                     string projectCode = dao.GenaraCode("BPTTT", 5);
                     string name = data["Name"].ToString();
                     string address = data["Address"].ToString();
-                    string contratorID = data["txtContratorID"].ToString();
-                    string builderID = data["txtBuilder"].ToString();
+                    
+                 
+                  //  string builderID = data["txtBuilder"].ToString();
                     string[] lstproductID = data.GetValues("cblProduct");
+                   
 
                     ViewBag.Address = address;
                     ViewBag.Name = name;
                     ViewBag.EndCreate = data["EndCreate"].ToString();
-                    ViewBag.ContratorID = contratorID;
-                    ViewBag.BuilderID = builderID;
+                    //   ViewBag.ContratorID = contratorID;
+                    //  ViewBag.BuilderID = lstBuilders;
                     //string IsGroup = data["IsGroup"].ToString();
                     //string IsPublic = data["IsPublic"].ToString();
 
-                    //Kiem tra ma chu dau tu
-                    ContratorDao contraDAO = new ContratorDao();
-                    Contrator objContra = contraDAO.FindByCode(contratorID.Trim());
-                    if (objContra == null)
+                    //Kiểm tra nhà cung ứng
+                    if (iSupplierID == null)
                     {
                         kt = false;
-                        ModelState.AddModelError("", "Mã chủ đầu tư không đúng!");
+                        ModelState.AddModelError("", "Bạn phải chọn nhà cung ứng!");
+
+                    }
+                    if (lstContrators == null)
+                    {
+                        kt = false;
+                        ModelState.AddModelError("", "Bạn phải chọn chủ đầu tư!");
+
+                    }
+                    if (lstBuilders == null)
+                    {
+                        kt = false;
+                        ModelState.AddModelError("", "Bạn phải chọn nhà thầu thi công!");
 
                     }
 
-
-                    BuilderDao buiderDao = new BuilderDao();
-                    Builder objBuider = buiderDao.FindByCode(builderID.Trim());
-                    if (objBuider == null)
-                    {
-                        kt = false;
-                        ModelState.AddModelError("", "Mã nhà thầu thi công không đúng!");
-
-                    }
                     List<long> lstProductIDProject = new List<long>();
                     if (lstproductID == null)
                     {
@@ -1049,8 +1221,7 @@ namespace PTT.Controllers
                         }
 
                     }
-                    //Kiểm tra sản phẩm của đối thủ cạnh tranh đã chọn
-                    SetCompetitorViewBag(lstCompetitors);
+                  
                     if (lstCompetitors != null)
                     {
                         foreach (string scpID in lstCompetitors)
@@ -1102,16 +1273,14 @@ namespace PTT.Controllers
 
                     }
 
-                    long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
-                    SetViewSupplier(iSupplierID);
-
+                  
 
 
                     UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
                     ProjectDao bdDao = new ProjectDao();
                     Project objProject = new Project();
 
-                    objProject.SupplierID = iSupplierID;
+                  //  objProject.SupplierID = iSupplierID;
                     objProject.CreateDate = Hepper.GetDateServer();
                     objProject.ModifiedDate = Hepper.GetDateServer();
                     objProject.CreateBy = us.UserName;
@@ -1139,8 +1308,8 @@ namespace PTT.Controllers
                     //Thêm dự án vào CSDL
                     if (kt == true)
                     {
-                        objProject.ContratorID = objContra.ID;
-                        objProject.BuilderID = (objBuider.ID);
+                       // objProject.ContratorID = objContra.ID;
+                      //  objProject.BuilderID = (objBuider.ID);
                         long projectID = bdDao.Insert(objProject);
 
                         //thêm danh sách nhóm vào trong dự án
@@ -1163,6 +1332,42 @@ namespace PTT.Controllers
                                     objPrUSM.IsAdmin = false;
                                     prUSDao.Insert(objPrUSM);
                                 }
+                            }
+                        }
+                        //Thêm danh sách nhà cung ứng
+                        if (iSupplierID != null)
+                        {
+                            ProjectSupplierDao prsDB = new ProjectSupplierDao();
+                            foreach (string spID in iSupplierID)
+                            {
+                                ProjectSupplier objPS = new ProjectSupplier();
+                                objPS.ProjectID = projectID;
+                                objPS.SupplierID = long.Parse(spID);
+                                prsDB.Insert(objPS);
+                            }
+                        }
+                        //Thêm danh sách chủ đầu tư
+                        if (lstContrators != null)
+                        {
+                            ProjectContratorDao pcDB = new ProjectContratorDao();
+                            foreach (string ctID in lstContrators)
+                            {
+                                ProjectContrator objPS = new ProjectContrator();
+                                objPS.ProjectID = projectID;
+                                objPS.ContratorID = long.Parse(ctID);
+                                pcDB.Insert(objPS);
+                            }
+                        }
+                        //Thêm danh sách nhà thầu thi công
+                        if (lstBuilders != null)
+                        {
+                            ProjectBuilderDao pbDB = new ProjectBuilderDao();
+                            foreach (string bdID in lstBuilders)
+                            {
+                                ProjectBuilder objPS = new ProjectBuilder();
+                                objPS.ProjectID = projectID;
+                                objPS.BuilderID = long.Parse(bdID);
+                                pbDB.Insert(objPS);
                             }
                         }
 
@@ -1343,12 +1548,10 @@ namespace PTT.Controllers
             SetViewBag();
             SetViewBagCity(ViewBag.Project.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
-            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
-            SetViewBagCitySuplier(objSupplier.CityID);
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
-            SetViewSupplier(ViewBag.Project.SupplierID);
+           
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -1358,22 +1561,44 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
 
+
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
             ProjectProductDao prProdDao = new ProjectProductDao();
 
             ViewBag.lstProjectProdut = prProdDao.FindByID(ViewBag.Project.ProjectID);
@@ -1426,30 +1651,10 @@ namespace PTT.Controllers
                 ViewBag.Project = bdDao.FindByID(id);
                 SetViewBag();
 
-                ProjectUserDao usDao = new ProjectUserDao();
-                List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
-                List<string> lstUPlogin = new List<string>();
-                foreach (var pUs in lstUP)
-                {
-                    //string sLogin = pUs.LoginID.ToString();
-                    lstUPlogin.Add(pUs.LoginID.ToString());
-                }
-                SetUserBag(lstUPlogin.ToArray<string>());
-                ContratorDao contrDao = new ContratorDao();
-                Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-                string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-                str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-                str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-                ViewBag.PrContraDetail = str;
-                ViewBag.PrContraCode = objConTra.ContratorID;
-                BuilderDao buiDao = new BuilderDao();
-                Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-                ViewBag.PrBuiderCode = objBuilder.BuilderID;
-                str = "";
-                str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-                str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-                str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-                ViewBag.BuiderDetail = str;
+              
+               
+                string[] lstContrators = data.GetValues("drlContrator");
+                SetContratorViewBag(lstContrators);
 
                 ProjectProductDao prProdDao = new ProjectProductDao();
 
@@ -1491,8 +1696,8 @@ namespace PTT.Controllers
 
                     Project objProject = bdDao.FindByID(id);
                     string cityID = data["drlCityID"].ToString();
-                    string citySupplier = data["drlCitySupplier"].ToString();
-                    SetViewBagCitySuplier(citySupplier);
+              
+                 
                     SetViewBagCity(cityID);
                     long categoryID = Convert.ToInt64(data["drlCategoryID"].ToString());
                     SetCatagoryBag(categoryID);
@@ -1501,41 +1706,52 @@ namespace PTT.Controllers
                     SetViewBagDistrict(data["drlCityID"], data["drlCityID"]);
                     SetResourceIDViewBag(Convert.ToInt64(data["drlResourceID"]));
                     SetPriceIDViewBag(Convert.ToInt64(data["drlPriceID"]));
+
+
+                    //Danh sách  đối thủ cạnh tranh được chọn
+                    string[] lstCompetitors = data.GetValues("drlCompetitor");
+                    SetCompetitorViewBag(lstCompetitors);
+
                     string[] members = data.GetValues("drbMember");
-
                     SetUserBag(members);
+                    //Danh sách nhà cung ứng
+                    string[] iSupplierID = data.GetValues("drlSupplier");
+                    SetViewSupplier(iSupplierID);
 
+                    //Danh sách nhà thầu thi công
+                    string[] lstBuilders = data.GetValues("drlBuilder");
+                    SetBuilderViewBag(lstBuilders);
+                    //Danh sách chủ đầu tư
 
                     //string projectCode = data["txtCode"].ToString();
                     string name = data["Name"].ToString();
                     string address = data["Address"].ToString();
-                    string contratorID = data["txtContratorID"].ToString();
-                    string builderID = data["txtBuilder"].ToString();
+                  
                     string[] lstproductID = data.GetValues("cblProduct");
                     //string IsGroup = data["IsGroup"].ToString();
                     //string IsPublic = data["IsPublic"].ToString();
 
-                    //Kiem tra ma chu dau tu
-                    ContratorDao contraDAO = new ContratorDao();
-                    Contrator objContra = contraDAO.FindByCode(contratorID.Trim());
-                    if (objContra == null)
+                    //Kiểm tra nhà cung ứng
+                    if (iSupplierID == null)
                     {
                         kt = false;
-                        ModelState.AddModelError("", "Mã chủ đầu tư không đúng!");
+                        ModelState.AddModelError("", "Bạn phải chọn nhà cung ứng!");
+
+                    }
+                    if (lstContrators == null)
+                    {
+                        kt = false;
+                        ModelState.AddModelError("", "Bạn phải chọn chủ đầu tư!");
+
+                    }
+                    if (lstBuilders == null)
+                    {
+                        kt = false;
+                        ModelState.AddModelError("", "Bạn phải chọn nhà thầu thi công!");
 
                     }
 
 
-                    BuilderDao buiderDao = new BuilderDao();
-                    Builder objBuider = buiderDao.FindByCode(builderID.Trim());
-                    if (objBuider == null)
-                    {
-                        kt = false;
-                        ModelState.AddModelError("", "Mã nhà thầu thi công không đúng!");
-
-                    }
-                    long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
-                    SetViewSupplier(iSupplierID);
 
                     List<long> lstProductIDProject = new List<long>();
                     if (lstproductID == null)
@@ -1584,8 +1800,7 @@ namespace PTT.Controllers
 
 
 
-                    //Danh sách  đối thủ cạnh tranh được chọn
-                    string[] lstCompetitors = data.GetValues("drlCompetitor");
+             
                     //Kiểm tra sản phẩm của đối thủ cạnh tranh đã chọn
 
                     if (lstCompetitors != null)
@@ -1666,9 +1881,8 @@ namespace PTT.Controllers
                         objProject.DistrictID = data["drlCityID"].ToString();
                         objProject.Address = address;
                         //objProject.Code = projectCode;
-                        objProject.ContratorID = objContra.ID;
-                        objProject.BuilderID = objBuider.ID;
-                        objProject.SupplierID = iSupplierID;
+                       
+                    //    objProject.SupplierID = iSupplierID;
                         // objProject.EndCreate = Convert.ToDateTime(data["EndCreate"].ToString());
                         //objProject.Status = 0;
                         // objProject.DateLine = Hepper.GetDateServer();
@@ -1700,6 +1914,51 @@ namespace PTT.Controllers
                                 }
                             }
                         }
+
+                        //Thêm danh sách nhà cung ứng
+                        if (iSupplierID != null)
+                        {
+
+                            ProjectSupplierDao prsDB = new ProjectSupplierDao();
+                            //Xóa danh sách nhà cung ứng thuộc dự án
+                            prsDB.DeleteByProjectID(objProject.ProjectID);
+                            foreach (string spID in iSupplierID)
+                            {
+                                ProjectSupplier objPS = new ProjectSupplier();
+                                objPS.ProjectID = projectID;
+                                objPS.SupplierID = long.Parse(spID);
+                                prsDB.Insert(objPS);
+                            }
+                        }
+                        //Thêm danh sách chủ đầu tư
+                        if (lstContrators != null)
+                        {
+                            ProjectContratorDao pcDB = new ProjectContratorDao();
+                            //Xóa danh sách chủ đầu tư thuộc dự án
+                            pcDB.DeleteByProjectID(objProject.ProjectID);
+                            foreach (string ctID in lstContrators)
+                            {
+                                ProjectContrator objPS = new ProjectContrator();
+                                objPS.ProjectID = projectID;
+                                objPS.ContratorID = long.Parse(ctID);
+                                pcDB.Insert(objPS);
+                            }
+                        }
+                        //Thêm danh sách nhà thầu thi công
+                        if (lstBuilders != null)
+                        {
+                            ProjectBuilderDao pbDB = new ProjectBuilderDao();
+                            //Xóa danh nhà thầu thi công thuộc dự án
+                            pbDB.DeleteByProjectID(objProject.ProjectID);
+                            foreach (string bdID in lstBuilders)
+                            {
+                                ProjectBuilder objPS = new ProjectBuilder();
+                                objPS.ProjectID = projectID;
+                                objPS.BuilderID = long.Parse(bdID);
+                                pbDB.Insert(objPS);
+                            }
+                        }
+
 
                         //Lấy danh sách sản phẩm được chọn với chiết khấu và giá kèm theo
                         List<ProjectProduct> lstProductPrject = new List<ProjectProduct>();
@@ -1879,12 +2138,11 @@ namespace PTT.Controllers
             SetViewBag();
             SetViewBagCity(ViewBag.Project.CityID);
             SetViewBagDistrict(ViewBag.Project.DistrictID, ViewBag.Project.CityID);
-            Supplier objSupplier = new SupplierDao().FindByID(ViewBag.Project.SupplierID);
-            SetViewBagCitySuplier(objSupplier.CityID);
+           
             SetCatagoryBag(ViewBag.Project.CategoryID);
             SetResourceIDViewBag(ViewBag.Project.ResourceID);
             SetPriceIDViewBag(ViewBag.Project.PriceID);
-            SetViewSupplier(ViewBag.Project.SupplierID);
+       
             ProjectUserDao usDao = new ProjectUserDao();
             List<ProjectUser> lstUP = usDao.FindByProjectID(ViewBag.Project.ProjectID);
             List<string> lstUPlogin = new List<string>();
@@ -1894,21 +2152,45 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+
+            //Lấy danh sách nhà cung ứng 
+            ProjectSupplierDao psDao = new ProjectSupplierDao();
+            List<ProjectSupplier> lsPSP = psDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPS = new List<string>();
+            foreach (var sid in lsPSP)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPS.Add(sid.SupplierID.ToString());
+            }
+            SetViewSupplier(lstPS.ToArray<string>());
+
+
+            //Lấy danh sách chủ đầu tư
+            ProjectContratorDao pctrDao = new ProjectContratorDao();
+            List<ProjectContrator> lstPCTR = pctrDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPCT = new List<string>();
+            foreach (var contrid in lstPCTR)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPCT.Add(contrid.ContratorID.ToString());
+            }
+            SetContratorViewBag(lstPCT.ToArray<string>());
+
+            //Lấy danh sách nhà thầu thi công
+            ProjectBuilderDao pbdDao = new ProjectBuilderDao();
+            List<ProjectBuilder> lsPBD = pbdDao.FindByID(ViewBag.Project.ProjectID);
+
+            List<string> lstPD = new List<string>();
+            foreach (var bdid in lsPBD)
+            {
+                //string sLogin = pUs.LoginID.ToString();
+                lstPD.Add(bdid.BuilderID.ToString());
+            }
+            SetBuilderViewBag(lstPD.ToArray<string>());
+
+           
 
             ProjectProductDao prProdDao = new ProjectProductDao();
 
@@ -1970,21 +2252,7 @@ namespace PTT.Controllers
                     lstUPlogin.Add(pUs.LoginID.ToString());
                 }
                 SetUserBag(lstUPlogin.ToArray<string>());
-                ContratorDao contrDao = new ContratorDao();
-                Contrator objConTra = contrDao.FindByID(ViewBag.Project.ContratorID);
-                string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-                str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-                str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-                ViewBag.PrContraDetail = str;
-                ViewBag.PrContraCode = objConTra.ContratorID;
-                BuilderDao buiDao = new BuilderDao();
-                Builder objBuilder = buiDao.FindByID(ViewBag.Project.BuilderID);
-                ViewBag.PrBuiderCode = objBuilder.BuilderID;
-                str = "";
-                str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-                str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-                str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-                ViewBag.BuiderDetail = str;
+                
 
                 ProjectProductDao prProdDao = new ProjectProductDao();
 
@@ -2026,8 +2294,7 @@ namespace PTT.Controllers
                     Project objProject = bdDao.FindByID(id);
                     string cityID = data["drlCityID"].ToString();
                     SetViewBagCity(cityID);
-                    string citySupplier = data["drlCitySupplier"].ToString();
-                    SetViewBagCitySuplier(citySupplier);
+                 
                     long categoryID = Convert.ToInt64(data["drlCategoryID"].ToString());
                     SetCatagoryBag(categoryID);
                     long priceID = Convert.ToInt64(data["drlPriceID"].ToString());
@@ -2035,41 +2302,50 @@ namespace PTT.Controllers
                     SetViewBagDistrict(data["drlDistrict"], data["drlCityID"]);
                     SetResourceIDViewBag(Convert.ToInt64(data["drlResourceID"]));
                     SetPriceIDViewBag(Convert.ToInt64(data["drlPriceID"]));
-                    SetViewSupplier(Convert.ToInt64(data["drlSupplier"]));
+                           
+                    //Danh sách  đối thủ cạnh tranh được chọn
+                    string[] lstCompetitors = data.GetValues("drlCompetitor");
+                    SetCompetitorViewBag(lstCompetitors);
+
                     string[] members = data.GetValues("drbMember");
-
                     SetUserBag(members);
+                    //Danh sách nhà cung ứng
+                    string[] iSupplierID = data.GetValues("drlSupplier");
+                    SetViewSupplier(iSupplierID);
 
+                    //Danh sách nhà thầu thi công
+                    string[] lstBuilders = data.GetValues("drlBuilder");
+                    SetBuilderViewBag(lstBuilders);
+                    //Danh sách chủ đầu tư
+                    string[] lstContrators = data.GetValues("drlContrator");
+                    SetContratorViewBag(lstContrators);
 
                     //  string projectCode = data["txtCode"].ToString();
                     string name = data["Name"].ToString();
                     string address = data["Address"].ToString();
-                    string contratorID = data["txtContratorID"].ToString();
-                    string builderID = data["txtBuilder"].ToString();
+                   
                     string[] lstproductID = data.GetValues("cblProduct");
-                    //string IsGroup = data["IsGroup"].ToString();
-                    //string IsPublic = data["IsPublic"].ToString();
-                    //Kiem tra ma chu dau tu
-                    ContratorDao contraDAO = new ContratorDao();
-                    Contrator objContra = contraDAO.FindByCode(contratorID.Trim());
-                    if (objContra == null)
+
+
+                    //Kiểm tra nhà cung ứng
+                    if (iSupplierID == null)
                     {
                         kt = false;
-                        ModelState.AddModelError("", "Mã chủ đầu tư không đúng!");
+                        ModelState.AddModelError("", "Bạn phải chọn nhà cung ứng!");
 
                     }
-
-
-                    BuilderDao buiderDao = new BuilderDao();
-                    Builder objBuider = buiderDao.FindByCode(builderID.Trim());
-                    if (objBuider == null)
+                    if (lstContrators == null)
                     {
                         kt = false;
-                        ModelState.AddModelError("", "Mã nhà thầu thi công không đúng!");
+                        ModelState.AddModelError("", "Bạn phải chọn chủ đầu tư!");
 
                     }
-                    long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
-                    SetViewSupplier(iSupplierID);
+                    if (lstBuilders == null)
+                    {
+                        kt = false;
+                        ModelState.AddModelError("", "Bạn phải chọn nhà thầu thi công!");
+
+                    }
 
                     List<long> lstProductIDProject = new List<long>();
                     if (lstproductID == null)
@@ -2118,8 +2394,7 @@ namespace PTT.Controllers
 
 
 
-                    //Danh sách  đối thủ cạnh tranh được chọn
-                    string[] lstCompetitors = data.GetValues("drlCompetitor");
+                  
                     //Kiểm tra sản phẩm của đối thủ cạnh tranh đã chọn
 
                     if (lstCompetitors != null)
@@ -2204,9 +2479,9 @@ namespace PTT.Controllers
                         objProject.NotePass = data["txtNotePass"].ToString();
                         objProject.Address = address;
                         //  objProject.Code = projectCode;
-                        objProject.ContratorID = objContra.ID;
-                        objProject.BuilderID = objBuider.ID;
-                        objProject.SupplierID = iSupplierID;
+                        //objProject.ContratorID = objContra.ID;
+                        //objProject.BuilderID = objBuider.ID;
+                      //i  objProject.SupplierID = iSupplierID;
                         decimal value = 0;
                         if (data["txtPriceProject"].ToString().Length > 0)
                         {
@@ -2244,6 +2519,53 @@ namespace PTT.Controllers
                                 }
                             }
                         }
+
+                        //Thêm danh sách nhà cung ứng
+                        if (iSupplierID != null)
+                        {
+
+                            ProjectSupplierDao prsDB = new ProjectSupplierDao();
+                            //Xóa danh sách nhà cung ứng thuộc dự án
+                            prsDB.DeleteByProjectID(objProject.ProjectID);
+                            foreach (string spID in iSupplierID)
+                            {
+                                ProjectSupplier objPS = new ProjectSupplier();
+                                objPS.ProjectID = projectID;
+                                objPS.SupplierID = long.Parse(spID);
+                                prsDB.Insert(objPS);
+                            }
+                        }
+                        //Thêm danh sách chủ đầu tư
+                        if (lstContrators != null)
+                        {
+                            ProjectContratorDao pcDB = new ProjectContratorDao();
+                            //Xóa danh sách chủ đầu tư thuộc dự án
+                            pcDB.DeleteByProjectID(objProject.ProjectID);
+                            foreach (string ctID in lstContrators)
+                            {
+                                ProjectContrator objPS = new ProjectContrator();
+                                objPS.ProjectID = projectID;
+                                objPS.ContratorID = long.Parse(ctID);
+                                pcDB.Insert(objPS);
+                            }
+                        }
+                        //Thêm danh sách nhà thầu thi công
+                        if (lstBuilders != null)
+                        {
+                            ProjectBuilderDao pbDB = new ProjectBuilderDao();
+                            //Xóa danh nhà thầu thi công thuộc dự án
+                            pbDB.DeleteByProjectID(objProject.ProjectID);
+                            foreach (string bdID in lstBuilders)
+                            {
+                                ProjectBuilder objPS = new ProjectBuilder();
+                                objPS.ProjectID = projectID;
+                                objPS.BuilderID = long.Parse(bdID);
+                                pbDB.Insert(objPS);
+                            }
+                        }
+
+
+
                         //Lấy danh sách sản phẩm được chọn với chiết khấu và giá kèm theo
                         List<ProjectProduct> lstProductPrject = new List<ProjectProduct>();
                         if (lstproductID.Length > 0)
@@ -2414,13 +2736,13 @@ namespace PTT.Controllers
         public void SetViewBag(string selectedId = null)
         {
 
-            var condao = new ContratorDao();
-            var builderdao = new BuilderDao();
+            //var condao = new ContratorDao();
+            //var builderdao = new BuilderDao();
             var productdao = new ProductDao();
 
-            ViewBag.Contrator = new SelectList(condao.ToListActive(), "ContratorID", "ContraName", selectedId);
+            //ViewBag.Contrator = new SelectList(condao.ToListActive(), "ContratorID", "ContraName", selectedId);
 
-            ViewBag.Builder = new SelectList(builderdao.ToListActive(), "BuilderID", "BuilderName", selectedId);
+        //    ViewBag.Builder = new SelectList(builderdao.ToListActive(), "BuilderID", "BuilderName", selectedId);
             ViewBag.Products = productdao.ToListActive();
         }
         public void SetViewBagCity(string selectedId = null)
@@ -2464,7 +2786,18 @@ namespace PTT.Controllers
             ViewBag.Competitor = new MultiSelectList(dao.ToListActive(), "ID", "CompetitorName", selectedId);
             ViewBag.ListCompetitor = dao.ToListActive();
         }
-
+        public void SetBuilderViewBag(string[] selectedId = null)
+        {
+            var dao = new BuilderDao();
+            ViewBag.Builder = new MultiSelectList(dao.ToListActive(), "ID", "BuilderName", selectedId);
+            ViewBag.ListBuilder = dao.ToListActive();
+        }
+        public void SetContratorViewBag(string[] selectedId = null)
+        {
+            var dao = new ContratorDao();
+            ViewBag.Contrator = new MultiSelectList(dao.ToListActive(), "ID", "ContraName", selectedId);
+            ViewBag.ListContrator = dao.ToListActive();
+        }
         public void SetViewBagDistrict(string selectedId = null, string cityid = null)
         {
             var dao = new DistrictDao();
@@ -2475,15 +2808,15 @@ namespace PTT.Controllers
             else
                 ViewBag.DistrictID = new SelectList(dao.ToList(), "DistrictCode", "Name", selectedId);
         }
-        public void SetViewSupplier(long? selectedId = null, string cityid = null, string districtid = null)
+        public void SetViewSupplier(string[] selectedId = null, string cityid = null, string districtid = null)
         {
             var dao = new SupplierDao();
             if (cityid != null)
             {
-                ViewBag.Supplier = new SelectList(dao.FindByDistrist(cityid, districtid), "ID", "SupplierName", selectedId);
+                ViewBag.Supplier = new MultiSelectList(dao.FindByDistrist(cityid, districtid), "ID", "SupplierName", selectedId);
             }
             else
-                ViewBag.Supplier = new SelectList(dao.ToList(), "ID", "SupplierName", selectedId);
+                ViewBag.Supplier = new MultiSelectList(dao.ToList(), "ID", "SupplierName", selectedId);
         }
         [HttpPost]
         public JsonResult ChangeDistrict(string cityid)

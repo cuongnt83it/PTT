@@ -52,11 +52,17 @@ namespace Model.DAO
             var ct = db.Contrators.SingleOrDefault<Contrator>(c => c.ContratorID == code&&c.Status==true);
             return ct;
         }
+        public Contrator FindByTaxID(string taxID)
+        {
+            var ct = db.Contrators.SingleOrDefault<Contrator>(c => c.TaxID == taxID );
+            return ct;
+        }
         public long Update(Contrator buider)
         {
             var bd = db.Contrators.Find(buider.ID);
            // bd.ContratorID = buider.ContratorID;
             bd.FullName = buider.FullName;
+            bd.TaxID = buider.TaxID;
             //bd.CreateBy = buider.CreateBy;
             //bd.CreateDate = buider.CreateDate;
             bd.Email = buider.Email;

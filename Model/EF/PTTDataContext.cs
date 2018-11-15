@@ -36,6 +36,9 @@ namespace Model.EF
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectCompetitor> ProjectCompetitors { get; set; }
+        public virtual DbSet<ProjectContrator> ProjectContrators { get; set; }
+        public virtual DbSet<ProjectBuilder> ProjectBuilders { get; set; }
+        public virtual DbSet<ProjectSupplier> ProjectSuppliers { get; set; }
         public virtual DbSet<ProjectProduct> ProjectProducts { get; set; }
         public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }

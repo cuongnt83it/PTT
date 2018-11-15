@@ -44,23 +44,35 @@ namespace PTT.Controllers
                 if (ModelState.IsValid)
                 {
                     // TODO: Add insert logic here
-
                     BuilderDao bdDao = new BuilderDao();
-                    UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
-                    collection.BuilderID = bdDao.GenaraCode("NT",4);
-                    collection.CreateDate = Hepper.GetDateServer();
-                    collection.ModifiedDate = Hepper.GetDateServer();
-                    collection.CreateBy = us.UserName;
-                    collection.ModifiedBy = us.UserName;
-                    if (bdDao.Insert(collection) > 0)
+                    bool kt = true;
+                    string taxid = collection.TaxID;
+                    if (bdDao.FindByTaxID(taxid) != null)
                     {
-                        SetAlert("Thêm thành công", "success");
-                        return RedirectToAction("Index");
+                        ModelState.AddModelError("", "Mã số thuế đã tồn tại!");
+                        kt = false;
                     }
-                    else
+                      
+                    if (kt == true)
                     {
-                        SetAlert("Không thêm được", "danger");
+
+                        UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+                        collection.BuilderID = bdDao.GenaraCode("NT", 4);
+                        collection.CreateDate = Hepper.GetDateServer();
+                        collection.ModifiedDate = Hepper.GetDateServer();
+                        collection.CreateBy = us.UserName;
+                        collection.ModifiedBy = us.UserName;
+                        if (bdDao.Insert(collection) > 0)
+                        {
+                            SetAlert("Thêm thành công", "success");
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            SetAlert("Không thêm được", "danger");
+                        }
                     }
+                
                 }
                 return View();
             }
@@ -91,20 +103,36 @@ namespace PTT.Controllers
                     // TODO: Add insert logic here
 
                     BuilderDao bdDao = new BuilderDao();
-                    UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
-                    
-                    collection.ModifiedDate = Hepper.GetDateServer();
+                    bool kt = true;
+                    string taxid = collection.TaxID;
+                    Builder objBuider = bdDao.FindByTaxID(taxid);
+                    if (objBuider != null)
+                    {
+                        if(objBuider.ID != collection.ID)
+                        {
+                            ModelState.AddModelError("", "Mã số thuế đã tồn tại!");
+                            kt = false;
+                        }
+                       
+                    }
+                    if (kt == true)
+                    {
+                        UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+
+                        collection.ModifiedDate = Hepper.GetDateServer();
+
+                        collection.ModifiedBy = us.UserName;
+                        if (bdDao.Update(collection) > 0)
+                        {
+                            SetAlert("Sửa thành công", "success");
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            SetAlert("Không sửa được", "danger");
+                        }
+                    }
                    
-                    collection.ModifiedBy = us.UserName;
-                    if (bdDao.Update(collection) > 0)
-                    {
-                        SetAlert("Sửa thành công", "success");
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        SetAlert("Không sửa được", "danger");
-                    }
                 }
                 return View();
                 

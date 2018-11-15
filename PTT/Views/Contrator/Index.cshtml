@@ -31,6 +31,9 @@
                         @Html.DisplayNameFor(model => model.ContratorID)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.TaxID)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.ContraName)
                     </th>
                     <th>
@@ -54,6 +57,9 @@
                     <tr id="row_@item.ID">
                         <td>
                             @Html.DisplayFor(modelItem => item.ContratorID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaxID)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ContraName)

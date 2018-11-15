@@ -52,11 +52,17 @@ namespace Model.DAO
             var ct = db.Builders.SingleOrDefault<Builder>(c => c.BuilderID == code&&c.Status==true);
             return ct;
         }
+        public Builder FindByTaxID(string taxID)
+        {
+            var ct = db.Builders.SingleOrDefault<Builder>(c => c.TaxID == taxID && c.Status == true);
+            return ct;
+        }
         public long Update(Builder buider)
         {
             var bd = db.Builders.Find(buider.ID);
            // bd.BuilderID = buider.BuilderID;
             bd.FullName = buider.FullName;
+            bd.TaxID = buider.TaxID;
             //bd.CreateBy = buider.CreateBy;
             //bd.CreateDate = buider.CreateDate;
             bd.Email = buider.Email;

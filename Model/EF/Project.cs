@@ -43,7 +43,6 @@ namespace Model.EF
         public string Description { get; set; }
 
         [DisplayName("Chủ đầu tư")]
-        [Required(ErrorMessage = "Mời nhập chủ đầu tư!")]
         public long? ContratorID { get; set; }
 
         [DisplayName("Loại dự án")]
@@ -51,7 +50,6 @@ namespace Model.EF
         public long? CategoryID { get; set; }
 
         [DisplayName("Nhà thầu")]
-        [Required(ErrorMessage = "Mời nhập nhà thầu!")]
         public long? BuilderID { get; set; }
 
 
