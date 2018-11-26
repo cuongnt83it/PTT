@@ -34,13 +34,7 @@ namespace Model.EF
         [StringLength(500)]
         public string Description { get; set; }
 
-        public long? ContratorID { get; set; }
-
         public long? CategoryID { get; set; }
-
-        public long? BuilderID { get; set; }
-
-        public long? SupplierID { get; set; }
 
         public long? ResourceID { get; set; }
 

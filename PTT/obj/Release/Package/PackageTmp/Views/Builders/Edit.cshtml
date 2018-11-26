@@ -29,7 +29,7 @@
 @section ContenHeader{
     <section class="content-header">
         <h1>
-            Sửa thông tin nhà thầu thi công
+            Sửa thông tin nhà thầu
         </h1>
         <ol class="breadcrumb">
              <li><a href="~/Project/Create"><i class="fa fa-dashboard"></i> Đăng kí dự án</a></li>
@@ -47,7 +47,13 @@
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.ID)
-
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TaxID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.TaxID, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Mã số thuế" })
+                        @Html.ValidationMessageFor(model => model.TaxID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.BuilderID, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -91,14 +97,6 @@
                     <div class="col-md-10">
                         @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = "Địa chỉ" })
                         @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.Image, new { @class = "form-control" })
-                        <button class="btn btn-primary" type="button" onclick="BrowseServer('Image');">Chọn ảnh..</button>
-                        @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

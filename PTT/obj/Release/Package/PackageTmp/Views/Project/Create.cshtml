@@ -122,48 +122,33 @@
                         </div>
                       
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Khu vực nhà cung ứng</label>
-                        <div class="col-md-10">
-                            @Html.DropDownList("drlCitySupplier", (SelectList)ViewBag.CityIDSupplier, new { id = "drlCitySupplier", @class = "form-control", @placeholder = "Thành phố" })
-                        </div>
-
-                    </div>
+                   
                     <div class="form-group">
                         <label for="drlSupplier" class="control-label col-md-2">Nhà cung ứng</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("drlSupplier", (SelectList)ViewBag.Supplier, new { @class = "form-control", @id = "drlSupplier" })
+                            @Html.DropDownList("drlSupplier", (MultiSelectList)ViewBag.Supplier, new { @class = "form-control select2", @id = "drlSupplier", @multiple = "multiple" })
                         </div>
                     </div>
                     <div class="box box-success">
                         <div class="box-header">
-                            <h3 class="box-title col-md-2">Chủ đầu tư</h3>
                             <div class="form-group">
-                                <div class="col-md-2">
-                                    @Html.TextBox("txtContratorID",(string)ViewBag.ContratorID, new { @class = "form-control", @autoforcus = "autoforcus", @required = "required", @placeholder = "Mã chủ đầu tư" })
+                                <label for="drlContrator" class="control-label col-md-2">Chủ đầu tư</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("drlContrator", (MultiSelectList)ViewBag.Contrator, new { @class = "form-control select2", @id = "drlContrator", @multiple = "multiple" })
                                 </div>
-                                <button class="btn btn-primary class=col-md-3" type="button" id="btnContraID">Chọn mã..</button>
                             </div>
                         </div>
-                        <div class="box-body">
-                            <div id="contentContrator"></div>
-
-                        </div>
+                    
                         <!-- /.box-body -->
                     </div>
                     <div class="box box-success">
                         <div class="box-header">
-                            <h3 class="box-title col-md-2">Nhà thầu thi công</h3>
                             <div class="form-group">
-                                <div class="col-md-2">
-                                    @Html.TextBox("txtBuilder", (string)ViewBag.BuilderID, new { @class = "form-control", @required = "required", @autoforcus = "autoforcus", @placeholder = "Mã chủ thầu" })
+                                <label for="drlBuilder" class="control-label col-md-2">Nhà thầu thi công</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("drlBuilder", (MultiSelectList)ViewBag.Builder, new { @class = "form-control select2", @id = "drlBuilder", @multiple = "multiple" })
                                 </div>
-                                <button class="btn btn-primary class=col-md-3" type="button" id="btnBuilderID">Chọn mã..</button>
                             </div>
-                        </div>
-                        <div class="box-body">
-
-                            <div id="contentBuilder"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -175,7 +160,7 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="drlCompetitor" class="control-label col-md-2">Đối thủ cạnh tranh:</label>
-                                <div class="col-md-6">
+                                <div class="col-md-10">
                                     @Html.DropDownList("drlCompetitor", (MultiSelectList)ViewBag.Competitor, new { @class = "form-control select2", @multiple = "multiple" })
                                 </div>
                             </div>
@@ -252,7 +237,7 @@
                                         <label data-toggle="tooltip" title="@tile">
                                             <input type="checkbox" value="@value" id="cblProduct" name="cblProduct"> @p.Code
                                         </label><br />
-                                        <label for="@txtPrice" class="control-label">Giá trị</label>
+                                        <label for="@txtPrice" class="control-label">Giá trị(ĐVT: đồng)</label>
                                         <input type="text" class="form-control" id="@txtPrice" name="@txtPrice" placeholder="Giá trị">
                                         <label for="@txtDiscount" class="control-label">CK % ngoài HĐ</label>
                                         <input type="text" class="form-control" id="@txtDiscount" name="@txtDiscount" placeholder="CK % ngoài HĐ ">
@@ -290,46 +275,4 @@
 
     </div>
 </div>
-<!-- Modal -->
-<div id="ContratorModal" class="modal fade" style="display: none;">
-    <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Chọn chủ đầu tư</h4>
-            </div>
-            <div class="modal-body">
-                @Html.DropDownList("drlContrator", (SelectList)ViewBag.Contrator, new { @class = "form-control" })
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="ContratorChoice" data-dismiss="modal">Chọn</button>
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Thoát</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Modal -->
-<div id="BuilderModal" class="modal fade" style="display: none;">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Chọn nhà thầu</h4>
-            </div>
-            <div class="modal-body">
-                @Html.DropDownList("drlBuilder", (SelectList)ViewBag.Builder, new { @class = "form-control" })
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="BuilderChoice" data-dismiss="modal">Chọn</button>
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Thoát</button>
-            </div>
-        </div>
-
-    </div>
-</div>

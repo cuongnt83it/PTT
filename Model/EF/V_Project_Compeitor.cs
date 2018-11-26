@@ -6,10 +6,9 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class V_Project_Products
+    public partial class V_Project_Compeitor
     {
         [Key]
-        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long ProjectID { get; set; }
 
@@ -77,21 +76,21 @@ namespace Model.EF
         [StringLength(250)]
         public string CategoryName { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long ProductID { get; set; }
+        public long? CompetiorID { get; set; }
 
-        public decimal? Price { get; set; }
+        [StringLength(100)]
+        public string CompetitorName { get; set; }
 
-        public double? Discount { get; set; }
+        [StringLength(100)]
+        public string FullName { get; set; }
 
-        [StringLength(250)]
-        public string ProductName { get; set; }
+        [StringLength(500)]
+        public string CompeitorAddress { get; set; }
 
-        [StringLength(50)]
-        public string ProductCode { get; set; }
+        [StringLength(100)]
+        public string Email { get; set; }
 
-        public double? DiscountVAT { get; set; }
+        [StringLength(100)]
+        public string Phone { get; set; }
     }
 }

@@ -106,18 +106,23 @@
     <Compile Include="EF\ProcessUser.cs" />
     <Compile Include="EF\Product.cs" />
     <Compile Include="EF\Project.cs" />
-    <Compile Include="EF\ProjectSupplier.cs" />
     <Compile Include="EF\ProjectBuilder.cs" />
-    <Compile Include="EF\ProjectContrator.cs" />
     <Compile Include="EF\ProjectCompetitor.cs" />
+    <Compile Include="EF\ProjectContrator.cs" />
     <Compile Include="EF\ProjectMessage.cs" />
     <Compile Include="EF\ProjectProduct.cs" />
+    <Compile Include="EF\ProjectSupplier.cs" />
     <Compile Include="EF\ProjectUser.cs" />
     <Compile Include="EF\PTTDataContext.cs" />
     <Compile Include="EF\Resource.cs" />
     <Compile Include="EF\Supplier.cs" />
     <Compile Include="EF\User.cs" />
+    <Compile Include="EF\V_Project_Builder.cs" />
     <Compile Include="EF\V_Project_Builer_Contrator.cs" />
+    <Compile Include="EF\V_Project_Compeitor.cs" />
+    <Compile Include="EF\V_Project_Contrator.cs" />
+    <Compile Include="EF\V_Project_Messege.cs" />
+    <Compile Include="EF\V_Project_Process.cs" />
     <Compile Include="EF\V_Project_Products.cs" />
     <Compile Include="EF\V_Project_Supplier.cs" />
     <Compile Include="EF\V_Project_Users.cs" />
@@ -127,7 +132,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

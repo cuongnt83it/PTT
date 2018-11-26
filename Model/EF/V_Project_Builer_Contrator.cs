@@ -76,35 +76,8 @@ namespace Model.EF
         [StringLength(500)]
         public string Note { get; set; }
 
-        [StringLength(100)]
-        public string BuilderName { get; set; }
-
-        [StringLength(100)]
-        public string BuilderFullName { get; set; }
-
-        [StringLength(100)]
-        public string BuilderPhone { get; set; }
-
-        [StringLength(500)]
-        public string AddresBuider { get; set; }
-
         [StringLength(255)]
         public string CityName { get; set; }
-
-        [StringLength(100)]
-        public string ContraName { get; set; }
-
-        [StringLength(100)]
-        public string ContratorFullname { get; set; }
-
-        [StringLength(50)]
-        public string BiuderCode { get; set; }
-
-        [StringLength(500)]
-        public string AddressContractor { get; set; }
-
-        [StringLength(100)]
-        public string PhoneContrator { get; set; }
 
         [StringLength(250)]
         public string CategoryName { get; set; }

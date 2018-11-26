@@ -6,10 +6,9 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class V_Project_Products
+    public partial class V_Project_Builder
     {
         [Key]
-        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long ProjectID { get; set; }
 
@@ -71,27 +70,25 @@ namespace Model.EF
         [StringLength(500)]
         public string Note { get; set; }
 
+        [StringLength(100)]
+        public string BuilderName { get; set; }
+
+        [StringLength(100)]
+        public string BuilderFullName { get; set; }
+
+        [StringLength(100)]
+        public string BuilderPhone { get; set; }
+
+        [StringLength(500)]
+        public string AddresBuider { get; set; }
+
         [StringLength(255)]
         public string CityName { get; set; }
 
+        [StringLength(50)]
+        public string BiuderCode { get; set; }
+
         [StringLength(250)]
         public string CategoryName { get; set; }
-
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long ProductID { get; set; }
-
-        public decimal? Price { get; set; }
-
-        public double? Discount { get; set; }
-
-        [StringLength(250)]
-        public string ProductName { get; set; }
-
-        [StringLength(50)]
-        public string ProductCode { get; set; }
-
-        public double? DiscountVAT { get; set; }
     }
 }

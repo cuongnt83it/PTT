@@ -37,6 +37,9 @@ namespace Model.EF
         [StringLength(100)]
         public string Email { get; set; }
 
+        [DisplayName("Người tạo")]
+        [StringLength(100)]
+        public string CreateBy { get; set; }
         [DisplayName("Ngày tạo")]
         public DateTime? CreatedDate { get; set; }
 

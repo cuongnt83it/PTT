@@ -6,30 +6,27 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class V_Project_Products
+    public partial class V_Project_Messege
     {
+        [StringLength(50)]
+        public string Code { get; set; }
+
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long ProjectID { get; set; }
 
-        [StringLength(50)]
-        public string Code { get; set; }
-
         [StringLength(25)]
         public string CityID { get; set; }
-
-        [StringLength(250)]
-        public string Name { get; set; }
 
         [StringLength(25)]
         public string DistrictID { get; set; }
 
         [StringLength(250)]
-        public string MetaTite { get; set; }
+        public string Name { get; set; }
 
-        [StringLength(500)]
-        public string Address { get; set; }
+        [StringLength(250)]
+        public string MetaTite { get; set; }
 
         [StringLength(500)]
         public string Description { get; set; }
@@ -37,6 +34,9 @@ namespace Model.EF
         public long? CategoryID { get; set; }
 
         public long? ResourceID { get; set; }
+
+        [StringLength(500)]
+        public string Address { get; set; }
 
         public decimal? Value { get; set; }
 
@@ -80,18 +80,27 @@ namespace Model.EF
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long ProductID { get; set; }
+        public long ProcessID { get; set; }
 
-        public decimal? Price { get; set; }
-
-        public double? Discount { get; set; }
-
-        [StringLength(250)]
-        public string ProductName { get; set; }
+        [StringLength(500)]
+        public string DescriptionProcess { get; set; }
 
         [StringLength(50)]
-        public string ProductCode { get; set; }
+        public string NameProcess { get; set; }
 
-        public double? DiscountVAT { get; set; }
+        public DateTime? CreateDateProcess { get; set; }
+
+        [StringLength(100)]
+        public string CreateByProcess { get; set; }
+
+        public long? ChildID { get; set; }
+
+        [StringLength(500)]
+        public string DescriptionMessege { get; set; }
+
+        public DateTime? CreateDateMessege { get; set; }
+
+        [StringLength(100)]
+        public string CreateByMessege { get; set; }
     }
 }

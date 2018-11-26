@@ -35,16 +35,21 @@ namespace Model.EF
         public virtual DbSet<Process> Processes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectBuilder> ProjectBuilders { get; set; }
         public virtual DbSet<ProjectCompetitor> ProjectCompetitors { get; set; }
         public virtual DbSet<ProjectContrator> ProjectContrators { get; set; }
-        public virtual DbSet<ProjectBuilder> ProjectBuilders { get; set; }
-        public virtual DbSet<ProjectSupplier> ProjectSuppliers { get; set; }
         public virtual DbSet<ProjectProduct> ProjectProducts { get; set; }
+        public virtual DbSet<ProjectSupplier> ProjectSuppliers { get; set; }
         public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<V_Project_Builder> V_Project_Builder { get; set; }
         public virtual DbSet<V_Project_Builer_Contrator> V_Project_Builer_Contrator { get; set; }
+        public virtual DbSet<V_Project_Compeitor> V_Project_Compeitor { get; set; }
+        public virtual DbSet<V_Project_Contrator> V_Project_Contrator { get; set; }
+        public virtual DbSet<V_Project_Messege> V_Project_Messege { get; set; }
+        public virtual DbSet<V_Project_Process> V_Project_Process { get; set; }
         public virtual DbSet<V_Project_Products> V_Project_Products { get; set; }
         public virtual DbSet<V_Project_Supplier> V_Project_Supplier { get; set; }
         public virtual DbSet<V_Project_Users> V_Project_Users { get; set; }
@@ -231,6 +236,22 @@ namespace Model.EF
                 .Property(e => e.Email)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<User>()
+                .Property(e => e.CreateBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Builder>()
+                .Property(e => e.Value)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<V_Project_Builder>()
+                .Property(e => e.CreateBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Builder>()
+                .Property(e => e.ModifiedBy)
+                .IsUnicode(false);
+
             modelBuilder.Entity<V_Project_Builer_Contrator>()
                 .Property(e => e.Value)
                 .HasPrecision(18, 0);
@@ -241,6 +262,70 @@ namespace Model.EF
 
             modelBuilder.Entity<V_Project_Builer_Contrator>()
                 .Property(e => e.ModifiedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Compeitor>()
+                .Property(e => e.Value)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<V_Project_Compeitor>()
+                .Property(e => e.CreateBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Compeitor>()
+                .Property(e => e.ModifiedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Compeitor>()
+                .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Contrator>()
+                .Property(e => e.Value)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<V_Project_Contrator>()
+                .Property(e => e.CreateBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Contrator>()
+                .Property(e => e.ModifiedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Messege>()
+                .Property(e => e.Value)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<V_Project_Messege>()
+                .Property(e => e.CreateBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Messege>()
+                .Property(e => e.ModifiedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Messege>()
+                .Property(e => e.CreateByProcess)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Messege>()
+                .Property(e => e.CreateByMessege)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Process>()
+                .Property(e => e.Value)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<V_Project_Process>()
+                .Property(e => e.CreateBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Process>()
+                .Property(e => e.ModifiedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<V_Project_Process>()
+                .Property(e => e.CreateByProcess)
                 .IsUnicode(false);
 
             modelBuilder.Entity<V_Project_Products>()

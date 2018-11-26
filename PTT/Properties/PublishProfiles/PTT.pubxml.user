@@ -103,7 +103,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2012 15:23:58</publishTime>
     </File>
     <File Include="bin/Model.dll">
-      <publishTime>11/03/2018 16:31:21</publishTime>
+      <publishTime>11/15/2018 09:15:08</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/03/2014 20:33:56</publishTime>
@@ -112,7 +112,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2003 01:38:06</publishTime>
     </File>
     <File Include="bin/PTT.dll">
-      <publishTime>11/03/2018 22:51:18</publishTime>
+      <publishTime>11/15/2018 09:15:13</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -253,16 +253,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/06/2018 16:36:56</publishTime>
     </File>
     <File Include="Views/Builders/Create.cshtml">
-      <publishTime>10/16/2018 10:12:26</publishTime>
+      <publishTime>11/10/2018 16:31:34</publishTime>
     </File>
     <File Include="Views/Builders/Details.cshtml">
       <publishTime>07/11/2018 15:35:29</publishTime>
     </File>
     <File Include="Views/Builders/Edit.cshtml">
-      <publishTime>10/16/2018 10:14:10</publishTime>
+      <publishTime>11/11/2018 17:39:10</publishTime>
     </File>
     <File Include="Views/Builders/Index.cshtml">
-      <publishTime>10/09/2018 10:28:04</publishTime>
+      <publishTime>11/10/2018 16:37:57</publishTime>
     </File>
     <File Include="Views/Business/Edit.cshtml">
       <publishTime>07/11/2018 15:35:29</publishTime>
@@ -295,16 +295,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/05/2018 08:58:00</publishTime>
     </File>
     <File Include="Views/Contrator/Create.cshtml">
-      <publishTime>10/16/2018 09:52:33</publishTime>
+      <publishTime>11/13/2018 15:05:36</publishTime>
     </File>
     <File Include="Views/Contrator/Details.cshtml">
       <publishTime>07/11/2018 15:35:29</publishTime>
     </File>
     <File Include="Views/Contrator/Edit.cshtml">
-      <publishTime>10/16/2018 10:05:06</publishTime>
+      <publishTime>11/13/2018 15:08:45</publishTime>
     </File>
     <File Include="Views/Contrator/Index.cshtml">
-      <publishTime>10/09/2018 10:25:32</publishTime>
+      <publishTime>11/13/2018 15:04:14</publishTime>
     </File>
     <File Include="Views/Feedback/Index.cshtml">
       <publishTime>09/17/2018 15:19:39</publishTime>
@@ -445,28 +445,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/05/2018 09:15:55</publishTime>
     </File>
     <File Include="Views/Project/Create.cshtml">
-      <publishTime>10/20/2018 17:13:09</publishTime>
+      <publishTime>11/15/2018 08:44:16</publishTime>
     </File>
     <File Include="Views/Project/Details.cshtml">
-      <publishTime>10/18/2018 00:56:14</publishTime>
+      <publishTime>11/15/2018 08:43:46</publishTime>
     </File>
     <File Include="Views/Project/Edit.cshtml">
-      <publishTime>10/18/2018 02:41:05</publishTime>
+      <publishTime>11/15/2018 08:46:42</publishTime>
     </File>
     <File Include="Views/Project/EditMNG.cshtml">
-      <publishTime>10/18/2018 02:40:54</publishTime>
+      <publishTime>11/15/2018 08:44:42</publishTime>
     </File>
     <File Include="Views/Project/End.cshtml">
-      <publishTime>10/17/2018 23:30:36</publishTime>
+      <publishTime>11/15/2018 08:43:35</publishTime>
     </File>
     <File Include="Views/Project/Index.cshtml">
       <publishTime>11/03/2018 16:29:10</publishTime>
     </File>
     <File Include="Views/Project/PassEnd.cshtml">
-      <publishTime>10/18/2018 00:56:54</publishTime>
+      <publishTime>11/15/2018 08:43:10</publishTime>
     </File>
     <File Include="Views/Project/PassStart.cshtml">
-      <publishTime>10/18/2018 00:57:48</publishTime>
+      <publishTime>11/15/2018 08:45:07</publishTime>
     </File>
     <File Include="Views/Project/ProjectEnd.cshtml">
       <publishTime>10/09/2018 15:01:33</publishTime>

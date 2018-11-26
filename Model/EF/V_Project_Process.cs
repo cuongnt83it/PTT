@@ -6,7 +6,7 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class V_Project_Products
+    public partial class V_Project_Process
     {
         [Key]
         [Column(Order = 0)]
@@ -80,18 +80,17 @@ namespace Model.EF
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long ProductID { get; set; }
-
-        public decimal? Price { get; set; }
-
-        public double? Discount { get; set; }
-
-        [StringLength(250)]
-        public string ProductName { get; set; }
+        public long ProcessID { get; set; }
 
         [StringLength(50)]
-        public string ProductCode { get; set; }
+        public string NameProcess { get; set; }
 
-        public double? DiscountVAT { get; set; }
+        [StringLength(500)]
+        public string DescriptionProcess { get; set; }
+
+        public DateTime? CreateDateProcess { get; set; }
+
+        [StringLength(100)]
+        public string CreateByProcess { get; set; }
     }
 }

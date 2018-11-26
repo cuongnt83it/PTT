@@ -185,8 +185,8 @@
                                         if (i % 3 == 0)
                                         {
                                             <td>Giá trị</td>
-                                            <td>Triết khấu ngoài HĐ</td>
-                                            <td>Triết khấu trong HĐ</td>
+                                            <td>Triết khấu % ngoài HĐ</td>
+                                            <td>Triết khấu % trên HĐ</td>
                                         }
                                     }
                                 }
@@ -220,21 +220,32 @@
                                     </td>
                                     <td>
                                         @{
-                                            var conTra = "";
-                                            var buider = "";
-                                            foreach (var prC in ViewBag.Project)
+                                            var ctn = "";
+                                            foreach (var ct in ViewBag.Contrator)
                                             {
-                                                if (prC.ProjectID == pj.ProjectID)
+                                                if (ct.ProjectID == pj.ProjectID)
                                                 {
-                                                    conTra = prC.ContraName;
-                                                    buider = prC.BuilderName;
-
+                                                    ctn += ct.ContraName + "; ";
                                                 }
                                             }
+                                            ctn = ctn.Remove(ctn.Length - 2, 2);
                                         }
-                                        @conTra
+                                        @ctn
                                     </td>
-                                    <td>@buider</td>
+                                    <td>
+                                        @{
+                                            var bdn = "";
+                                            foreach (var ct in ViewBag.Builer)
+                                            {
+                                                if (ct.ProjectID == pj.ProjectID)
+                                                {
+                                                    bdn += ct.BuilderName + "; ";
+                                                }
+                                            }
+                                            bdn = bdn.Remove(bdn.Length - 2, 2);
+                                        }
+                                        @bdn
+                                        </td>
                                     <td>
                                         @{
                                             var sp = "";
@@ -245,6 +256,7 @@
                                                     sp += s.SupplierName;
                                                 }
                                             }
+                                            sp = sp.Remove(sp.Length - 2, 2);
                                         }
                                         @sp
                                     </td>
@@ -261,16 +273,20 @@
                                                     <td>@pdP.Discount</td>
                                                     <td>@pdP.DiscountVAT</td>
                                                 }
+                                                else
+                                                {
+                                                    for (var i = 0; i < 3; i++)
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                }
 
 
                                             }
 
 
                                         }
-                                        for (var i = col; i < collProdut; i++)
-                                        {
-                                            <td></td>
-                                        }
+
                                     }
 
 
