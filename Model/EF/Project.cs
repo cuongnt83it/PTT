@@ -87,7 +87,7 @@ namespace Model.EF
         [DisplayName("Ngày sửa")]
         public DateTime? ModifiedDate { get; set; }
 
-        [DisplayName("Kết thúc khởi tạo")]
+        [DisplayName("Ngày khởi tạo")]
         public DateTime? EndCreate { get; set; }
 
         [DisplayName("Ngày duyệt kết thúc")]

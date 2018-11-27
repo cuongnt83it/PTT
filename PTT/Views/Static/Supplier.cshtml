@@ -262,8 +262,10 @@
                                     </td>
                                     @{
                                         var col = 0;
+                                        var ft = false;
                                         foreach (var pd in ViewBag.Product)
                                         {
+                                            ft = true;
                                             foreach (var pdP in ViewBag.ProductProject)
                                             {
                                                 if (pj.ProjectID == pdP.ProjectID && pdP.ProductID == pd.ProductID)
@@ -272,20 +274,23 @@
                                                     <td>@pdP.Price</td>
                                                     <td>@pdP.Discount</td>
                                                     <td>@pdP.DiscountVAT</td>
+                                                    ft = false;
+
                                                 }
 
                                             }
 
+                                            if (ft == true)
+                                            {
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
 
+                                            }
                                         }
-                                        for (var i = col; i < collProdut; i++)
-                                        {
-                                            <td></td>
-                                        }
+
                                     }
-
-
-                                    <td>@pj.Value</td>
+                                     <td>@pj.Value</td>
                                 </tr>
 
                                         }

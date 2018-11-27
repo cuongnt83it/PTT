@@ -231,6 +231,7 @@
     <Content Include="Access\js\controller\userController.js" />
     <Content Include="Access\js\controller\supplierController.js" />
     <Content Include="Access\js\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Access\js\plugins\simple_money_format.js" />
     <Content Include="Access\plugins\tableExport\js\Blob.min.js" />
     <Content Include="Access\plugins\tableExport\js\FileSaver.min.js" />
     <Content Include="Access\plugins\tableExport\js\gulpfile.js" />
