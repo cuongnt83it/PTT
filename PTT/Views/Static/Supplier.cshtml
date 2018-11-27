@@ -214,7 +214,7 @@
                                                     usr += gu.FullName + "; ";
                                                 }
                                             }
-                                            usr = usr.Remove(usr.Length - 2, 2);
+                                           // usr = usr.Remove(usr.Length - 2, 2);
                                         }
                                         @usr
                                     </td>
@@ -228,7 +228,7 @@
                                                     ctn += ct.ContraName + "; ";
                                                 }
                                             }
-                                            ctn = ctn.Remove(ctn.Length - 2, 2);
+                                          //  ctn = ctn.Remove(ctn.Length - 2, 2);
                                         }
                                         @ctn
                                     </td>
@@ -256,7 +256,7 @@
                                                     sp += s.SupplierName;
                                                 }
                                             }
-                                            sp = sp.Remove(sp.Length - 2, 2);
+                                            //sp = sp.Remove(sp.Length - 2, 2);
                                         }
                                         @sp
                                     </td>
@@ -273,20 +273,15 @@
                                                     <td>@pdP.Discount</td>
                                                     <td>@pdP.DiscountVAT</td>
                                                 }
-                                                else
-                                                {
-                                                    for (var i = 0; i < 3; i++)
-                                                    {
-                                                        <td></td>
-                                                    }
-                                                }
-
 
                                             }
 
 
                                         }
-
+                                        for (var i = col; i < collProdut; i++)
+                                        {
+                                            <td></td>
+                                        }
                                     }
 
 

@@ -218,7 +218,7 @@
                                                     ctn += ct.ContraName + "; ";
                                                 }
                                             }
-                                            ctn = ctn.Remove(ctn.Length - 2, 2);
+                                          //  ctn = ctn.Remove(ctn.Length - 2, 2);
                                         }
                                         @ctn
                                     </td>
@@ -231,7 +231,7 @@
                                                 bdn += ct.BuilderName + "; ";
                                             }
                                         }
-                                        bdn = bdn.Remove(bdn.Length - 2, 2);
+                                       // bdn = bdn.Remove(bdn.Length - 2, 2);
                                     }
                                     @bdn</td>
                                     <td>
@@ -244,7 +244,7 @@
                                                     sp += s.SupplierName +"; ";
                                                 }
                                             }
-                                            sp = sp.Remove(sp.Length - 2, 2);
+                                           // sp = sp.Remove(sp.Length - 2, 2);
                     }
                     @sp
                 </td>
@@ -261,22 +261,17 @@
                                                     <td>@pdP.Discount</td>
                                                     <td>@pdP.DiscountVAT</td>
                                                 }
-                                                else
-                                                {
-                                                    for (var i = 0; i < 3; i++)
-                                                    {
-                                                        <td></td>
-                                                    }
-                                                }
-
-
+                                               
                                             }
 
 
                                         }
+                                        for (var i = col; i < collProdut; i++)
+                                        {
+                                            <td></td>
+                                        }
 
                                     }
-
 
                                     <td>@pj.Value</td>
                                 </tr>

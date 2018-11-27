@@ -103,7 +103,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2012 15:23:58</publishTime>
     </File>
     <File Include="bin/Model.dll">
-      <publishTime>11/15/2018 09:15:08</publishTime>
+      <publishTime>11/27/2018 07:56:22</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/03/2014 20:33:56</publishTime>
@@ -112,7 +112,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2003 01:38:06</publishTime>
     </File>
     <File Include="bin/PTT.dll">
-      <publishTime>11/15/2018 09:15:13</publishTime>
+      <publishTime>11/27/2018 09:21:40</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -511,13 +511,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/03/2018 15:40:30</publishTime>
     </File>
     <File Include="Views/Static/Project.cshtml">
-      <publishTime>07/13/2018 15:39:47</publishTime>
+      <publishTime>11/27/2018 09:16:24</publishTime>
     </File>
     <File Include="Views/Static/Supplier.cshtml">
-      <publishTime>07/13/2018 15:48:22</publishTime>
+      <publishTime>11/27/2018 09:18:26</publishTime>
     </File>
     <File Include="Views/Static/Users.cshtml">
-      <publishTime>07/13/2018 15:54:08</publishTime>
+      <publishTime>11/27/2018 09:17:16</publishTime>
     </File>
     <File Include="Views/Supplier/Create.cshtml">
       <publishTime>10/16/2018 10:48:27</publishTime>

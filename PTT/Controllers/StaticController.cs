@@ -259,6 +259,7 @@ namespace PTT.Controllers
                     break;
 
             }
+            ViewBag.Member = db.V_Project_Users.Where(a => ((a.StartDate >= sDate && a.StartDate <= eDate) || (a.StartDate >= sDate && a.EndDate >= eDate))).ToList();
             ViewBag.Project = db.V_Project_Builer_Contrator.Where(a => ((a.StartDate >= sDate && a.StartDate <= eDate) || (a.StartDate >= sDate && a.EndDate >= eDate))).ToList();
             //string sqlSupplier = string.Format("Select * From V_Project_Supplier Where (StartDate >= '{0}' AND StartDate <= '{1}' ) OR (StartDate >= '{2}' AND EndDate>='{3}')", sDate, eDate, sDate, eDate);
             //ViewBag.Supplier = db.Database.SqlQuery<V_Project_Supplier>(sqlSupplier).ToList();

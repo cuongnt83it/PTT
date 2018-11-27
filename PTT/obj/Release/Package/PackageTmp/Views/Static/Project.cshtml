@@ -179,8 +179,8 @@
                                         if (i%3==0  )
                                         {
                                             <td>Giá trị</td>
-                                            <td>Triết khấu ngoài HĐ</td>
-                                            <td>Triết khấu trong HĐ</td>
+                                            <td>Triết khấu % ngoài HĐ</td>
+                                            <td>Triết khấu % trên HĐ</td>
                                         }
                                         
                                     }
@@ -208,11 +208,38 @@
                                                 usr += gu.FullName + "; ";
                                             }
                                         }
-                                        usr = usr.Remove(usr.Length-2, 2);
+                                        //usr = usr.Remove(usr.Length-2, 2);
                                     }
                                     @usr</td>
-                                    <td>@pj.ContraName</td>
-                                    <td >@pj.BuilderName</td>
+                                    <td>
+                                        @{
+                                            var ctn = "";
+                                            foreach (var ct in ViewBag.Contrator)
+                                            {
+                                                if (ct.ProjectID == pj.ProjectID)
+                                                {
+                                                    ctn += ct.ContraName + "; ";
+                                                }
+                                            }
+                                          //  ctn = ctn.Remove(ctn.Length - 2, 2);
+                                        }
+                                        @ctn
+                                </td>
+                                    <td>
+                                        @{
+                                            var bdn = "";
+                                            foreach (var bd in ViewBag.Builer)
+                                            {
+                                                if (bd.ProjectID == pj.ProjectID)
+                                                {
+                                                    bdn += bd.BuilderName + "; ";
+                                                }
+                                            }
+                                           // bdn = bdn.Remove(bdn.Length - 2, 2);
+                                        }
+                                        @bdn
+                                    
+                                   </td>
                                     <td >
                                         @{
                                             var sp = "";
@@ -220,9 +247,10 @@
                                             {
                                                 if (s.ProjectID == pj.ProjectID)
                                                 {
-                                                    sp += s.SupplierName;
+                                                    sp += s.SupplierName + "; ";
                                                 }
                                             }
+                                          //  sp = sp.Remove(sp.Length - 2, 2);
                                         }
                                         @sp
                                     </td>
@@ -239,8 +267,7 @@
                                                     <td>@pdP.Discount</td>
                                                     <td>@pdP.DiscountVAT</td>
                                                 }
-
-
+                                                
                                             }
 
 

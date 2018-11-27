@@ -208,24 +208,22 @@
                                                 usr += gu.FullName + "; ";
                                             }
                                         }
-                                        usr = usr.Remove(usr.Length-2, 2);
+                                        //usr = usr.Remove(usr.Length-2, 2);
                                     }
                                     @usr</td>
                                     <td>
-
                                         @{
-                                            usr = "";
-                                            foreach (var gu in ViewBag.Contrator)
+                                            var ctn = "";
+                                            foreach (var ct in ViewBag.Contrator)
                                             {
-                                                if (gu.ProjectID == pj.ProjectID)
+                                                if (ct.ProjectID == pj.ProjectID)
                                                 {
-                                                    usr += gu.ContraName + "; ";
+                                                    ctn += ct.ContraName + "; ";
                                                 }
                                             }
-                                            usr = usr.Remove(usr.Length - 2, 2);
+                                          //  ctn = ctn.Remove(ctn.Length - 2, 2);
                                         }
-                                        @usr
-                                    
+                                        @ctn
                                 </td>
                                     <td>
                                         @{
@@ -237,7 +235,7 @@
                                                     bdn += bd.BuilderName + "; ";
                                                 }
                                             }
-                                            bdn = bdn.Remove(bdn.Length - 2, 2);
+                                           // bdn = bdn.Remove(bdn.Length - 2, 2);
                                         }
                                         @bdn
                                     
@@ -252,7 +250,7 @@
                                                     sp += s.SupplierName + "; ";
                                                 }
                                             }
-                                            sp = sp.Remove(sp.Length - 2, 2);
+                                          //  sp = sp.Remove(sp.Length - 2, 2);
                                         }
                                         @sp
                                     </td>
@@ -269,21 +267,15 @@
                                                     <td>@pdP.Discount</td>
                                                     <td>@pdP.DiscountVAT</td>
                                                 }
-                                                else
-                                                {
-                                                    for (var i = 0; i < 3; i++)
-                                                    {
-                                                        <td></td>
-                                                    }
-
-                                                }
-
-
+                                                
                                             }
 
 
                                         }
-
+                                        for (var i = col; i < collProdut; i++)
+                                        {
+                                            <td></td>
+                                        }
                                     }
                                     
                                    
