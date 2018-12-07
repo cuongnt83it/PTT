@@ -19,7 +19,7 @@ namespace Model.DAO
         }
         public List<Information> ToList()
         {
-            return db.Information.OrderBy(c => c.ModifiedDate).ToList<Information>();
+            return db.Information.OrderByDescending(c => c.ModifiedDate).ToList<Information>();
         }
         public List<Information> ToListShared()
         {
@@ -61,6 +61,9 @@ namespace Model.DAO
 
         public long Delete(long ID)
         {
+            //Xóa thông tin chia sẻ bảng Feedback Information 
+            var fb = new FeedbackInforDao();
+            fb.DeleteByFeedbackID(ID);
             var bd = db.Information.Find(ID);
             db.Information.Remove(bd);
             db.SaveChanges();

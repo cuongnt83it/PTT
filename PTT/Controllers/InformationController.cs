@@ -95,13 +95,14 @@ namespace PTT.Controllers
         }
 
         // POST: Information/Create
-        [HttpPost]
-        public ActionResult Delete(FormCollection collection)
+        [HttpDelete]
+        public ActionResult Delete(long id)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                InformationDao bdDao = new InformationDao();
+                bdDao.Delete(id);
                 return RedirectToAction("Index");
             }
             catch
@@ -130,22 +131,30 @@ namespace PTT.Controllers
             }
             SetUserBag(lstUPlogin.ToArray<string>());
 
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Infomation.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
+            if (ViewBag.Infomation.ContratorID != null)
+            {
+                ContratorDao contrDao = new ContratorDao();
+                Contrator objConTra = contrDao.FindByID(ViewBag.Infomation.ContratorID);
+                string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
+                str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
+                str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
+                ViewBag.PrContraDetail = str;
+                ViewBag.PrContraCode = objConTra.ContratorID;
+            }
+            if (ViewBag.Infomation.BuilderID != null)
+            {
+                BuilderDao buiDao = new BuilderDao();
+                Builder objBuilder = buiDao.FindByID(ViewBag.Infomation.BuilderID);
+                ViewBag.PrBuiderCode = objBuilder.BuilderID;
+                string str = "";
+                str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
+                str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
+                str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
+                ViewBag.BuiderDetail = str;
+            } 
 
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Infomation.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
+
+               
 
 
             return View();
@@ -169,23 +178,28 @@ namespace PTT.Controllers
                 lstUPlogin.Add(pUs.LoginID.ToString());
             }
             SetUserBag(lstUPlogin.ToArray<string>());
+            if (ViewBag.Infomation.ContratorID != null)
+            {
+                ContratorDao contrDao = new ContratorDao();
+                Contrator objConTra = contrDao.FindByID(ViewBag.Infomation.ContratorID);
+                string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
+                str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
+                str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
+                ViewBag.PrContraDetail = str;
+                ViewBag.PrContraCode = objConTra.ContratorID;
+            }
+            if (ViewBag.Infomation.BuilderID != null)
+            {
+                BuilderDao buiDao = new BuilderDao();
+                Builder objBuilder = buiDao.FindByID(ViewBag.Infomation.BuilderID);
+                ViewBag.PrBuiderCode = objBuilder.BuilderID;
+                string str = "";
+                str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
+                str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
+                str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
+                ViewBag.BuiderDetail = str;
+            }
 
-            ContratorDao contrDao = new ContratorDao();
-            Contrator objConTra = contrDao.FindByID(ViewBag.Infomation.ContratorID);
-            string str = "<p><b>Tên chủ đầu tư: </b>" + objConTra.ContraName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objConTra.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objConTra.FullName + "<b> &nbsp;&nbsp;&nbsp;  Điện thoại: </b>" + objConTra.Phone + "</p>";
-            ViewBag.PrContraDetail = str;
-
-            ViewBag.PrContraCode = objConTra.ContratorID;
-            BuilderDao buiDao = new BuilderDao();
-            Builder objBuilder = buiDao.FindByID(ViewBag.Infomation.BuilderID);
-            ViewBag.PrBuiderCode = objBuilder.BuilderID;
-            str = "";
-            str = "<p><b>Tên nhà thầu: </b>" + objBuilder.BuilderName + "</p>";
-            str += "<p><b>Địa chỉ: </b>" + objBuilder.Address + "</p>";
-            str += "<p><b>Thông tin liên hệ: </b>" + objBuilder.FullName + "<b>&nbsp;&nbsp; &nbsp; Điện thoại: </b>" + objBuilder.Phone + "</p>";
-            ViewBag.BuiderDetail = str;
 
 
             return View();
@@ -207,68 +221,121 @@ namespace PTT.Controllers
                 // SetViewBag(cityID);
                 // long categoryID = Convert.ToInt64(data["CategoryID"].ToString());
                 //long priceID = Convert.ToInt64(data["PriceID"].ToString());
-                string name = data["Name"].ToString();
-                string address = data["Address"].ToString();
-                string contratorID = data["txtContratorID"].ToString();
-                string builderID = data["txtBuilder"].ToString();
-                string Note = data["txtNote"].ToString();
-                string[] members = data.GetValues("drbMember");
-
-                SetUserBag(members);
-
-                objProject.Address = address;
-
-
-                objProject.ContratorID = (new ContratorDao().FindByCode(contratorID.Trim()).ID);
-                objProject.BuilderID = (new BuilderDao().FindByCode(builderID.Trim()).ID);
-                //  objProject.SupplierID = Convert.ToInt64(data["drlSupplier"]);
-                UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
-
-
-                int iStatus = Convert.ToInt32(data["drlStatus"].ToString());
-                // long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
-                objProject.Status = iStatus;
-
-                objProject.ModifiedDate = Hepper.GetDateServer();
-                objProject.Description = data["txtDescription"].ToString();
-                objProject.ModifiedBy = us.UserName;
-                objProject.Note = Note;
-                objProject.Name = name;
-
-                long infoID = dbDao.Update(objProject);
-                //thêm danh sách nhóm vào trong dự án
-                InforUserDao prUSDao = new InforUserDao();
-                if (members != null)
+                if (ModelState.IsValid)
                 {
-                    //Xóa nhóm thuộc dự án
-                    prUSDao.Delete(objProject.InformationID);
-                    // InforUser objPrUS = new InforUser();
-                    //objPrUS.InforID = infoID;
-                    //objPrUS.LoginID = us.UserID;
-                    //objPrUS.IsAdmin = true;
-                    //prUSDao.Insert(objPrUS);
-                    foreach (string sUsID in members)
+
+                    string name = data["Name"].ToString();
+                    string address = data["Address"].ToString();
+                    string contratorID = data["txtContratorID"].ToString();
+                    string builderID = data["txtBuilder"].ToString();
+                    string Note = data["txtNote"].ToString();
+                    string[] members = data.GetValues("drbMember");
+
+                    SetUserBag(members);
+
+                    bool kt = true;
+                    //Kiem tra ma chu dau tu
+                    if (contratorID.Trim().Length > 0)
                     {
-                        long usID = Convert.ToInt64(sUsID);
-                        if (usID != us.UserID)
+                        ContratorDao contraDAO = new ContratorDao();
+                        Contrator objContra = contraDAO.FindByCode(contratorID.Trim());
+                        if (objContra == null)
                         {
-                            InforUser objPrUSM = new InforUser();
-                            objPrUSM.InforID = infoID;
-                            objPrUSM.LoginID = usID;
-                            objPrUSM.IsAdmin = false;
-                            prUSDao.Insert(objPrUSM);
+                            kt = false;
+                            ModelState.AddModelError("", "Mã chủ đầu tư không đúng!");
+
                         }
                     }
-                }
 
-                SetAlert("Cập nhật thành công", "success");
-                return RedirectToAction("Manager", "Information");
+
+                    //Kiem tra nha thau thi cong
+                    if (builderID.Trim().Length > 0)
+                    {
+                        BuilderDao buiderDao = new BuilderDao();
+                        Builder objBuider = buiderDao.FindByCode(builderID.Trim());
+                        if (objBuider == null)
+                        {
+                            kt = false;
+                            ModelState.AddModelError("", "Mã nhà thầu thi công không đúng!");
+
+                        }
+                    }
+
+                    if (kt == true)
+                    {
+                        objProject.Address = address;
+
+                        if (contratorID.Trim().Length > 0)
+                            objProject.ContratorID = (new ContratorDao().FindByCode(contratorID.Trim()).ID);
+                        if (builderID.Trim().Length > 0)
+                            objProject.BuilderID = (new BuilderDao().FindByCode(builderID.Trim()).ID);
+
+                        //  objProject.SupplierID = Convert.ToInt64(data["drlSupplier"]);
+                        UserLogin us = (UserLogin)Session[CommonConstant.USER_SESSION];
+
+                        if (data["drlStatus"] != null)
+                        {
+                            int iStatus = Convert.ToInt32(data["drlStatus"].ToString());
+                            // long iSupplierID = Convert.ToInt64(data["drlSupplier"].ToString());
+                            objProject.Status = iStatus;
+
+                        }
+                    
+
+                        objProject.ModifiedDate = Hepper.GetDateServer();
+                        objProject.Description = data["txtDescription"].ToString();
+                        objProject.ModifiedBy = us.UserName;
+                        objProject.Note = Note;
+                        objProject.Name = name;
+
+                        long infoID = dbDao.Update(objProject);
+                        //thêm danh sách nhóm vào trong dự án
+                        InforUserDao prUSDao = new InforUserDao();
+                        if (members != null)
+                        {
+                            //Xóa nhóm thuộc dự án
+                            prUSDao.Delete(objProject.InformationID);
+                            // InforUser objPrUS = new InforUser();
+                            //objPrUS.InforID = infoID;
+                            //objPrUS.LoginID = us.UserID;
+                            //objPrUS.IsAdmin = true;
+                            //prUSDao.Insert(objPrUS);
+                            foreach (string sUsID in members)
+                            {
+                                long usID = Convert.ToInt64(sUsID);
+                                if (usID != us.UserID)
+                                {
+                                    InforUser objPrUSM = new InforUser();
+                                    objPrUSM.InforID = infoID;
+                                    objPrUSM.LoginID = usID;
+                                    objPrUSM.IsAdmin = false;
+                                    prUSDao.Insert(objPrUSM);
+                                }
+                            }
+                        }
+
+                        SetAlert("Cập nhật thành công", Common.CommonConstant.ALERT_SUCCESS);
+                        return RedirectToAction("Manager", "Information");
+                    }
+
+                    else
+                    {
+                        SetAlert("Không cập nhật được", Common.CommonConstant.ALERT_WARNING);
+                        return RedirectToAction("Manager", "Information");
+                    }
+                }
+                else
+                {
+                    SetAlert("Không cập nhật được", Common.CommonConstant.ALERT_WARNING);
+                    return RedirectToAction("Manager", "Information");
+                }
 
             }
             catch
             {
-                SetAlert("Không cập nhật được", "danger");
-                return View();
+                SetAlert("Không cập nhật được", Common.CommonConstant.ALERT_WARNING);
+
+                return RedirectToAction("Manager", "Information");
             }
         }
 
@@ -297,23 +364,30 @@ namespace PTT.Controllers
                     string builderID = data["txtBuilder"].ToString();
                     bool kt = true;
                     //Kiem tra ma chu dau tu
-                    ContratorDao contraDAO = new ContratorDao();
-                    Contrator objContra = contraDAO.FindByCode(contratorID.Trim());
-                    if (objContra == null)
+                    if (contratorID.Trim().Length>0)
                     {
-                        kt = false;
-                        ModelState.AddModelError("", "Mã chủ đầu tư không đúng!");
+                        ContratorDao contraDAO = new ContratorDao();
+                        Contrator objContra = contraDAO.FindByCode(contratorID.Trim());
+                        if (objContra == null)
+                        {
+                            kt = false;
+                            ModelState.AddModelError("", "Mã chủ đầu tư không đúng!");
 
+                        }
                     }
 
 
-                    BuilderDao buiderDao = new BuilderDao();
-                    Builder objBuider = buiderDao.FindByCode(builderID.Trim());
-                    if (objBuider == null)
+                    //Kiem tra nha thau thi cong
+                    if (contratorID.Trim().Length > 0)
                     {
-                        kt = false;
-                        ModelState.AddModelError("", "Mã nhà thầu thi công không đúng!");
+                        BuilderDao buiderDao = new BuilderDao();
+                        Builder objBuider = buiderDao.FindByCode(builderID.Trim());
+                        if (objBuider == null)
+                        {
+                            kt = false;
+                            ModelState.AddModelError("", "Mã nhà thầu thi công không đúng!");
 
+                        }
                     }
                     //string IsGroup = data["IsGroup"].ToString();
                     //string IsPublic = data["IsPublic"].ToString();
@@ -331,9 +405,14 @@ namespace PTT.Controllers
                         objProject.Name = name;
                         objProject.Description = data["txtDescription"].ToString();
                         objProject.Address = address;
-
-                        objProject.ContratorID = (new ContratorDao().FindByCode(contratorID.Trim()).ID);
-                        objProject.BuilderID = (new BuilderDao().FindByCode(builderID.Trim()).ID);
+                        if (contratorID.Trim().Length > 0)
+                        {
+                            objProject.ContratorID = (new ContratorDao().FindByCode(contratorID.Trim()).ID);
+                        }
+                        if (builderID.Trim().Length > 0)
+                        {
+                            objProject.BuilderID = (new BuilderDao().FindByCode(builderID.Trim()).ID);
+                        }
 
                         objProject.Status = 0;
                         objProject.DateLine = Hepper.GetDateServer();

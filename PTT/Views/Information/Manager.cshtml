@@ -59,7 +59,7 @@
                 {
 
                     stt++;
-                <tr>
+                <tr id="row_@item.InformationID">
                     <td>
                         @stt
                     </td>
@@ -104,8 +104,14 @@
                     </td>
                    
                     <td>
-                        @Html.ActionLink("Quản lý", "Edit", new { id = item.InformationID })
-                      
+                        @Html.ActionLink("Quản lý", "Edit", new { id = item.InformationID })|
+                         @Ajax.ActionLink("Xoá", "Delete", new { id = item.InformationID }, new AjaxOptions
+                        {
+                            Confirm = "Bạn có muốn xoá bản ghi này?",
+                            OnComplete = "$('#row_" + @item.InformationID + "').remove()",
+                            HttpMethod = "Delete"
+                        })
+
                     </td>
                 </tr>
                     } }

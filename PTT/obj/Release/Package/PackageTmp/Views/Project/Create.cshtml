@@ -42,6 +42,8 @@
             })
             $('.select2').select2()
         })
+        $('.money').simpleMoneyFormat();
+
     </script>
 }
 
@@ -238,7 +240,7 @@
                                             <input type="checkbox" value="@value" id="cblProduct" name="cblProduct"> @p.Code
                                         </label><br />
                                         <label for="@txtPrice" class="control-label">Giá trị(ĐVT: đồng)</label>
-                                        <input type="text" class="form-control" id="@txtPrice" name="@txtPrice" placeholder="Giá trị">
+                                        <input type="text" class="money form-control" id="@txtPrice" name="@txtPrice" placeholder="Giá trị">
                                         <label for="@txtDiscount" class="control-label">CK % ngoài HĐ</label>
                                         <input type="text" class="form-control" id="@txtDiscount" name="@txtDiscount" placeholder="CK % ngoài HĐ ">
                                         <label for="@txtDiscountVAT" class="control-label">CK % trên HĐ</label>
