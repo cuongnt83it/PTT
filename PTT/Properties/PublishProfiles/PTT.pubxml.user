@@ -42,6 +42,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Access/js/plugins/simple_money_format.js">
       <publishTime>11/28/2018 01:43:34</publishTime>
     </File>
+    <File Include="Access/plugins/saveAsExcel.js">
+      <publishTime>12/08/2018 16:00:31</publishTime>
+    </File>
     <File Include="Access/plugins/tableExport/js/Blob.min.js">
       <publishTime>07/04/2018 16:29:43</publishTime>
     </File>
@@ -115,7 +118,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2003 01:38:06</publishTime>
     </File>
     <File Include="bin/PTT.dll">
-      <publishTime>12/06/2018 00:29:49</publishTime>
+      <publishTime>12/08/2018 16:36:29</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -250,7 +253,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/30/2018 08:53:37</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>11/28/2018 01:37:34</publishTime>
+      <publishTime>12/08/2018 16:35:52</publishTime>
     </File>
     <File Include="Uploads/Images/photo3.jpg">
       <publishTime>06/06/2018 16:36:56</publishTime>
@@ -448,16 +451,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/05/2018 09:15:55</publishTime>
     </File>
     <File Include="Views/Project/Create.cshtml">
-      <publishTime>11/28/2018 01:42:06</publishTime>
+      <publishTime>12/07/2018 00:03:54</publishTime>
     </File>
     <File Include="Views/Project/Details.cshtml">
       <publishTime>11/28/2018 01:54:41</publishTime>
     </File>
     <File Include="Views/Project/Edit.cshtml">
-      <publishTime>11/28/2018 01:55:05</publishTime>
+      <publishTime>12/07/2018 00:11:34</publishTime>
     </File>
     <File Include="Views/Project/EditMNG.cshtml">
-      <publishTime>11/28/2018 01:52:27</publishTime>
+      <publishTime>12/07/2018 00:13:07</publishTime>
     </File>
     <File Include="Views/Project/End.cshtml">
       <publishTime>11/15/2018 08:43:35</publishTime>
@@ -514,13 +517,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/05/2018 16:33:48</publishTime>
     </File>
     <File Include="Views/Static/Project.cshtml">
-      <publishTime>11/27/2018 23:25:08</publishTime>
+      <publishTime>12/08/2018 16:30:53</publishTime>
     </File>
     <File Include="Views/Static/Supplier.cshtml">
-      <publishTime>11/27/2018 23:43:40</publishTime>
+      <publishTime>12/08/2018 16:32:48</publishTime>
     </File>
     <File Include="Views/Static/Users.cshtml">
-      <publishTime>11/27/2018 23:48:03</publishTime>
+      <publishTime>12/08/2018 16:34:47</publishTime>
     </File>
     <File Include="Views/Supplier/Create.cshtml">
       <publishTime>10/16/2018 10:48:27</publishTime>

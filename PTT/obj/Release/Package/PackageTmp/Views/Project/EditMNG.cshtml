@@ -104,18 +104,18 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Thành phố </label>
                         <div class="col-md-4">
-                            @Html.DropDownList("drlCityID", (SelectList)ViewBag.CityID, new { @id = "drlCityID", @class = "form-control", @placeholder = "Thành phố" })
+                            @Html.DropDownList("drlCityID", (SelectList)ViewBag.CityID, new { @id = "drlCityID", @class = "form-control select2", @placeholder = "Thành phố" })
                         </div>
                         <label class="control-label col-md-2">Quận huyện </label>
                         <div class="col-md-4">
-                            @Html.DropDownList("drlDistrict", (SelectList)ViewBag.DistrictID, new { @id = "drlDistrict", @class = "form-control", @placeholder = "Quận huyện" })
+                            @Html.DropDownList("drlDistrict", (SelectList)ViewBag.DistrictID, new { @id = "drlDistrict", @class = "form-control select2", @placeholder = "Quận huyện" })
 
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Địa chỉ </label>
                         <div class="col-md-10">
-                            @Html.TextBox("Address", (string)ViewBag.Project.Address, new { @class = "form-control", @autoforcus = "autoforcus", @placeholder = "Địa chỉ", @required = "required" })
+                            @Html.TextBox("Address", (string)ViewBag.Project.Address, new { @class = "form-control select2", @autoforcus = "autoforcus", @placeholder = "Địa chỉ", @required = "required" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -128,16 +128,16 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Loại dự án </label>
                         <div class="col-md-2">
-                            @Html.DropDownList("drlCategoryID", (SelectList)ViewBag.CategoryID, new { @id = "drlCategoryID", @class = "form-control", @placeholder = "Loại dự án" })
+                            @Html.DropDownList("drlCategoryID", (SelectList)ViewBag.CategoryID, new { @id = "drlCategoryID", @class = "form-control select2", @placeholder = "Loại dự án" })
 
                         </div>
                         <label class="control-label col-md-2">Nguồn vốn </label>
                         <div class="col-md-2">
-                            @Html.DropDownList("drlResourceID", (SelectList)ViewBag.ResourceID, new { @id = "drlResourceID", @class = "form-control", @placeholder = "Nguồn vốn" })
+                            @Html.DropDownList("drlResourceID", (SelectList)ViewBag.ResourceID, new { @id = "drlResourceID", @class = "form-control select2", @placeholder = "Nguồn vốn" })
                         </div>
                         <label class="control-label col-md-2">Giá dự án </label>
                         <div class="col-md-2">
-                            @Html.DropDownList("drlPriceID", (SelectList)ViewBag.PriceID, new { @id = "drlPriceID", @class = "form-control", @placeholder = "Giá dự án" })
+                            @Html.DropDownList("drlPriceID", (SelectList)ViewBag.PriceID, new { @id = "drlPriceID", @class = "form-control select2", @placeholder = "Giá dự án" })
                         </div>
                     </div>
                     <div class="form-group">

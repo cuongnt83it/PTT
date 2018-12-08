@@ -232,11 +232,7 @@
     <Content Include="Access\js\controller\supplierController.js" />
     <Content Include="Access\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Access\js\plugins\simple_money_format.js" />
-    <Content Include="Access\plugins\tableExport\js\Blob.min.js" />
-    <Content Include="Access\plugins\tableExport\js\FileSaver.min.js" />
-    <Content Include="Access\plugins\tableExport\js\gulpfile.js" />
-    <Content Include="Access\plugins\tableExport\js\xls.core.min.js" />
-    <Content Include="Access\plugins\tableExport\tableexport.d.ts" />
+    <Content Include="Access\plugins\saveAsExcel.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -373,8 +369,6 @@
     <Folder Include="Access\dist\js\" />
     <Folder Include="Access\js\plugins\ckeditor\" />
     <Folder Include="Access\js\plugins\ckfinder\" />
-    <Folder Include="Access\plugins\tableExport\css\" />
-    <Folder Include="Access\plugins\tableExport\img\" />
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

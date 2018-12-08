@@ -44,30 +44,8 @@
             })
             })
     </script>
-    <link href="~/Access/plugins/tableExport/css/tableexport.css" rel="stylesheet" />
-    <script src="~/Access/plugins/tableExport/js/FileSaver.min.js"></script>
-    <script src="~/Access/plugins/tableExport/js/FileSaver.min.js"></script>
-    <script src="~/Access/plugins/tableExport/js/xls.core.min.js"></script>
-    <script src="~/Access/plugins/tableExport/js/tableexport.js"></script>
-    <script>
-    $("table").tableExport(
-        {
-            // Displays table headers (th or td elements) in the <thead>
-                headers: true,
-            // Filename for the downloaded file
-                  fileName: "id",
-            // Style buttons using bootstrap framework
-
-                      bootstrap: true,
-            formats: ["xlsx",  "csv", "txt"],
-            charset:"charset=utf-8"
-        });
-    //$.fn.tableExport.charset = "charset=utf-8";
-    // Filename fallback for exported files.
-
-
-
-    </script>
+  
+ <script src="~/Access/plugins/saveAsExcel.js"></script>
 
 
 }
@@ -138,42 +116,45 @@
 
                 if (ViewBag.Supplier != null)
                 {
+                    <a class="btn btn-primary" onclick="saveAsExcel('HoSoPTT', 'ThongKeDonVi.xls')">
+                        <i class="fa fa-file-excel-o"></i> Export to Excel
+                    </a>
                     var stt = 0;
                     var collProdut = ViewBag.Product.Count * 3;
-                    <table id="HoSoPTT" class="table table-bordered  col-md-10" data-name="cool-table">
+                    <table id="HoSoPTT" border="1" class="table table-bordered  col-md-10" data-name="cool-table">
                         <thead>
                             <tr>
-                                <th rowspan="3">
+                                <th rowspan="3" align="center">
                                     STT
                                 </th>
-                                <th rowspan="3">
+                                <th rowspan="3" align="center">
                                     MÃ DỰ ÁN
                                 </th>
 
-                                <th rowspan="3">
+                                <th rowspan="3" align="center">
                                     TÊN DỰ ÁN
                                 </th>
-                                <th rowspan="3">
+                                <th rowspan="3" align="center">
                                     THỜI GIAN BẮT ĐẦU
                                 </th>
-                                <th rowspan="3">
+                                <th rowspan="3" align="center">
                                     THỜI GIAN KẾT THÚC
                                 </th>
-                                <th rowspan="3">
+                                <th rowspan="3" align="center">
                                     NHÓM PHÁT TRIỂN
                                 </th>
-                                <th rowspan="3">CHỦ ĐẦU TƯ</th>
-                                <th rowspan="3">NHÀ THẦU THI CÔNG</th>
-                                <th rowspan="3">ĐƠN VỊ CUNG ỨNG</th>
-                                <th colspan="@collProdut">SẢN PHẨM</th>
-                                <th rowspan="3">TỔNG GIÁ TRỊ</th>
+                                <th rowspan="3" align="center">CHỦ ĐẦU TƯ</th>
+                                <th rowspan="3" align="center">NHÀ THẦU THI CÔNG</th>
+                                <th rowspan="3" align="center">ĐƠN VỊ CUNG ỨNG</th>
+                                <th colspan="@collProdut" align="center">SẢN PHẨM</th>
+                                <th rowspan="3" align="center">TỔNG GIÁ TRỊ</th>
                             </tr>
                             <tr>
                                 @{
                                     foreach (var pd in ViewBag.Product)
                                     {
 
-                                        <td colspan="3">@pd.Code</td>
+                                        <td colspan="3" align="center">@pd.Code</td>
 
                                     }
                                 }
@@ -185,9 +166,9 @@
 
                                         if (i % 3 == 0)
                                         {
-                                            <td>Giá trị</td>
-                                            <td>Triết khấu % ngoài HĐ</td>
-                                            <td>Triết khấu % trên HĐ</td>
+                                            <td align="center">Giá trị</td>
+                                            <td align="center">Triết khấu % ngoài HĐ</td>
+                                            <td align="center">Triết khấu % trên HĐ</td>
                                         }
                                     }
                                 }
