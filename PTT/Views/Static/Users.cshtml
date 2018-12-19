@@ -118,158 +118,159 @@
             </a>
                     var stt = 0;
                     var collProdut = ViewBag.Product.Count * 3;
-                    <table id="HoSoPTT" border="1" class="table table-bordered  col-md-10" data-name="cool-table">
-                        <thead>
-                            <tr>
-                                <th rowspan="3" align="center">
-                                    STT
-                                </th>
-                                <th rowspan="3" align="center">
-                                    MÃ DỰ ÁN
-                                </th>
-
-                                <th rowspan="3" align="center">
-                                    TÊN DỰ ÁN
-                                </th>
-                                <th rowspan="3" align="center">
-                                    THỜI GIAN BẮT ĐẦU
-                                </th>
-                                <th rowspan="3" align="center">
-                                    THỜI GIAN KẾT THÚC
-                                </th>
-                                <th rowspan="3" align="center">
-                                    NHÂN VIÊN
-                                </th>
-                                <th rowspan="3" align="center">CHỦ ĐẦU TƯ</th>
-                                <th rowspan="3" align="center">NHÀ THẦU THI CÔNG</th>
-                                <th rowspan="3" align="center">ĐƠN VỊ CUNG ỨNG</th>
-                                <th colspan="@collProdut" align="center">SẢN PHẨM</th>
-                                <th rowspan="3" align="center">TỔNG GIÁ TRỊ</th>
-                            </tr>
-                            <tr>
-                                @{
-                                    foreach (var pd in ViewBag.Product)
-                                    {
-
-                                        <td colspan="3" align="center">@pd.Code</td>
-
-                                    }
-                                }
-                            </tr>
-                            <tr>
-                                @{
-                                    for (var i = 1; i <= collProdut; i++)
-                                    {
-
-
-                                        if (i % 3 == 0)
-                                        {
-                                            <td align="center">Giá trị</td>
-                                            <td align="center">Triết khấu % ngoài HĐ</td>
-                                            <td align="center">Triết khấu % trên HĐ</td>
-                                        }
-                                    }
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach (var pj in ViewBag.Member)
-                            {
-                                stt = stt + 1;
+                    <div class="table-responsive">
+                        <table id="HoSoPTT" border="1" class="table table-bordered" data-name="cool-table">
+                            <thead>
                                 <tr>
+                                    <th rowspan="3" align="center">
+                                        STT
+                                    </th>
+                                    <th rowspan="3" align="center">
+                                        MÃ DỰ ÁN
+                                    </th>
 
-                                    <td>@stt</td>
-                                    <td>@pj.Code</td>
-                                    <td>@pj.Name</td>
-                                    <td>@pj.StartDate.ToString("MM/dd/yyyy")</td>
-                                    <td> @pj.DateLine.ToString("MM/dd/yyyy")</td>
-                                    <td>
-                                        @pj.FullName
-                                    </td>
-                                    <td>
-                                        @{
-                                            var ctn = "";
-                                            foreach (var ct in ViewBag.Contrator)
-                                            {
-                                                if (ct.ProjectID == pj.ProjectID)
-                                                {
-                                                    ctn += ct.ContraName + "; ";
-                                                }
-                                            }
-                                            //  ctn = ctn.Remove(ctn.Length - 2, 2);
-                                        }
-                                        @ctn
-                                    </td>
-                                    <td>
-                                        @{
-                                        var bdn = "";
-                                        foreach (var ct in ViewBag.Builer)
-                                        {
-                                            if (ct.ProjectID == pj.ProjectID)
-                                            {
-                                                bdn += ct.BuilderName + "; ";
-                                            }
-                                        }
-                                        // bdn = bdn.Remove(bdn.Length - 2, 2);
-                                    }
-                                    @bdn
-                                </td>
-                                <td>
+                                    <th rowspan="3" align="center">
+                                        TÊN DỰ ÁN
+                                    </th>
+                                    <th rowspan="3" align="center">
+                                        THỜI GIAN BẮT ĐẦU
+                                    </th>
+                                    <th rowspan="3" align="center">
+                                        THỜI GIAN KẾT THÚC
+                                    </th>
+                                    <th rowspan="3" align="center">
+                                        NHÂN VIÊN
+                                    </th>
+                                    <th rowspan="3" align="center">CHỦ ĐẦU TƯ</th>
+                                    <th rowspan="3" align="center">NHÀ THẦU THI CÔNG</th>
+                                    <th rowspan="3" align="center">ĐƠN VỊ CUNG ỨNG</th>
+                                    <th colspan="@collProdut" align="center">SẢN PHẨM</th>
+                                    <th rowspan="3" align="center">TỔNG GIÁ TRỊ</th>
+                                </tr>
+                                <tr>
                                     @{
-                                        var sp = "";
-                                        foreach (var s in ViewBag.Supplier)
-                                        {
-                                            if (s.ProjectID == pj.ProjectID)
-                                            {
-                                                sp += s.SupplierName + "; ";
-                                            }
-                                        }
-                                        // sp = sp.Remove(sp.Length - 2, 2);
-                                    }
-                                    @sp
-                                </td>
-                                    @{
-                                        var col = 0;
-                                        var ft = false;
                                         foreach (var pd in ViewBag.Product)
                                         {
-                                            ft = true;
-                                            foreach (var pdP in ViewBag.ProductProject)
+
+                                            <th colspan="3" align="center">@pd.Code</th>
+
+                                        }
+                                    }
+                                </tr>
+                                <tr>
+                                    @{
+                                        for (var i = 1; i <= collProdut; i++)
+                                        {
+
+
+                                            if (i % 3 == 0)
                                             {
-                                                if (pj.ProjectID == pdP.ProjectID && pdP.ProductID == pd.ProductID)
+                                                <th align="center">Giá trị</th>
+                                                <th align="center">Triết khấu % ngoài HĐ</th>
+                                                <th align="center">Triết khấu % trên HĐ</th>
+                                            }
+                                        }
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var pj in ViewBag.Member)
+                                {
+                                    stt = stt + 1;
+                                    <tr>
+
+                                        <td>@stt</td>
+                                        <td>@pj.Code</td>
+                                        <td>@pj.Name</td>
+                                        <td>@pj.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td> @pj.DateLine.ToString("MM/dd/yyyy")</td>
+                                        <td>
+                                            @pj.FullName
+                                        </td>
+                                        <td>
+                                            @{
+                                                var ctn = "";
+                                                foreach (var ct in ViewBag.Contrator)
                                                 {
-                                                    col += 3;
-                                                    <td>@pdP.Price</td>
-                                                    <td>@pdP.Discount</td>
-                                                    <td>@pdP.DiscountVAT</td>
-                                                    ft = false;
+                                                    if (ct.ProjectID == pj.ProjectID)
+                                                    {
+                                                        ctn += ct.ContraName + "; ";
+                                                    }
+                                                }
+                                                //  ctn = ctn.Remove(ctn.Length - 2, 2);
+                                            }
+                                            @ctn
+                                        </td>
+                                        <td>
+                                            @{
+                                                var bdn = "";
+                                                foreach (var ct in ViewBag.Builer)
+                                                {
+                                                    if (ct.ProjectID == pj.ProjectID)
+                                                    {
+                                                        bdn += ct.BuilderName + "; ";
+                                                    }
+                                                }
+                                                // bdn = bdn.Remove(bdn.Length - 2, 2);
+                                            }
+                                            @bdn
+                                        </td>
+                                        <td>
+                                            @{
+                                                var sp = "";
+                                                foreach (var s in ViewBag.Supplier)
+                                                {
+                                                    if (s.ProjectID == pj.ProjectID)
+                                                    {
+                                                        sp += s.SupplierName + "; ";
+                                                    }
+                                                }
+                                                // sp = sp.Remove(sp.Length - 2, 2);
+                                            }
+                                            @sp
+                                        </td>
+                                        @{
+                                            var col = 0;
+                                            var ft = false;
+                                            foreach (var pd in ViewBag.Product)
+                                            {
+                                                ft = true;
+                                                foreach (var pdP in ViewBag.ProductProject)
+                                                {
+                                                    if (pj.ProjectID == pdP.ProjectID && pdP.ProductID == pd.ProductID)
+                                                    {
+                                                        col += 3;
+                                                        <td>@pdP.Price</td>
+                                                        <td>@pdP.Discount</td>
+                                                        <td>@pdP.DiscountVAT</td>
+                                                        ft = false;
+
+                                                    }
 
                                                 }
 
+                                                if (ft == true)
+                                                {
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+
+                                                }
                                             }
 
-                                            if (ft == true)
-                                            {
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-
-                                            }
                                         }
 
-                                    }
-                                                                        
-                                <td>@pj.Value</td>
-                            </tr>
+                                        <td>@pj.Value</td>
+                                    </tr>
 
-                                    }
+                                            }
 
-                        </tbody>
-                    </table>
-
-                                    }}
-        </div>
+                            </tbody>
+                        </table>
+                        </div>
+                        }}
+                    </div>
     </div>
 
 </div>

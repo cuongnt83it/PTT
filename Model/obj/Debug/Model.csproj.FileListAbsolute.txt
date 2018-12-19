@@ -27,3 +27,4 @@ F:\STUDY\WinForms\QuanLyDuan(PTT)\PTT\Model\bin\Debug\EntityFramework.SqlServer.
 F:\STUDY\WinForms\QuanLyDuan(PTT)\PTT\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 F:\STUDY\WinForms\QuanLyDuan(PTT)\PTT\Model\obj\Debug\Model.dll
 F:\STUDY\WinForms\QuanLyDuan(PTT)\PTT\Model\obj\Debug\Model.pdb
+E:\STUDY\WinForms\QuanLyDuan(PTT)\PTT\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
